@@ -19,15 +19,6 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "=+b9m=5%e80xc#jjl7=!54eac0km*o5yl7g)vz4oc(x7@f_tw!"
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -117,4 +108,4 @@ MEDIA_URL = "/media/"
 STATIC_ROOT = BASE_DIR / "staticfiles" / "static_root"
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS = [BASE_DIR / "services" / "static"]
+# STATICFILES_DIRS = [BASE_DIR / "services" / "static"]
