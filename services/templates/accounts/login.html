@@ -1,14 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-  <h1 class="pt-3">Login</h1>
-  <form method="POST" class="form">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    {% buttons %}
+  <div class="container">
+    <h1 class="pt-3">Login</h1>
+    <form method="POST" class="form">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% buttons %}
       <button type="submit" class="btn btn-primary">Login</button>
-    {% endbuttons %}
-  </form>
-</div>
+      {% endbuttons %}
+    </form>
+    <p>New User? Sign Up
+      <a href="{% url 'accounts:signup' %}">Here</a>
+    </p>
+    <p>
+      Forgot Your Password? Reset It
+      <a href="#">Here</a>
+    </p>
+  </div>
 {% endblock %}
