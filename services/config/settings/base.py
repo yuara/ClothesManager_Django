@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "bootstrap4",
+    "accounts.apps.AccountsConfig",
 ]
 
 MIDDLEWARE = [
@@ -111,3 +112,6 @@ STATIC_ROOT = BASE_DIR / "staticfiles" / "static_root"
 STATIC_URL = "/static/"
 
 # STATICFILES_DIRS = [BASE_DIR / "services" / "static"]
+
+LOGIN_REDIRECT_URL = "index"
+LOGOUT_REDIRECT_URL = "thanks"
