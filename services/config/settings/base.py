@@ -115,3 +115,5 @@ STATIC_URL = "/static/"
 
 LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "thanks"
+
+AUTH_USER_MODEL = "accounts.User"

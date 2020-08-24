@@ -7,7 +7,6 @@ from django.core.mail import send_mail
 from django.conf import settings
 import uuid as uuid_lib
 
-
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
