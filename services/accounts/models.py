@@ -22,6 +22,18 @@ class Profile(models.Model):
         return f"{self.user.username}'s profile"
 
 
+class FollowUser(models.Model):
+    follower = models.ForeignKey(
+        "User", on_delete=models.CASCADE, related_name="following_followusers"
+    )
+    following = models.ForeignKey(
+        "User", on_delete=models.CASCADE, related_name="follower_followusers"
+    )
+
+    class Meta:
+        unique_together = ("follower", "following")
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     uuid = models.UUIDField(default=uuid_lib.uuid4, primary_key=True, editable=False)
     username_validator = UnicodeUsernameValidator()
@@ -38,6 +50,23 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     full_name = models.CharField(_("your name"), max_length=150, blank=True)
     email = models.EmailField(_("email address"), blank=True)
+
+    followings = models.ManyToManyField(
+        "User",
+        verbose_name="following users",
+        through="FollowUser",
+        related_name="+",
+        through_fields=("follower", "following"),
+        blank=True,
+    )
+    followers = models.ManyToManyField(
+        "User",
+        verbose_name="followers",
+        through="FollowUser",
+        related_name="+",
+        through_fields=("following", "follower"),
+        blank=True,
+    )
 
     is_staff = models.BooleanField(
         _("staff status"),
@@ -80,3 +109,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         return self.full_name
+
+    def follow(self, user):
+        if not self.is_following(user):
+            self.following_followusers.create(following=user)
+
+    def unfollow(self, user):
+        if self.is_following(user):
+            self.following_followusers.filter(following=user).delete()
+
+    def is_following(self, user):
+        return self.following_followusers.filter(following=user).count() > 0
