@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Users list{% endblock %}
+
+{% block breadcrumb %}
+  <ol class="breadcrumb mb-4 pt-3">
+    <li class="breadcrumb-item active">Explore</li>
+  </ol>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    {% if object_list %}
+    {% include "snippets/user_list.html" %}
+    {% else %}
+    <h3>No Users Yet</h3>
+    {% endif %}
+  </div>
+{% endblock %}
