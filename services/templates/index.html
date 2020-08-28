@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 
-{% block content %}
-  <h1 class="pt-3">Dashboard</h1>
-  <ol class="breadcrumb mb-4">
+{% block title %}Dashboard{% endblock %}
+
+{% block breadcrumb %}
+  <ol class="breadcrumb mb-4 pt-3">
     <li class="breadcrumb-item">Dashboard</li>
     <li class="breadcrumb-item active">{{ user.username }}</li>
   </ol>
+{% endblock %}
+
+{% block content %}
   <div class="row">
     <div class="col-xl-12">
       <div class="card mb-4">
