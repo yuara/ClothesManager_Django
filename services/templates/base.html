@@ -36,10 +36,15 @@
                 <i class="fas fa-user"></i>
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#">Action</a>
+                {% if user.is_authenticated %}
+                <a class="dropdown-item" href="{% url 'accounts:profile' username=user.username %}">Profile</a>
                 <a class="dropdown-item" href="#">Another action</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
+                <a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a>
+                {% else %}
+                <a class="dropdown-item" href="{% url 'accounts:signup' %}">SignUp</a>
+                <a class="dropdown-item" href="{% url 'accounts:login' %}">Login</a>
+                {% endif %}
               </div>
             </li>
           </ul>

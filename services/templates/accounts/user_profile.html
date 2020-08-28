@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="pt-3">Profile</h1>
+    {{ user.username }}
+    {{ user.profile.about_me }}
+    <form method="POST" class="form">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% buttons %}
+      <button type="submit" class="btn btn-primary">Login</button>
+      {% endbuttons %}
+    </form>
+  </div>
+{% endblock %}

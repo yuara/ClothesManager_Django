@@ -1,4 +1,5 @@
 from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView
 
@@ -12,7 +13,7 @@ class HomePage(TemplateView):
         return super().get(request, *args, **kwargs)
 
 
-class IndexPage(TemplateView):
+class IndexPage(LoginRequiredMixin, TemplateView):
     template_name = "index.html"
 
 
