@@ -1,16 +1,78 @@
 {% extends "base.html" %}
 
+{% block title %}{{ user.username }}
+  Profile{% endblock %}
+
+{% block breadcrumb %}
+  <ol class="breadcrumb mb-4 pt-3">
+    <li class="breadcrumb-item">Profile</li>
+    <li class="breadcrumb-item active">{{ user.username }}</li>
+  </ol>
+{% endblock %}
+
 {% block content %}
   <div class="container">
-    <h1 class="pt-3">Profile</h1>
-    {{ user.username }}
-    {{ user.profile.about_me }}
-    <form method="POST" class="form">
-      {% csrf_token %}
-      {% bootstrap_form form %}
-      {% buttons %}
-      <button type="submit" class="btn btn-primary">Login</button>
-      {% endbuttons %}
-    </form>
+    {% if request.user.username == user.username %}
+    <h3>Here is my profile.</h3>
+    <table>
+      <tr>
+        <th>emal</th>
+        <td>{{ user.email }}</td>
+      </tr>
+      <tr>
+        <th>full name</th>
+        <td>{{ user.full_name }}</td>
+      </tr>
+      <tr>
+        <th>about me</th>
+        <td>{{ user.profile.about_me }}</td>
+      </tr>
+      <tr>
+        <th>website</th>
+        <td>{{ user.profile.webpage }}</td>
+      </tr>
+      <tr>
+        <th><a href="{% url 'accounts:followers' %}">followers</a></th>
+        <td>{{ user.followers.count }}</td>
+      </tr>
+      <tr>
+        <th><a href="{% url 'accounts:followings' %}">following</a></th>
+        <td>{{ user.followings.count }}</td>
+      </tr>
+    </table>
+    <small>
+      <a href="{% url 'accounts:edit' user.username %}">edit</a>
+    </small>
+    {% else %}
+    <h3>{{ request.user.username }} is watching {{ user.username }} profile.</h3>
+    <table>
+      <tr>
+        <th>full name</th>
+        <td>{{ user.full_name }}</td>
+      </tr>
+      <tr>
+        <th>about me</th>
+        <td>{{ user.profile.about_me }}</td>
+      </tr>
+      <tr>
+        <th>website</th>
+        <td>{{ user.profile.webpage }}</td>
+      </tr>
+      <tr>
+        <th>followers</th>
+        <td>{{ user.followers.count }}</td>
+      </tr>
+      <tr>
+        <th>following</th>
+        <td>{{ user.followings.count }}</td>
+      </tr>
+    </table>
+    {% if is_following %}
+    <a href="{% url 'accounts:unfollow' user.username %}">Unfollow</a>
+    {% else %}
+    <a href="{% url 'accounts:follow' user.username %}">Follow</a>
+    {% endif %}
+    {% endif %}
   </div>
+<!-- container -->
 {% endblock %}
