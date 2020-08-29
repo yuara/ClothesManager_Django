@@ -68,6 +68,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True,
     )
 
+    clothings = models
+
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,

@@ -29,7 +29,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "bootstrap4",
+    "debug_toolbar",
     "accounts.apps.AccountsConfig",
+    "closet.apps.ClosetConfig",
 ]
 
 MIDDLEWARE = [
@@ -40,6 +42,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -112,6 +115,8 @@ STATIC_ROOT = BASE_DIR / "staticfiles" / "static_root"
 STATIC_URL = "/static/"
 
 # STATICFILES_DIRS = [BASE_DIR / "services" / "static"]
+
+INTERNAL_IPS = ["127.0.0.1"]
 
 LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "thanks"

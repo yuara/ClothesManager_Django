@@ -9,6 +9,8 @@ verify_ssl = true
 django = "*"
 django-bootstrap4 = "*"
 pillow = "*"
+django-choices = "*"
+django-debug-toolbar = "*"
 
 [requires]
 python_version = "3.8"
