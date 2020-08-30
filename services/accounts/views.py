@@ -3,17 +3,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic
 from django.shortcuts import render, redirect, resolve_url, get_object_or_404
-from . import models, forms
+from .forms import UserCreateForm, ProfileForm
+from .models import User, Profile
 
 # Create your views here.
 class SignUp(generic.CreateView):
-    form_class = forms.UserCreateForm
+    form_class = UserCreateForm
     success_url = reverse_lazy("login")
     template_name = "accounts/signup.html"
 
 
 class Users(generic.ListView):
-    model = models.User
+    model = User
     template_name = "accounts/users_list.html"
 
 
@@ -28,7 +29,7 @@ class CurrentUserProfile(LoginRequiredMixin, generic.TemplateView):
 
 
 class UserProfile(LoginRequiredMixin, generic.DetailView):
-    model = models.User
+    model = User
     template_name = "accounts/user_profile.html"
 
     slug_field = "username"
@@ -36,7 +37,7 @@ class UserProfile(LoginRequiredMixin, generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = models.User.objects.get(username=self.kwargs["username"])
+        user = User.objects.get(username=self.kwargs["username"])
         current_user = self.request.user
         if current_user != user:
             if current_user.is_following(user):
@@ -46,13 +47,14 @@ class UserProfile(LoginRequiredMixin, generic.DetailView):
         return context
 
 
-class EditProfile(LoginRequiredMixin, generic.UpdateView):
-    model = models.User
-    form_class = forms.ProfileForm
-    template_name = "accounts/edit_profile.html"
-
-    slug_field = "username"
-    slug_url_kwarg = "username"
+# class EditProfile(LoginRequiredMixin, generic.UpdateView):
+#     model = User
+#     form_class = ProfileForm
+#     success_url = reverse_lazy("accounts:current")
+#     template_name = "accounts/edit_profile.html"
+#
+#     slug_field = "username"
+#     slug_url_kwarg = "username"
 
 
 class FollowingUsers(LoginRequiredMixin, generic.ListView):
@@ -62,6 +64,11 @@ class FollowingUsers(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return self.request.user.followings.all()
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["followers_or_following"] = "Following"
+        return context
+
 
 class Followers(LoginRequiredMixin, generic.ListView):
 
@@ -70,9 +77,14 @@ class Followers(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return self.request.user.followers.all()
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["followers_or_following"] = "Followers"
+        return context
+
 
 def follow(request, username):
-    user = get_object_or_404(models.User, username=username)
+    user = get_object_or_404(User, username=username)
     if user == request.user:
         return redirect("accounts:profile", username=username)
     request.user.follow(user)
@@ -81,7 +93,7 @@ def follow(request, username):
 
 
 def unfollow(request, username):
-    user = get_object_or_404(models.User, username=username)
+    user = get_object_or_404(User, username=username)
     if user == request.user:
         return redirect("accounts:profile", username=username)
     request.user.unfollow(user)
@@ -89,22 +101,11 @@ def unfollow(request, username):
     return redirect("accounts:profile", username=username)
 
 
-#
-# def update_user(request, username):
-#     user = get_object_or_404(models.User, username=username)
-#     if user.profile is None:
-#         profile = models.Profile(user=user)
-#     else:
-#         profile = user.profile
-#     user_form = forms.UserEditableForm(request.POST or None, instance=user)
-#     profile_form = forms.ProfileForm(request.POST or None, instance=profile)
-#     if request.method == "POST" and user_form.is_valid() and profile_form.is_valid():
-#         user_form.save()
-#         profile_form.save()
-#         return redirect("index")
-#
-#     context = {
-#         "user_form": user_form,
-#         "profile_form": profile_form,
-#     }
-#     return render(request, "accounts/edit_profile.html", context)
+def update_user(request, username):
+    user = get_object_or_404(User, username=username)
+    profile, x = Profile.objects.get_or_create(user=user)
+    form = ProfileForm(request.POST or None, instance=profile)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        return redirect("accounts:current")
+    return render(request, "accounts/edit_profile.html", {"form": form})
