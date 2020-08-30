@@ -29,15 +29,22 @@ class Clothes(models.Model):
     name = models.CharField(_("name"), max_length=255, blank=True)
     note = models.TextField(_("note"))
     owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="clothings"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="clothes"
+    )
+    parent_category = models.ForeignKey(
+        ParentCategory,
+        verbose_name="parent category",
+        related_name="parent_category",
+        on_delete=models.PROTECT,
     )
     category = models.ForeignKey(
         Category,
         verbose_name="category",
-        related_name="clothings",
+        related_name="clothes",
         on_delete=models.PROTECT,
     )
     created_at = models.DateTimeField(_("date created"), default=timezone.now)
+    publish = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.owner.username}'s {self.name}"
