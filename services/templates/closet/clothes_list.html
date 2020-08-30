@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Clothes List{% endblock %}
+
+{% block breadcrumb %}
+  <ol class="breadcrumb mb-4 pt-3">
+    <li class="breadcrumb-item">Closet</li>
+    <li class="breadcrumb-item"><a href="{% url 'closet:clothes' %}">Clothes</a></li>
+    <li class="breadcrumb-item active">{{ who }}</li>
+  </ol>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h3>Clothes List</h3>
+    {% if request.user.username == user.username %}
+      {% if object_list %}
+        <table class="table table-hover">
+          <tr>
+            <th>Clothes Name</th>
+            <th>Category</th>
+            <th>Addtime</th>
+            <th>Publish</th>
+          </tr>
+          {% for clothes in object_list %}
+            <tr>
+              <td>
+                <a href="{% url 'closet:edit_clothes' clothes.pk %}">{{ clothes.name }}</a>
+              </td>
+              <td>{{ clothes.parent_category }}
+                /
+                {{ clothes.category }}</td>
+              <td>{{ clothes.created_at }}</td>
+              <td>{{ clothes.publish }}</td>
+            </tr>
+          {% endfor %}
+        </table>
+      {% else %}
+        <h3>No Clothes Yet</h3>
+      {% endif %}
+      <a href="{% url 'closet:add' %}">Add Clothes</a>
+
+    {% else %}
+      {% if object_list %}
+        <table class="table table-hover">
+          <tr>
+            <th>Clothes Name</th>
+            <th>Category</th>
+            <th>Addtime</th>
+          </tr>
+          {% for clothes in object_list %}
+            <tr>
+              <td>{{ clothes.name }}</td>
+              <td>{{ clothes.parent_category }}
+                /
+                {{ clothes.category }}</td>
+              <td>{{ clothes.created_at }}</td>
+            </tr>
+          {% endfor %}
+        </table>
+      {% else %}
+        <h3>No Clothes</h3>
+      {% endif %}
+    {% endif %}
+  </div>
+{% endblock %}

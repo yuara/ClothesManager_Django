@@ -17,7 +17,7 @@ class Users(generic.ListView):
     template_name = "accounts/users_list.html"
 
 
-class CurrentUserProfile(generic.TemplateView):
+class CurrentUserProfile(LoginRequiredMixin, generic.TemplateView):
 
     template_name = "accounts/user_profile.html"
 
@@ -27,7 +27,7 @@ class CurrentUserProfile(generic.TemplateView):
         return context
 
 
-class UserProfile(generic.DetailView):
+class UserProfile(LoginRequiredMixin, generic.DetailView):
     model = models.User
     template_name = "accounts/user_profile.html"
 
@@ -55,7 +55,7 @@ class EditProfile(LoginRequiredMixin, generic.UpdateView):
     slug_url_kwarg = "username"
 
 
-class FollowingUsers(generic.ListView):
+class FollowingUsers(LoginRequiredMixin, generic.ListView):
 
     template_name = "accounts/users_list.html"
 
@@ -63,7 +63,7 @@ class FollowingUsers(generic.ListView):
         return self.request.user.followings.all()
 
 
-class Followers(generic.ListView):
+class Followers(LoginRequiredMixin, generic.ListView):
 
     template_name = "accounts/users_list.html"
 

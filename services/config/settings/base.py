@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "bootstrap4",
     "debug_toolbar",
     "accounts.apps.AccountsConfig",
+    "closet.apps.ClosetConfig",
 ]
 
 MIDDLEWARE = [

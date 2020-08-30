@@ -26,12 +26,13 @@ urlpatterns = [
     path("thanks/", views.ThanksPage.as_view(), name="thanks"),
     path("accounts/", include("accounts.urls", namespace="accounts")),
     path("accounts/", include("django.contrib.auth.urls")),
+    path("closet/", include("closet.urls", namespace="closet")),
 ]
 
 if settings.DEBUG:
     import debug_toolbar
 
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += [
-        static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
         path("__debug__/", include(debug_toolbar.urls)),
     ]
