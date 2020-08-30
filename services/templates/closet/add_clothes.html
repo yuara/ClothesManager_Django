@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1 class="pt-3">Add Clothes</h1>
+  <form method="POST" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">Add</button>
+    {% endbuttons %}
+  </form>
+</div>
+{% endblock %}
+
+{% block script %}
+  <script>
+    const parentCategoryElement = $('#id_parent_category');
+    const categoryElement = $('#id_category');
+
+    const changeCategory = (select) => {
+      // Empty choices of child categories
+      categoryElement.children().remove();
+
+      $.ajax({
+        url: '{% url 'closet:ajax_get_category' %}',
+        type: 'GET',
+        data: {
+          'pk': parentCategoryElement.val()
+        }
+      }).done(response => {
+        // Create and add the choices of the child categories
+        for (const category of response.categoryList) {
+          const option = $('<option>');
+          option.val(category['pk']);
+          option.text(category['name']);
+          categoryElement.append(option);
+        }
+
+        // Choose the category if picked
+        if (select !== undefined) {
+          categoryElement.val(select);
+        }
+
+      });
+    };
+
+    parentCategoryElement.on('change', () => {
+      changeCategory();
+    });
+
+    // If reloaded when something happens, create child categories
+    if (parentCategoryElement.val()) {
+      const selectedCategory = categoryElement.val();
+      changeCategory(selectedCategory);
+    }
+  </script>
+{% endblock %}
