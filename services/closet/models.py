@@ -27,7 +27,7 @@ class Category(models.Model):
 
 class Clothes(models.Model):
     name = models.CharField(_("name"), max_length=255, blank=True)
-    note = models.TextField(_("note"))
+    note = models.TextField(_("note"), blank=True)
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="clothes"
     )
