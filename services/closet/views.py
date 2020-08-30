@@ -49,7 +49,7 @@ class UserClothes(LoginRequiredMixin, generic.ListView):
         return context
 
 
-class LimitedClothes(generic.DetailView):
+class PublishedClothes(generic.DetailView):
     model = User
     template_name = "closet/clothes_list.html"
 
