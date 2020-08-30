@@ -1,13 +1,23 @@
 {% extends 'base.html' %}
 
+{% block title %}{{ add_or_edit }} Clothes{% endblock %}
+
+{% block breadcrumb %}
+  <ol class="breadcrumb mb-4 pt-3">
+    <li class="breadcrumb-item">Closet</li>
+    <li class="breadcrumb-item"><a href="{% url 'closet:clothes' %}">Clothes</a></li>
+    <li class="breadcrumb-item active">{{ add_or_edit }}</li>
+  </ol>
+{% endblock %}
+
 {% block content %}
 <div class="container">
-  <h1 class="pt-3">Add Clothes</h1>
+  <h3>{{ add_or_edit }} Clothes</h3>
   <form method="POST" class="form">
     {% csrf_token %}
     {% bootstrap_form form %}
     {% buttons %}
-    <button type="submit" class="btn btn-primary">Add</button>
+    <button type="submit" class="btn btn-primary">{{ add_or_edit }}</button>
     {% endbuttons %}
   </form>
 </div>

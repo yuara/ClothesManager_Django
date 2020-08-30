@@ -1,19 +1,31 @@
 {% extends "base.html" %}
 
-{% block title %}Users list{% endblock %}
+{% block title %}
+  {% if followers_or_following %}
+    {{ followers_or_following }}
+  {% else %}
+    Users list
+  {% endif %}
+{% endblock %}
 
 {% block breadcrumb %}
   <ol class="breadcrumb mb-4 pt-3">
-    <li class="breadcrumb-item active">Explore</li>
-  </ol>
+    {% if followers_or_following %}
+      <li class="breadcrumb-item">Profile</li>
+      <li class="breadcrumb-item active">{{ followers_or_following }}</li>
+    {% else %}
+      <li class="breadcrumb-item active">Explore</li>
+    </li>
+  {% endif %}
+</ol>
 {% endblock %}
 
 {% block content %}
-  <div class="container">
-    {% if object_list %}
+<div class="container">
+  {% if object_list %}
     {% include "snippets/user_list.html" %}
-    {% else %}
+  {% else %}
     <h3>No Users Yet</h3>
-    {% endif %}
-  </div>
+  {% endif %}
+</div>
 {% endblock %}
