@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ set_or_edit }} Outfit{% endblock %}
+
+{% block breadcrumb %}
+  <ol class="breadcrumb mb-4 pt-3">
+    <li class="breadcrumb-item">Closet</li>
+    <li class="breadcrumb-item"><a href="{% url 'closet:outfits' %}">Outfits</a></li>
+    <li class="breadcrumb-item active">{{ set_or_edit }}</li>
+  </ol>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h3>{{ set_or_edit }} Outfit</h3>
+  <form method="POST" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">{{ set_or_edit }}</button>
+    {% endbuttons %}
+  </form>
+</div>
+{% endblock %}
