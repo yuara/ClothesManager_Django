@@ -61,6 +61,8 @@ class Outfit(models.Model):
         verbose_name="outerwear",
         related_name="outerwear",
         on_delete=models.PROTECT,
+        blank=True,
+        null=True,
     )
     top = models.ForeignKey(
         Clothes, verbose_name="top", related_name="top", on_delete=models.PROTECT,
@@ -71,6 +73,7 @@ class Outfit(models.Model):
         related_name="extra_top",
         on_delete=models.PROTECT,
         blank=True,
+        null=True,
     )
     bottom = models.ForeignKey(
         Clothes, verbose_name="bottom", related_name="bottom", on_delete=models.PROTECT,
