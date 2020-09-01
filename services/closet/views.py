@@ -95,7 +95,7 @@ class CreateOutfit(LoginRequiredMixin, generic.CreateView):
 
         if not outfit.name:
             count_outfit = user.outfits.count()
-            outfit.name = f"{category} {count_outfit + 1}"
+            outfit.name = f"Outfit {count_outfit + 1}"
         outfit.save()
         return redirect("closet:outfits")
 
@@ -137,6 +137,11 @@ class EditOutfit(LoginRequiredMixin, generic.UpdateView):
     form_class = OutfitCreateForm
     success_url = reverse_lazy("closet:outfits")
     template_name = "closet/set_outfit.html"
+
+    def get_form_kwargs(self):
+        kwargs = super(EditOutfit, self).get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
