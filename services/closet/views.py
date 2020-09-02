@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 from django.views import generic
 from .forms import ClothesCreateForm, OutfitCreateForm
 from accounts.models import User
@@ -29,6 +30,10 @@ class CreateClothes(LoginRequiredMixin, generic.CreateView):
             count_clothes = user.clothes.filter(category=category).count()
             clothes.name = f"{category} {count_clothes + 1}"
         clothes.save()
+
+        messages.info(
+            self.request, f"{user.username} added {clothes.name} successfully."
+        )
         return redirect("closet:clothes")
 
     def get_context_data(self, **kwargs):

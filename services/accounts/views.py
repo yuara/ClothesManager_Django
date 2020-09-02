@@ -1,6 +1,7 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.contrib import messages
 from django.views import generic
 from django.shortcuts import render, redirect, resolve_url, get_object_or_404
 from .forms import UserCreateForm, ProfileForm
@@ -11,6 +12,11 @@ class SignUp(generic.CreateView):
     form_class = UserCreateForm
     success_url = reverse_lazy("login")
     template_name = "accounts/signup.html"
+
+    def form_valid(self, form):
+        self.object = user = form.save()
+        messages.info(self.request, f"Sign Up! {user.username}!")
+        return redirect(self.get_success_url())
 
 
 class Users(generic.ListView):
