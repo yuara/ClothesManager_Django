@@ -110,8 +110,10 @@ def unfollow(request, username):
 def update_user(request, username):
     user = get_object_or_404(User, username=username)
     profile, x = Profile.objects.get_or_create(user=user)
-    form = ProfileForm(request.POST or None, instance=profile)
-    if request.method == "POST" and form.is_valid():
-        form.save()
-        return redirect("accounts:current")
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect("accounts:current")
+    form = ProfileForm(instance=profile)
     return render(request, "accounts/edit_profile.html", {"form": form})

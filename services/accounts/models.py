@@ -12,7 +12,7 @@ class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     about_me = models.TextField(blank=True)
     webpage = models.URLField(blank=True)
-    picture = models.ImageField(upload_to="accounts/profile_pic", blank=True)
+    picture = models.ImageField(upload_to="profile_pic/", blank=True)
 
     class Meta:
         verbose_name = "profile"
