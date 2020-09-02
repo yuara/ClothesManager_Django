@@ -31,12 +31,12 @@
           </ul>
           <ul class="navbar-nav">
             {% if user.is_authenticated %}
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'closet:outfits' %}">Outfits</a>
-            </li>
-            <li>
-              <a class="nav-link" href="{% url 'closet:clothes' %}">Clothes</a>
-            </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'closet:outfits' %}">Outfits</a>
+              </li>
+              <li>
+                <a class="nav-link" href="{% url 'closet:clothes' %}">Clothes</a>
+              </li>
             {% else %}
             {% endif %}
             <li class="nav-item dropdown">
@@ -63,9 +63,21 @@
       <div class="container-fluid">
         <h1 class="pt-3"></h1>
         <div class="container">
-        {% block breadcrumb %}{% endblock %}
-        {% block content %}{% endblock %}
-      </div>
+          {% if messages %}
+            <div style="margin-top:1rem;">
+              <div class="alert alert-primary align-center notification" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+          {% block breadcrumb %}{% endblock %}
+          {% block content %}{% endblock %}
+        </div>
       </div>
       <!-- container-fluid -->
     </main>
