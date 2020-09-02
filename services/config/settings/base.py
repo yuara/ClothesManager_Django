@@ -114,7 +114,7 @@ MEDIA_URL = "/media/"
 STATIC_ROOT = BASE_DIR / "staticfiles" / "static_root"
 STATIC_URL = "/static/"
 
-# STATICFILES_DIRS = [BASE_DIR / "services" / "static"]
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 INTERNAL_IPS = ["127.0.0.1"]
 
