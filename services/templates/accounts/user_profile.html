@@ -59,6 +59,12 @@
           </th>
           <td>{{ user.clothes.count }}</td>
         </tr>
+        <tr>
+          <th>
+            <a href="{% url 'closet:outfits' %}">Outfits</a>
+          </th>
+          <td>{{ user.outfits.count }}</td>
+        </tr>
       </table>
       <small>
         <a href="{% url 'accounts:edit' user.username %}">edit</a>
@@ -101,6 +107,12 @@
             <a href="{% url 'closet:user_clothes' user.username %}">Clothes</a>
           </th>
           <td>{{ user.clothes.count }}</td>
+        </tr>
+        <tr>
+          <th>
+            <a href="{% url 'closet:user_outfits' user.username %}">Outfits</a>
+          </th>
+          <td>{{ user.outfits.count }}</td>
         </tr>
       </table>
       {% if is_following %}

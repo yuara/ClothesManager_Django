@@ -44,10 +44,45 @@ class Clothes(models.Model):
         on_delete=models.PROTECT,
     )
     created_at = models.DateTimeField(_("date created"), default=timezone.now)
-    publish = models.BooleanField(default=False)
+    publish = models.BooleanField(_("publish"), default=False)
 
     def __str__(self):
-        return f"{self.owner.username}'s {self.name}"
+        return self.name
+
+
+class Outfit(models.Model):
+    name = models.CharField(_("name"), max_length=255, blank=True)
+    note = models.TextField(_("note"), blank=True)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="outfits"
+    )
+    outerwear = models.ForeignKey(
+        Clothes,
+        verbose_name="outerwear",
+        related_name="outerwear",
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+    )
+    top = models.ForeignKey(
+        Clothes, verbose_name="top", related_name="top", on_delete=models.PROTECT,
+    )
+    extra_top = models.ForeignKey(
+        Clothes,
+        verbose_name="extra top",
+        related_name="extra_top",
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True,
+    )
+    bottom = models.ForeignKey(
+        Clothes, verbose_name="bottom", related_name="bottom", on_delete=models.PROTECT,
+    )
+    created_at = models.DateTimeField(_("date created"), default=timezone.now)
+    publish = models.BooleanField(_("publish"), default=False)
+
+    def __str__(self):
+        return self.name
 
 
 # class Outfit(db.Model):

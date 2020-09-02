@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Outfits List{% endblock %}
+
+{% block breadcrumb %}
+  <ol class="breadcrumb mb-4 pt-3">
+    <li class="breadcrumb-item">Closet</li>
+    <li class="breadcrumb-item"><a href="{% url 'closet:outfits' %}">Outfits</a></li>
+    <li class="breadcrumb-item active">{{ who }}</li>
+  </ol>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h3>Outfits List</h3>
+    {% if request.user.username == user.username %}
+      {% if object_list %}
+        <table class="table table-hover">
+          <tr>
+            <th>Outfit Name</th>
+            <th>Outerwears</th>
+            <th>Tops</th>
+            <th>Extra Tops</th>
+            <th>Bottoms</th>
+            <th>Addtime</th>
+            <th>Publish</th>
+          </tr>
+          {% for outfit in object_list %}
+            <tr>
+              <td>
+                <a href="{% url 'closet:edit_outfit' outfit.pk %}">{{ outfit.name }}</a>
+              </td>
+              <td>{{ outfit.outerwear }}</td>
+              <td>{{ outfit.top }}</td>
+              <td>{{ outfit.extra_top }}</td>
+              <td>{{ outfit.bottom }}</td>
+              <td>{{ outfit.created_at }}</td>
+              <td>{{ outfit.publish }}</td>
+            </tr>
+          {% endfor %}
+        </table>
+      {% else %}
+        <h3>No Outfits Yet</h3>
+      {% endif %}
+      <a href="{% url 'closet:set' %}">Set Outfit</a>
+
+    {% else %}
+    {% if object_list %}
+      <table class="table table-hover">
+        <tr>
+          <th>Outfit Name</th>
+          <th>Outerwears</th>
+          <th>Tops</th>
+          <th>Extra Tops</th>
+          <th>Bottoms</th>
+          <th>Addtime</th>
+        </tr>
+        {% for outfit in object_list %}
+          <tr>
+            <td>
+              <a href="{% url 'closet:edit_outfit' outfit.pk %}">{{ outfit.name }}</a>
+            </td>
+            <td>{{ outfit.outerwear }}</td>
+            <td>{{ outfit.top }}</td>
+            <td>{{ outfit.extra_top }}</td>
+            <td>{{ outfit.bottom }}</td>
+            <td>{{ outfit.created_at }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+      {% else %}
+        <h3>No Outfits</h3>
+      {% endif %}
+    {% endif %}
+  </div>
+{% endblock %}

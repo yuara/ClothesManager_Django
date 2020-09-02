@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.translation import gettext, gettext_lazy as _
-from .models import ParentCategory, Category, Clothes
+from .models import ParentCategory, Category, Clothes, Outfit
 
 # Register your models here.
 
@@ -17,4 +17,9 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Clothes)
 class ClothesAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Outfit)
+class OutfitAdmin(admin.ModelAdmin):
     pass
