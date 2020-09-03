@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from django.core.mail import send_mail
 from django.conf import settings
 import uuid as uuid_lib
+import random
 
 # Create your models here.
 class Profile(models.Model):
@@ -13,6 +14,7 @@ class Profile(models.Model):
     about_me = models.TextField(blank=True)
     webpage = models.URLField(blank=True)
     picture = models.ImageField(upload_to="profile_pic/", blank=True)
+    color = models.CharField(max_length=6, default="%06x" % random.randint(0, 0xFFFFFF))
 
     class Meta:
         verbose_name = "profile"
