@@ -11,6 +11,7 @@ django-bootstrap4 = "*"
 pillow = "*"
 django-choices = "*"
 django-debug-toolbar = "*"
+django-cleanup = "*"
 
 [requires]
 python_version = "3.8"

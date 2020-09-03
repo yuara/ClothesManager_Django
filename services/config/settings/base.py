@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "bootstrap4",
     "debug_toolbar",
+    "django_cleanup.apps.CleanupConfig",
     "accounts.apps.AccountsConfig",
     "closet.apps.ClosetConfig",
 ]
