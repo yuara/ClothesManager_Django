@@ -8,6 +8,12 @@ WORKDIR /usr/src/app
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+# install zlib, a required dependency for pillow
+RUN apk update \
+ && apk add --virtual build-tools gcc python3-dev musl-dev jpeg-dev zlib-dev \
+ && apk add postgresql-dev
+ && apk add libjpeg
+
 # install dependencies
 RUN pip install --upgrade pip
 COPY ./requirements.txt .
