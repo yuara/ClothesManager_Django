@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "dd71965e14ca86ce7301f36e05b51af1d57939b739a47a429455f91d16386043"
+            "sha256": "27d5706a5d655bb8deb093cf3693192c4ab53af0f5448bef4b832a2aec47d8ca"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -46,14 +46,6 @@
             ],
             "index": "pypi",
             "version": "==2.2.0"
-        },
-        "django-choices": {
-            "hashes": [
-                "sha256:010b773c2ffc58e616701ba417bafdbf5ae23b5bcd18d6101d2c9755e0c2b4de",
-                "sha256:5fa69f54c57ea4b99c55f261e0862a7c59d2950363cf1f80a7b2c7393fd5c6e3"
-            ],
-            "index": "pypi",
-            "version": "==1.7.1"
         },
         "django-cleanup": {
             "hashes": [
@@ -111,13 +103,6 @@
                 "sha256:c35965d010ce31b23eeb663ed3cc8c906275d6be1a34393a1d73a41febf4a048"
             ],
             "version": "==2020.1"
-        },
-        "six": {
-            "hashes": [
-                "sha256:30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259",
-                "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"
-            ],
-            "version": "==1.15.0"
         },
         "soupsieve": {
             "hashes": [

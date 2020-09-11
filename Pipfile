@@ -9,7 +9,6 @@ verify_ssl = true
 django = "*"
 django-bootstrap4 = "*"
 pillow = "*"
-django-choices = "*"
 django-debug-toolbar = "*"
 django-cleanup = "*"
 
