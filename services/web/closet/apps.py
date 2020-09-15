@@ -6,6 +6,12 @@ class ClosetConfig(AppConfig):
     name = "closet"
 
     def ready(self):
-        from .signals import create_default_category
+        from .signals import (
+            create_category_location,
+            create_clothes_index,
+            create_category_index,
+        )
 
-        post_migrate.connect(create_default_category, sender=self)
+        post_migrate.connect(create_category_location, sender=self)
+        post_migrate.connect(create_clothes_index, sender=self)
+        post_migrate.connect(create_category_index, sender=self)
