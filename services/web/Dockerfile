@@ -1,6 +1,7 @@
 # pull official base image
 FROM python:3.8.3-alpine
 
+
 # set work directory
 WORKDIR /usr/src/app
 
@@ -12,7 +13,8 @@ ENV PYTHONUNBUFFERED 1
 # gcc python3-dev jpeg-dev zlib-dev for pillow
 RUN apk update \
  && apk add --virtual build-tools gcc python3-dev musl-dev jpeg-dev zlib-dev \
- && apk add postgresql-dev libjpeg
+ && apk add postgresql-dev libjpeg curl
+
 
 # install dependencies
 RUN pip install --upgrade pip
