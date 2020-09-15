@@ -1,11 +1,16 @@
 from django.db import models
 from django.conf import settings
-from djchoices import ChoiceItem, DjangoChoices
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 
 # Create your models here
+
+
+class IndexCategory(models.Model):
+    clothes_index = models.ForeignKey("ClothesIndex", on_delete=models.CASCADE)
+    category = models.ForeignKey("Category", on_delete=models.CASCADE)
+    conditional = models.BooleanField(_("conditional"), default=False)
 
 
 class ParentCategory(models.Model):
@@ -43,6 +48,7 @@ class Clothes(models.Model):
         related_name="clothes",
         on_delete=models.PROTECT,
     )
+    picture = models.ImageField(upload_to="clothes_pic/", blank=True)
     created_at = models.DateTimeField(_("date created"), default=timezone.now)
     publish = models.BooleanField(_("publish"), default=False)
 
@@ -85,26 +91,64 @@ class Outfit(models.Model):
         return self.name
 
 
-# class Outfit(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(30), index=True, nullable=True)
-#     note = db.Column(db.String(140), nullable=True)
-#     owner_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-#     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-#     outerwear_id = db.Column(db.Integer, db.ForeignKey("clothes.id"))
-#     top_1_id = db.Column(db.Integer, db.ForeignKey("clothes.id"))
-#     top_2_id = db.Column(db.Integer, db.ForeignKey("clothes.id"))
-#     bottom_id = db.Column(db.Integer, db.ForeignKey("clothes.id"))
-#
-#     outerwear = db.relationship("Clothes", foreign_keys="Outfit.outerwear_id")
-#     top_1 = db.relationship("Clothes", foreign_keys="Outfit.top_1_id")
-#     top_2 = db.relationship("Clothes", foreign_keys="Outfit.top_2_id")
-#     bottom = db.relationship("Clothes", foreign_keys="Outfit.bottom_id")
-#
-#     def __repr__(self):
-#         return f"<Outfit {self.name}>"
-#
-#
+class Area(models.Model):
+    name = models.CharField(_("area"), max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class Prefecture(models.Model):
+    name = models.CharField(_("prefecture"), max_length=255)
+    parent = models.ForeignKey("Area", verbose_name="area", on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.name
+
+
+class ClothesIndex(models.Model):
+    value = models.PositiveIntegerField(_("value"))
+    description = models.TextField(_("description"), blank=True)
+    categories = models.ManyToManyField("Category", through="IndexCategory", blank=True)
+
+    def __str__(self):
+        return f"value: {self.value}"
+
+
+class Weather(models.Model):
+    name = models.CharField(max_length=255)
+    icon = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Forecast(models.Model):
+    area = models.ForeignKey(
+        Area, verbose_name="area", related_name="forecast", on_delete=models.PROTECT
+    )
+    prefecture = models.ForeignKey(
+        Prefecture,
+        verbose_name="prefecture",
+        related_name="forecast",
+        on_delete=models.PROTECT,
+    )
+    clothes_index = models.ForeignKey(
+        ClothesIndex,
+        verbose_name="clothes index",
+        related_name="forecast",
+        on_delete=models.PROTECT,
+    )
+    weather = models.ForeignKey("Weather", on_delete=models.PROTECT)
+    highest_temp = models.IntegerField(_("highest tempreture"))
+    lowest_temp = models.IntegerField(_("lowest tempreture"))
+    rain_chance = models.IntegerField(_("rain chance"))
+    created_at = models.DateTimeField(_("date created"))
+
+    def __str__(self):
+        return f"{self.prefecture} - {self.created_at}"
+
+
 # class Forecast(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
 #     location_id = db.Column(db.Integer, index=True)
