@@ -27,6 +27,8 @@ services:
     image: scrapyd
     ports:
       - 6800:6800
+    environment:
+      - POSTGRES_URL=postgresql://cmuser:cm@db:5432/cm
     depends_on:
       - db
     restart: always

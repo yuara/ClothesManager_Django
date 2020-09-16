@@ -14,21 +14,14 @@ import psycopg2
 
 class ForecastPipeline:
     def __init__(self):
+        self.counter = 0
+
+    def open_spider(self, spider: scrapy.Spider):
         # Connect to postgresql
-        # url = spider.settings.get('')
-        url = "postgresql://cmuser:cm@db:5432/cm"
-        # self.connection = pymysql.connect(
-        #     host="db",
-        #     user="ClothesManager",
-        #     password="cm",
-        #     db="cmdb",
-        #     charset="utf8mb4",
-        #     cursorclass=pymysql.cursors.DictCursor,
-        # )
+        url = spider.settings.get("POSTGRES_URL")
+        # url = "postgresql://cmuser:cm@db:5432/cm"
         self.connection = psycopg2.connect(url)
         self.cursor = self.connection.cursor()
-
-        self.counter = 0
 
     def close_spider(self, spider):
         self.connection.close()

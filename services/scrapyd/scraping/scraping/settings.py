@@ -7,6 +7,9 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+import os
+
+
 BOT_NAME = "scraping"
 
 SPIDER_MODULES = ["scraping.spiders"]
@@ -66,6 +69,7 @@ ITEM_PIPELINES = {
     "scraping.pipelines.ForecastPipeline": 300,
 }
 
+POSTGRES_URL = os.environ.get("POSTGRES_URL")
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
 # AUTOTHROTTLE_ENABLED = True
