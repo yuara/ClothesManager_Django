@@ -12,22 +12,37 @@ class IndexCategory(models.Model):
     category = models.ForeignKey("Category", on_delete=models.CASCADE)
     conditional = models.BooleanField(_("conditional"), default=False)
 
+    class Meta:
+        verbose_name = _("index category")
+        verbose_name_plural = _("index categories")
+
 
 class ParentCategory(models.Model):
-    name = models.CharField(_("parent category"), max_length=255)
+    name = models.CharField(_("parent category name"), max_length=255)
 
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _("parent category")
+        verbose_name_plural = _("parent categories")
+
 
 class Category(models.Model):
-    name = models.CharField(_("category"), max_length=255)
+    name = models.CharField(_("category name"), max_length=255)
     parent = models.ForeignKey(
-        "ParentCategory", verbose_name="parent category", on_delete=models.PROTECT
+        "ParentCategory",
+        verbose_name="parent category",
+        on_delete=models.PROTECT,
+        related_name="child",
     )
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = _("category")
+        verbose_name_plural = _("categories")
 
 
 class Clothes(models.Model):
@@ -54,6 +69,10 @@ class Clothes(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = _("clothes")
+        verbose_name_plural = _("clothes")
 
 
 class Outfit(models.Model):
@@ -114,6 +133,10 @@ class ClothesIndex(models.Model):
     def __str__(self):
         return f"value: {self.value}"
 
+    class Meta:
+        verbose_name = _("clothes index")
+        verbose_name_plural = _("clothes indexes")
+
 
 class Weather(models.Model):
     name = models.CharField(max_length=255)
@@ -147,42 +170,3 @@ class Forecast(models.Model):
 
     def __str__(self):
         return f"{self.prefecture} - {self.created_at}"
-
-
-# class Forecast(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     location_id = db.Column(db.Integer, index=True)
-#     clothes_index_id = db.Column(db.Integer)
-#     weather = db.Column(db.String(30), nullable=True)
-#     highest_temp = db.Column(db.Integer, nullable=True)
-#     lowest_temp = db.Column(db.Integer, nullable=True)
-#     rain_chance = db.Column(db.Integer, nullable=True)
-#     update_time = db.Column(db.DateTime, index=True)
-#
-#     def __repr__(self):
-#         return f"<Forecast {self.id}:{self.update_time}>"
-#
-#
-# class Location(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     area_id = db.Column(db.Integer)
-#     pref_id = db.Column(db.Integer)
-#     city_id = db.Column(db.Integer)
-#     area_name = db.Column(db.String(20))
-#     pref_name = db.Column(db.String(20))
-#     city_name = db.Column(db.String(20))
-#
-#     def __repr__(self):
-#         return f"<Location {self.id}:{self.pref_name}/{self.city_name}>"
-#
-#
-# class ClothesIndex(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     value = db.Column(db.Integer)
-#     description = db.Column(db.String(140))
-#     categories = db.relationship(
-#         "Category", secondary=category_index, backref="category_indexes", lazy="dynamic"
-#     )
-#
-#     def __repr__(self):
-#         return f"<ClothesIndex {self.id}:{self.value}>"
