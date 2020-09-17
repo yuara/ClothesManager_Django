@@ -23,6 +23,9 @@ RUN pip install -r requirements.txt
 
 # copy entrypoint.sh
 COPY ./entrypoint.sh .
+COPY ./cron-d .
+
+RUN /usr/bin/crontab cron-d
 
 # copy project
 COPY . .

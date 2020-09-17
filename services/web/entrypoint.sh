@@ -18,4 +18,7 @@ sleep 20
 
 curl http://scrapyd:6800/schedule.json -d project=scraping -d spider=forecast
 
+# start cron
+/usr/sbin/crond -f -l 8&
+
 exec "$@"
