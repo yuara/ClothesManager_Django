@@ -5,6 +5,7 @@ from .models import (
     Prefecture,
     ClothesIndex,
     IndexCategory,
+    Weather,
 )
 
 PARENT_CATEGORIES = ["outerwears", "tops", "bottoms"]
@@ -163,6 +164,32 @@ CATEGORY_INDEXES = [
     {"clothes_index_id": 10, "category_id": 22, "conditional": 0},
 ]
 
+WEATHER = [
+    {"name": "晴", "icon": ['<i class="fas fa-sun"></i>']},
+    {"name": "曇", "icon": ['<i class="fas fa-cloud"></i>']},
+    {"name": "雨", "icon": ['<i class="fas fa-umbrella"></i>']},
+    {
+        "name": "曇時々晴",
+        "icon": ['<i class="fas fa-cloud"></i> <i class="fas fa-sun"></i>'],
+    },
+    {
+        "name": "曇のち晴",
+        "icon": ['<i class="fas fa-cloud"></i> <i class="fas fa-sun"></i>'],
+    },
+    {
+        "name": "曇一時雨",
+        "icon": ['<i class="fas fa-cloud"></i> <i class="fas fa-umbrella"></i>'],
+    },
+    {
+        "name": "雨時々曇",
+        "icon": ['<i class="fas fa-umbrella"></i> <i class="fas fa-cloud"></i>'],
+    },
+    {
+        "name": "雨のち晴",
+        "icon": ['<i class="fas fa-umbrella"></i> <i class="fas fa-sun"></i>'],
+    },
+]
+
 POPULATE_DATA = [
     [PARENT_CATEGORIES, CATEGORIES, ParentCategory, Category],
     [AREAS, PREFECTURES, Area, Prefecture],
@@ -199,3 +226,8 @@ def create_category_index(sender, **kwargs):
         index_category = IndexCategory.objects.get_or_create(
             clothes_index=index, category=category, conditional=data["conditional"]
         )
+
+
+def create_weather(sender, **kwargs):
+    for data in WEATHER:
+        weather = Weather.objects.get_or_create(name=data["name"], icon=data["icon"])

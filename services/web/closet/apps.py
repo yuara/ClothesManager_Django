@@ -10,8 +10,10 @@ class ClosetConfig(AppConfig):
             create_category_location,
             create_clothes_index,
             create_category_index,
+            create_weather,
         )
 
         post_migrate.connect(create_category_location, sender=self)
         post_migrate.connect(create_clothes_index, sender=self)
         post_migrate.connect(create_category_index, sender=self)
+        post_migrate.connect(create_weather, sender=self)
