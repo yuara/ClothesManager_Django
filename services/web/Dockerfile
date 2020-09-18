@@ -13,7 +13,7 @@ ENV PYTHONUNBUFFERED 1
 # gcc python3-dev jpeg-dev zlib-dev for pillow
 RUN apk update \
  && apk add --virtual build-tools gcc python3-dev musl-dev jpeg-dev zlib-dev \
- && apk add postgresql-dev libjpeg curl
+ && apk add postgresql-dev libjpeg
 
 
 # install dependencies
@@ -23,9 +23,6 @@ RUN pip install -r requirements.txt
 
 # copy entrypoint.sh
 COPY ./entrypoint.sh .
-COPY ./cron-d .
-
-RUN /usr/bin/crontab cron-d
 
 # copy project
 COPY . .
