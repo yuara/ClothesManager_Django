@@ -32,6 +32,17 @@ services:
     depends_on:
       - web
 
+  scrapyd:
+    build: ./services/scrapyd
+    image: scrapyd
+    ports:
+      - 6800:6800
+    env_file:
+      - ./.env.prod.sc
+    depends_on:
+      - db
+    restart: always
+
 volumes:
   postgres_data:
   static_volume:
