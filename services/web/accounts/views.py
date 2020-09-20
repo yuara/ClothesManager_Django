@@ -4,8 +4,11 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.views import generic
 from django.shortcuts import render, redirect, resolve_url, get_object_or_404
+import random
+from django.http import JsonResponse
 from .forms import UserCreateForm, ProfileForm
 from .models import User, Profile
+from closet.models import Area, Prefecture
 
 # Create your views here.
 class SignUp(generic.CreateView):
@@ -15,6 +18,12 @@ class SignUp(generic.CreateView):
 
     def form_valid(self, form):
         self.object = user = form.save()
+        area = Area.objects.get(id=1)
+        prefecture = Prefecture.objects.get(id=1)
+        color = "%06x" % random.randint(0, 0xFFFFFF)
+        profile = Profile.objects.create(
+            user=user, area=area, prefecture=prefecture, color=color
+        )
         messages.info(self.request, f"Sign Up! {user.username}!")
         return redirect(self.get_success_url())
 
@@ -109,7 +118,7 @@ def unfollow(request, username):
 
 def update_user(request, username):
     user = get_object_or_404(User, username=username)
-    profile, x = Profile.objects.get_or_create(user=user)
+    profile = get_object_or_404(Profile, user=user)
     if request.method == "POST":
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
@@ -117,3 +126,22 @@ def update_user(request, username):
             return redirect("accounts:current")
     form = ProfileForm(instance=profile)
     return render(request, "accounts/edit_profile.html", {"form": form})
+
+
+def ajax_get_location(request):
+    pk = request.GET.get("pk")
+    # Return all categories if pk is None or empty.
+    if not pk:
+        pref_list = Prefecture.objects.all()
+
+    # Return categories if geting its pk
+    else:
+        pref_list = Prefecture.objects.filter(parent__pk=pk)
+
+    # Return a list that has dicts like this [ {'name': 'short sleeves', 'pk': '5'}, {'name': 'long sleeves', 'pk': '6'}, {...} ]
+    pref_list = [
+        {"pk": prefecture.pk, "name": prefecture.name} for prefecture in pref_list
+    ]
+
+    # Return as JSON
+    return JsonResponse({"locationList": pref_list})

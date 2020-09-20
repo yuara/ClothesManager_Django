@@ -19,7 +19,7 @@ class UserCreateForm(UserCreationForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ("about_me", "webpage", "picture")
+        fields = ("about_me", "area", "prefecture", "webpage", "picture")
 
 
 class UserChangeForm(forms.ModelForm):

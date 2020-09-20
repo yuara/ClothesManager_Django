@@ -20,3 +20,47 @@
     </form>
   </div>
 {% endblock %}
+
+{% block script %}
+  <script>
+    const parentCategoryElement = $('#id_area');
+    const categoryElement = $('#id_prefecture');
+
+    const changeCategory = (select) => {
+      // Empty choices of child categories
+      categoryElement.children().remove();
+
+      $.ajax({
+        url: '{% url 'accounts:ajax_get_location' %}',
+        type: 'GET',
+        data: {
+          'pk': parentCategoryElement.val()
+        }
+      }).done(response => {
+        // Create and add the choices of the child categories
+        for (const pref of response.locationList) {
+          const option = $('<option>');
+          option.val(pref['pk']);
+          option.text(pref['name']);
+          categoryElement.append(option);
+        }
+
+        // Choose the category if picked
+        if (select !== undefined) {
+          categoryElement.val(select);
+        }
+
+      });
+    };
+
+    parentCategoryElement.on('change', () => {
+      changeCategory();
+    });
+
+    // If reloaded when something happens, create child categories
+    if (parentCategoryElement.val()) {
+      const selectedCategory = categoryElement.val();
+      changeCategory(selectedCategory);
+    }
+  </script>
+{% endblock %}

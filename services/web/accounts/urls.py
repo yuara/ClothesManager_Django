@@ -21,4 +21,5 @@ urlpatterns = [
     path("unfollow/<slug:username>", views.unfollow, name="unfollow"),
     path("followers", views.Followers.as_view(), name="followers"),
     path("following_users", views.FollowingUsers.as_view(), name="followings"),
+    path("api/location/get/", views.ajax_get_location, name="ajax_get_location"),
 ]
