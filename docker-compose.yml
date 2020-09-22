@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  web:
+  dev-web:
     build: ./services/web
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
@@ -11,9 +11,9 @@ services:
     env_file:
       - ./.env.dev
     depends_on:
-      - db
+      - dev-db
 
-  db:
+  dev-db:
     image: postgres:12.0-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
@@ -22,15 +22,15 @@ services:
       - POSTGRES_PASSWORD=cm
       - POSTGRES_DB=cm
 
-  scrapyd:
+  dev-scrapyd:
     build: ./services/scrapyd
     image: scrapyd
     ports:
       - 6800:6800
     environment:
-      - POSTGRES_URL=postgresql://cmuser:cm@db:5432/cm
+      - POSTGRES_URL=postgresql://cmuser:cm@dev-db:5432/cm
     depends_on:
-      - db
+      - dev-db
     restart: always
 
 volumes:
