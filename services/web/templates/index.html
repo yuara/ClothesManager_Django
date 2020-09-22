@@ -19,68 +19,47 @@
         </div>
         <div class="card-body">
           {% if forecast %}
-            <div class="row">
-              <div class="col-md-6">
-                <table class="table text-center">
-                  <tr>
-                    <th>
-                      <i class="far fa-clock"></i>
-                      Update time</th>
-                    <th>
-                      <i class="fas fa-map-marker-alt"></i>
-                      Location</th>
-                    <th>
-                      <i class="fas fa-indent"></i>
-                      Clothes Index</th>
-                  </tr>
-                  <tr>
-                    <td>{{ forecast.Forecast.update_time.isoformat(sep=' ', timespec='minutes</td>
-                    <td>
-                      {{ forecast.pref_name }}
-                      /
-                      {{ forecast.city_name }}
-                    </td>
-                    <td>{{ forecast.value }}</td>
-                  </tr>
-                </table>
-              </div>
-              <div class="col-md-6">
-                <table class="table text-center">
-                  <tr>
-                    <th>
-                      <i class="fas fa-rainbow"></i>
-                      Weather</th>
-                    <th>
-                      <i class="fas fa-temperature-high"></i>
-                      High / Low</th>
-                    <th>
-                      <i class="fas fa-umbrella"></i>
-                      Chance of Rain</th>
-                  </tr>
-                  <tr>
-                    <td>
-                      {{ forecast.Forecast.weather }}
-                    </td>
-                    <td>
-                      {{ forecast.Forecast.highest_temp }}
-                      /
-                      {{ forecast.Forecast.lowest_temp }}
-                    </td>
-                    <td>
-                      {{ forecast.Forecast.rain_chance }}
-                      %
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            </div>
+            <table style="table-layout: fixed" class="table text-center">
+              <tr>
+                <th>
+                  <i class="far fa-clock"></i>
+                </th>
+                <th>
+                  <i class="fas fa-map-marker-alt"></i>
+                </th>
+                <th>
+                  <i class="fas fa-rainbow"></i>
+                </th>
+                <th>
+                  <i class="fas fa-temperature-high"></i>
+                </th>
+                <th>
+                  <i class="fas fa-umbrella"></i>
+                </th>
+              </tr>
+              <tr>
+                <td>{{ forecast.created_at }}</td>
+                <td>
+                  {{ forecast.area.name }}
+                  /
+                  {{ forecast.prefecture.name }}
+                </td>
+                <td>
+                  {{ forecast.weather.name }}
+                </td>
+                <td>
+                  {{ forecast.highest_temp }}
+                  /
+                  {{ forecast.lowest_temp }}
+                </td>
+                <td>
+                  {{ forecast.rain_chance }}
+                  %
+                </td>
+              </tr>
+            </table>
           {% else %}
-            {% if not forecast.Forecast %}
             Not Got data Yet
-            {% else %}
-            Put Your Place
-            <a href="{{ url_for('main.edit_profile">Here</a>
-            {% endif %}
           {% endif %}
         </div>
       </div>
@@ -103,21 +82,12 @@
                 <div class="card-body">
                   <div class="table-responsive">
                     {% if outerwears %}
-                      <table class="table table-hover" id="dataTable">
-                        <thead>
-                          <tr>
-                            <th>Name')}}</th>
-                            <th>Time')}}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
+                      <table class="table table-hover text-center">
                           {% for outerwear in outerwears %}
                             <tr>
                               <td>{{ outerwear.name }}</td>
-                              <td>{{ outerwear.timestamp }}</td>
                             </tr>
                           {% endfor %}
-                        </tbody>
                       </table>
                     {% else %}
                       None
@@ -135,21 +105,12 @@
                 <div class="card-body">
                   <div class="table-responsive">
                     {% if tops %}
-                      <table class="table table-hover" id="dataTable" cellspacing="0">
-                        <thead>
-                          <tr>
-                            <th>Name')}}</th>
-                            <th>Time')}}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
+                      <table class="table table-hover text-center">
                           {% for top in tops %}
                             <tr>
                               <td>{{ top.name }}</td>
-                              <td>{{ top.timestamp }}</td>
                             </tr>
                           {% endfor %}
-                        </tbody>
                       </table>
                     {% else %}
                       None
@@ -167,21 +128,12 @@
                 <div class="card-body">
                   <div class="table-responsive">
                     {% if bottoms %}
-                      <table class="table table-hover">
-                        <thead>
-                          <tr>
-                            <th>Name')}}</th>
-                            <th>Time')}}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
+                      <table class="table table-hover text-center">
                           {% for bottom in bottoms %}
                             <tr>
                               <td>{{ bottom.name }}</td>
-                              <td>{{ bottom.timestamp }}</td>
                             </tr>
                           {% endfor %}
-                        </tbody>
                       </table>
                     {% else %}
                       None
