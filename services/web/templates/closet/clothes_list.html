@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Clothes List{% endblock %}
 
@@ -11,6 +12,7 @@
 {% endblock %}
 
 {% block content %}
+<img src="{% static 'img/home/outfit-img.jpg' %}" class="p-5 img-fluid" alt="top img">
   <div class="container">
     <h3>Clothes List</h3>
     {% if request.user.username == user.username %}
