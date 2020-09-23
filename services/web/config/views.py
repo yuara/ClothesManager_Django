@@ -33,7 +33,3 @@ class IndexPage(LoginRequiredMixin, TemplateView):
         context["bottoms"] = user_clothes.filter(parent_category_id=3)
         context["forecast"] = user_forecast
         return context
-
-
-class ThanksPage(TemplateView):
-    template_name = "thanks.html"
