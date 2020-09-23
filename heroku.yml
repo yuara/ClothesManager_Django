@@ -6,7 +6,7 @@ build:
   docker:
     web: services/web/Dockerfile.prod
 run:
-  web: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+  web: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
 release:
   image: web
   command:
