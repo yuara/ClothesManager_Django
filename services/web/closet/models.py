@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 class IndexCategory(models.Model):
     clothes_index = models.ForeignKey("ClothesIndex", on_delete=models.CASCADE)
     category = models.ForeignKey("Category", on_delete=models.CASCADE)
-    conditional = models.BooleanField(_("conditional"), default=False)
+    needs_outers = models.BooleanField(_("needs_outers"), default=False)
 
     class Meta:
         verbose_name = _("index category")
