@@ -15,7 +15,8 @@ import os
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+BASE_DIR = Path(__file__).resolve(strict=True).parent
+# BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
@@ -137,7 +138,7 @@ MEDIA_URL = "/mediafiles/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = "/staticfiles/"
 
-# STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 INTERNAL_IPS = ["127.0.0.1"]
 
