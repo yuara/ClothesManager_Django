@@ -11,6 +11,7 @@ WORKDIR /usr/src/app
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV DEBUG 0
 
 # install psycopg2 dependencies
 RUN apk update \
@@ -62,6 +63,9 @@ COPY . $APP_HOME
 
 # chown all the files to the app user
 RUN chown -R app:app $APP_HOME
+
+# collect static files
+# RUN python manage.py collectstatic --noinput
 
 # change to the app user
 USER app

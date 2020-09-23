@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -92,6 +93,12 @@ DATABASES = {
     }
 }
 
+DATABASE_URL = os.environ.get("DATABASE_URL")
+db_from_env = dj_database_url.config(
+    default=DATABASE_URL, conn_max_age=500, ssl_require=True
+)
+DATABASES["default"].update(db_from_env)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -134,7 +141,7 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 INTERNAL_IPS = ["127.0.0.1"]
 
 LOGIN_REDIRECT_URL = "index"
-LOGOUT_REDIRECT_URL = "thanks"
+LOGOUT_REDIRECT_URL = "home"
 
 AUTH_USER_MODEL = "accounts.User"
 
