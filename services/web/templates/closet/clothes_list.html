@@ -15,7 +15,7 @@
     <h3>Clothes List</h3>
     {% if request.user.username == user.username %}
       {% if object_list %}
-        <table class="table table-hover">
+        <table class="table table-hover" id="dataTable">
           <tr>
             <th>Clothes Name</th>
             <th>Category</th>
