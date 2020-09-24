@@ -18,7 +18,7 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY", default="smth")
 
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
@@ -137,7 +137,7 @@ MEDIA_URL = "/media/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_DIRS = [BASE_DIR / "static", BASE_DIR / "home" / "app" / "web" / "static"]
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
