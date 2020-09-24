@@ -83,25 +83,22 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASE_URL = os.environ.get("DATABASE_URL")
-
-if DATABASE_URL:
-    db_from_env = dj_database_url.config(
-        default=DATABASE_URL, conn_max_age=500, ssl_require=True
-    )
-    DATABASES["default"].update(db_from_env)
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-            "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
-            "USER": os.environ.get("SQL_USER", "user"),
-            "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
-            "HOST": os.environ.get("SQL_HOST", "localhost"),
-            "PORT": os.environ.get("SQL_PORT", "5432"),
-        }
+DATABASES = {
+    "default": {
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
+}
 
+DATABASE_URL = os.environ.get("DATABASE_URL")
+db_from_env = dj_database_url.config(
+    default=DATABASE_URL, conn_max_age=500, ssl_require=True
+)
+DATABASES["default"].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
