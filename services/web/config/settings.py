@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1", "clothesmanager.herokuapp.com"]
 # Application definition
 
 INSTALLED_APPS = [
+    "whitenoise.runserver_nostatic",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -131,12 +132,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 MEDIA_ROOT = BASE_DIR / "mediafiles"
-MEDIA_URL = "/mediafiles/"
+MEDIA_URL = "/media/"
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 INTERNAL_IPS = ["127.0.0.1"]
 
@@ -144,5 +147,3 @@ LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "home"
 
 AUTH_USER_MODEL = "accounts.User"
-
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
