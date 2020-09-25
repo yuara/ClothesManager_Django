@@ -149,4 +149,4 @@ LOGOUT_REDIRECT_URL = "home"
 
 AUTH_USER_MODEL = "accounts.User"
 
-django_heroku.settings(config=locals(), staticfiles=False)
+# django_heroku.settings(config=locals(), staticfiles=False)
