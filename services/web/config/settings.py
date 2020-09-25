@@ -13,13 +13,13 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
-import django_heroku
+from django.core.management.utils import get_random_secret_key
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 
-SECRET_KEY = os.environ.get("SECRET_KEY", default="smth")
+SECRET_KEY = os.environ.get("SECRET_KEY", default=get_random_secret_key())
 
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
@@ -149,7 +149,6 @@ LOGOUT_REDIRECT_URL = "home"
 
 AUTH_USER_MODEL = "accounts.User"
 
-# django_heroku.settings(config=locals(), staticfiles=False)
 
 LOGGING = {
     "version": 1,
