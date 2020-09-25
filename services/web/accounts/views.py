@@ -77,7 +77,7 @@ class FollowingUsers(LoginRequiredMixin, generic.ListView):
     template_name = "accounts/users_list.html"
 
     def get_queryset(self):
-        return self.request.user.followings.all()
+        return self.request.user.following.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
