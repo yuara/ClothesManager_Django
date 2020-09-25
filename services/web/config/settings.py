@@ -140,7 +140,7 @@ STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # INTERNAL_IPS = ["127.0.0.1"]
 
