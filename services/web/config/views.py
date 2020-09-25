@@ -19,17 +19,18 @@ class IndexPage(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user_pref_id = self.request.user.profile.prefecture.id
-        user_forecast = (
-            Forecast.objects.filter(prefecture=user_pref_id)
-            .order_by("-created_at")
-            .first()
-        )
-        user_clothes = Clothes.objects.select_related("parent_category").filter(
-            category__in=user_forecast.clothes_index.categories.all()
-        )
-        context["outerwears"] = user_clothes.filter(parent_category_id=1)
-        context["tops"] = user_clothes.filter(parent_category_id=2)
-        context["bottoms"] = user_clothes.filter(parent_category_id=3)
-        context["forecast"] = user_forecast
+        if Forecast.objects.get(id=1):
+            user_pref_id = self.request.user.profile.prefecture.id
+            user_forecast = (
+                Forecast.objects.filter(prefecture=user_pref_id)
+                .order_by("-created_at")
+                .first()
+            )
+            user_clothes = Clothes.objects.select_related("parent_category").filter(
+                category__in=user_forecast.clothes_index.categories.all()
+            )
+            context["outerwears"] = user_clothes.filter(parent_category_id=1)
+            context["tops"] = user_clothes.filter(parent_category_id=2)
+            context["bottoms"] = user_clothes.filter(parent_category_id=3)
+            context["forecast"] = user_forecast
         return context
