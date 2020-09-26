@@ -1,7 +1,7 @@
 build:
   docker:
     web: services/web/Dockerfile.prod.heroku
-    scrapyd: services/scrapyd/Dockerfile
+    scrapyd: services/scrapyd/Dockerfile.heroku
 run:
   web: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
   scrapyd: scrapyd
