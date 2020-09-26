@@ -20,5 +20,5 @@ COPY ./scrapyd.conf ./scraping  ./
 COPY ./cron-d ./
 RUN crontab cron-d
 
-RUN sleep 15 \
-  && scrapyd-deploy
+RUN sleep 15
+RUN scrapyd-deploy
