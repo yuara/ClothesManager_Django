@@ -8,21 +8,6 @@ from scraping.scraping.spiders.forecast import ForecastSpider
 from scraping.scraping import settings
 
 
-# class UrlCrawlerScript(Process):
-#     def __init__(self, spider):
-#         Process.__init__(self)
-#         settings = get_project_settings()
-#         self.crawler = Crawler(settings)
-#         self.crawler.configure()
-#         self.crawler.signals.connect(reactor.stop, signal=signals.spider_closed)
-#         self.spider = spider
-#
-#     def run(self):
-#         self.crawler.crawl(self.spider)
-#         self.crawler.start()
-#         reactor.run()
-
-
 def run_spider():
     process = CrawlerProcess(
         settings={
@@ -34,4 +19,3 @@ def run_spider():
     )
     process.crawl(ForecastSpider)
     process.start()
-    # crawler.join()
