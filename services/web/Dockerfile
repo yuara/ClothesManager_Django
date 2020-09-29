@@ -12,7 +12,7 @@ ENV PYTHONUNBUFFERED 1
 # install zlib, a required dependency for pillow and postgres
 # gcc python3-dev jpeg-dev zlib-dev for pillow
 RUN apk update \
- && apk add --virtual build-tools gcc python3-dev musl-dev jpeg-dev zlib-dev \
+ && apk add --virtual build-tools gcc python3-dev musl-dev jpeg-dev zlib-dev libffi-dev libxml2-dev libxslt-dev \
  && apk add postgresql-dev libjpeg
 
 
