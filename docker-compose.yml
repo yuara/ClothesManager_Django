@@ -12,6 +12,7 @@ services:
       - ./.env.dev
     depends_on:
       - dev-db
+      - redis
 
   dev-db:
     image: postgres:12.0-alpine
@@ -22,16 +23,32 @@ services:
       - POSTGRES_PASSWORD=cm
       - POSTGRES_DB=cm
 
-  dev-scrapyd:
-    build: ./services/scrapyd
-    image: scrapyd
+  redis:
+    image: redis:6.0-alpine
     ports:
-      - 6800:6800
-    environment:
-      - POSTGRES_URL=postgresql://cmuser:cm@dev-db:5432/cm
+      - 6379:6379
+
+  celery:
+    build:
+      context: ./services/web
+      dockerfile: "Dockerfile.celery"
+    command: celery -A config worker -l INFO
+    env_file:
+      - ./.env.dev
     depends_on:
       - dev-db
-    restart: always
+      - redis
+
+  # dev-scrapyd:
+  #   build: ./services/scrapyd
+  #   image: scrapyd
+  #   ports:
+  #     - 6800:6800
+  #   environment:
+  #     - POSTGRES_URL=postgresql://cmuser:cm@dev-db:5432/cm
+  #   depends_on:
+  #     - dev-db
+  #   restart: always
 
 volumes:
   postgres_data:
