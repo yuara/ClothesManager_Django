@@ -96,11 +96,29 @@ DATABASES = {
     }
 }
 
+# Database url for heroku config
 DATABASE_URL = os.environ.get("DATABASE_URL")
 db_from_env = dj_database_url.config(
     default=DATABASE_URL, conn_max_age=500, ssl_require=True
 )
 DATABASES["default"].update(db_from_env)
+
+#
+# # Celery config
+# CACHES = {
+#     "default": {
+#         "BACKEND": "redis_cache.RedisCache",
+#         "LOCATION": os.environ.get("REDIS_URL"),
+#     }
+# }
+# # Redis is a broker for Celery
+# CELERY_BROKER_URL = os.environ.get("REDIS_URL", "redis://localhost:6379")
+# # Send results of jobs to the broker
+# CELERY_RESULT_BACKEND = os.environ.get("REDIS_URL", "redis://localhost:6379")
+# CELERY_TASK_SERIALIZER = "json"
+# CELERY_RESULT_SERIALIZER = "json"
+# CELERY_ACCEPT_CONTENT = ["json"]
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -140,6 +158,8 @@ STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
+
+# Compressed whitenoise storage for staticfiles.
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # INTERNAL_IPS = ["127.0.0.1"]
@@ -150,6 +170,7 @@ LOGOUT_REDIRECT_URL = "home"
 AUTH_USER_MODEL = "accounts.User"
 
 
+# Logging config
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
