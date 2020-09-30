@@ -22,6 +22,15 @@ app.config_from_object("django.conf:settings", namespace="CELERY")
 # Load task modules from all registered Django app configs.
 app.autodiscover_tasks()
 
+# Executes tasks with crontab periodically.
+app.conf.beat_schedule = {
+    "scrape-forecast-every-hour": {
+        "task": "config.celery.scrape_forecast",
+        "schedule": crontab(hour="*", minute=55),  # Executes every hour
+    },
+    "test-periodical-task": {"task": "add", "schedule": crontab(minute="*")},
+}
+
 
 @app.task(bind=True)
 def debug_task(self):
@@ -39,3 +48,10 @@ def scrape_forecast():
     from scraping.crawl import run_spider
 
     return run_spider()
+
+
+@app.task()
+def sc():
+    from scraping.crawl import runs
+
+    return runs()
