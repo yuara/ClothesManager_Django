@@ -15,6 +15,7 @@ services:
       - ./.env.prod
     depends_on:
       - db
+      - redis
   db:
     image: postgres:12.0-alpine
     volumes:
@@ -32,16 +33,32 @@ services:
     depends_on:
       - web
 
-  scrapyd:
-    build: ./services/scrapyd
-    image: scrapyd
+  redis:
+    image: redis:6.0-alpine
     ports:
-      - 6800:6800
+      - 6379:6379
+
+  celery:
+    build:
+      context: ./services/web
+      dockerfile: "Dockerfile.celery"
+    command: celery -A config worker -B -l INFO
     env_file:
-      - ./.env.prod.sc
+      - ./.env.prod
     depends_on:
       - db
-    restart: always
+      - redis
+
+  # scrapyd:
+  #   build: ./services/scrapyd
+  #   image: scrapyd
+  #   ports:
+  #     - 6800:6800
+  #   env_file:
+  #     - ./.env.prod.sc
+  #   depends_on:
+  #     - db
+  #   restart: always
 
 volumes:
   postgres_data:
