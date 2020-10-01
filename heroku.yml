@@ -1,11 +1,7 @@
 build:
   docker:
     web: services/web/Dockerfile.prod.heroku
-    scrapyd: services/scrapyd/Dockerfile.heroku
-release:
-  image: scrapyd
-  command:
-    - scrapyd-deploy
+    worker: services/web/Dockerfile.celery
 run:
   web: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
-  scrapyd: scrapyd
+  worker: celery -A config worker -B -l INFO

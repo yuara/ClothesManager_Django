@@ -28,12 +28,19 @@ app.conf.beat_schedule = {
         "task": "config.celery.scrape_forecast",
         "schedule": crontab(hour="*", minute=0),  # Executes every hour
     },
+    "test-periodical-task": {"task": "add", "schedule": crontab(minute="*")},
 }
 
 
 @app.task(bind=True)
 def debug_task(self):
     print(f"Request: {self.request!r}")
+
+
+@app.task(name="add")
+def add():
+    print("Start Add Method")
+    return 3
 
 
 @app.task()
