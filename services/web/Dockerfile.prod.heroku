@@ -15,7 +15,7 @@ ENV DEBUG 0
 
 # install psycopg2 dependencies
 RUN apk update \
-  && apk add --virtual build-tools gcc python3-dev musl-dev jpeg-dev zlib-dev \
+  && apk add --virtual build-tools gcc python3-dev musl-dev jpeg-dev zlib-dev libffi-dev libxml2-dev libxslt-dev \
   && apk add postgresql-dev libjpeg
 
 # lint
