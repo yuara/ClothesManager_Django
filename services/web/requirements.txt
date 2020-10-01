@@ -17,12 +17,12 @@ dj-database-url==0.5.0
 django-bootstrap4==2.2.0
 django-cleanup==5.1.0
 django-debug-toolbar==3.1.1
-django==3.1.1
+django==3.1.2
 gunicorn==20.0.4
 hyperlink==20.0.1
 idna==2.10
 incremental==17.5.0
-itemadapter==0.1.0
+itemadapter==0.1.1
 itemloaders==1.0.3
 jmespath==0.10.0
 kombu==5.0.2
@@ -51,4 +51,4 @@ vine==5.0.0
 w3lib==1.22.0
 wcwidth==0.2.5
 whitenoise==5.2.0
-zope.interface==5.1.0
+zope.interface==5.1.1
