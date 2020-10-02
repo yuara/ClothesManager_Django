@@ -26,21 +26,14 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     "scrape-forecast-every-hour": {
         "task": "config.celery.scrape_forecast",
-        "schedule": crontab(hour="*", minute=0),  # Executes every hour
+        "schedule": crontab(hour="*/12", minute=0),  # Executes 2 times a day
     },
-    "test-periodical-task": {"task": "add", "schedule": crontab(minute="*")},
 }
 
 
 @app.task(bind=True)
 def debug_task(self):
     print(f"Request: {self.request!r}")
-
-
-@app.task(name="add")
-def add():
-    print("Start Add Method")
-    return 3
 
 
 @app.task()
