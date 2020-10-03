@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1", "clothesmanager.herokuapp.com"]
 
 INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
+    "accounts.apps.AccountsConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -44,8 +45,8 @@ INSTALLED_APPS = [
     "bootstrap4",
     "debug_toolbar",
     "django_cleanup.apps.CleanupConfig",
-    "accounts.apps.AccountsConfig",
     "closet.apps.ClosetConfig",
+    "django.forms",
 ]
 
 MIDDLEWARE = [
@@ -61,6 +62,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "config.urls"
+
+FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
+
 
 TEMPLATES = [
     {
