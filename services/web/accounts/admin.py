@@ -1,9 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.db import models
 from django.utils.translation import gettext, gettext_lazy as _
 from .forms import UserChangeForm, ProfileForm
 from .models import User, Profile
+from .widgets import FileInputWithPreview
 
 # Register your models here.
 
@@ -13,6 +15,7 @@ from .models import User, Profile
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
+    form = ProfileForm
 
 
 # class FollowingInline(admin.StackedInline):
