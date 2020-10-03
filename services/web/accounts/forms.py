@@ -3,6 +3,7 @@ from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .models import User, Profile
+from .widgets import FileInputWithPreview
 
 
 class UserCreateForm(UserCreationForm):
@@ -20,6 +21,7 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ("about_me", "area", "prefecture", "webpage", "picture")
+        widgets = {"picture": FileInputWithPreview}
 
 
 class UserChangeForm(forms.ModelForm):
