@@ -5,7 +5,7 @@ from django.db import models
 from django.utils.translation import gettext, gettext_lazy as _
 from .forms import UserChangeForm, ProfileForm
 from .models import User, Profile
-from .widgets import FileInputWithPreview
+from config.widgets import FileInputWithPreview
 
 # Register your models here.
 
