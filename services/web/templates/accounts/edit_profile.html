@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Edit Profile{% endblock %}
 
@@ -10,18 +11,38 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container">
-    <form method="POST" class="form" enctype="multipart/form-data">
-      {% csrf_token %}
-      {% bootstrap_form form %}
-      {% buttons %}
-      <button type="submit" class="btn btn-primary">Save</button>
-      {% endbuttons %}
-    </form>
-  </div>
+<!-- Form -->
+<div class="container">
+  <form method="POST" class="form" id="formUpload" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <div class="row ">
+      {% if profile.picture %}
+      <div class="col-sm-6 pb-3">
+          <div class="">
+            Current pic
+          </div>
+        <img src="{{ profile.picture.url }}"/>
+      </div>
+      {% endif %}
+      <div class="col-sm-6 pb-3">
+        <div id="preview-title"></div>
+        <div id="cropped-preview-img"></div>
+      </div>
+    </div>
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">Save</button>
+    {% endbuttons %}
+  </form>
+</div>
+
+<!-- Modal to crop the img -->
+{% include "snippets/cropping_modal.html" %}
 {% endblock %}
 
 {% block script %}
+<script src="{% static 'js/crop_picture.js' %}"></script>
+
   <script>
     const parentCategoryElement = $('#id_area');
     const categoryElement = $('#id_prefecture');

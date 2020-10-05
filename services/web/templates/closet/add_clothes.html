@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{{ add_or_edit }} Clothes{% endblock %}
 
@@ -11,19 +12,40 @@
 {% endblock %}
 
 {% block content %}
+<!-- Form -->
 <div class="container">
   <h3>{{ add_or_edit }} Clothes</h3>
-  <form method="POST" class="form">
+  <form method="POST" class="form" id="formUpload" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form form %}
+    <div class="row ">
+      {% if clothes.picture %}
+      <div class="col-sm-6 pb-3">
+          <div class="">
+            Current pic
+          </div>
+        <img src="{{ clothes.picture.url }}"/>
+      </div>
+      {% endif %}
+      <div class="col-sm-6 pb-3">
+        <div id="preview-title"></div>
+        <div id="cropped-preview-img"></div>
+      </div>
+    </div>
     {% buttons %}
     <button type="submit" class="btn btn-primary">{{ add_or_edit }}</button>
     {% endbuttons %}
   </form>
 </div>
+
+<!-- Modal to crop the img -->
+{% include "snippets/cropping_modal.html" %}
 {% endblock %}
 
 {% block script %}
+  <script src="{% static 'js/crop_picture.js' %}"></script>
+  
+<!-- Make dropdowns for categories -->
   <script>
     const parentCategoryElement = $('#id_parent_category');
     const categoryElement = $('#id_category');

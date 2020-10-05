@@ -43,9 +43,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "bootstrap4",
     "debug_toolbar",
-    "django_cleanup.apps.CleanupConfig",
     "accounts.apps.AccountsConfig",
     "closet.apps.ClosetConfig",
+    "django_cleanup.apps.CleanupConfig",
+    "django.forms",
 ]
 
 MIDDLEWARE = [
@@ -61,6 +62,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "config.urls"
+
+# IPS for debug tool
+INTERNAL_IPS = ["127.0.0.1", "172.24.0.1"]
+
+FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
 TEMPLATES = [
     {
@@ -103,14 +109,14 @@ db_from_env = dj_database_url.config(
 )
 DATABASES["default"].update(db_from_env)
 
-#
-# # Celery config
-# CACHES = {
-#     "default": {
-#         "BACKEND": "redis_cache.RedisCache",
-#         "LOCATION": os.environ.get("REDIS_URL"),
-#     }
-# }
+
+# Celery config
+CACHES = {
+    "default": {
+        "BACKEND": "redis_cache.RedisCache",
+        "LOCATION": os.environ.get("REDIS_URL"),
+    }
+}
 # # Redis is a broker for Celery
 # CELERY_BROKER_URL = os.environ.get("REDIS_URL", "redis://localhost:6379")
 # # Send results of jobs to the broker
@@ -158,47 +164,10 @@ STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-
 # Compressed whitenoise storage for staticfiles.
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-
-# INTERNAL_IPS = ["127.0.0.1"]
 
 LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "home"
 
 AUTH_USER_MODEL = "accounts.User"
-
-
-# Logging config
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "verbose": {
-            "format": (
-                "%(asctime)s [%(process)d] [%(levelname)s] "
-                "pathname=%(pathname)s lineno=%(lineno)s "
-                "funcname=%(funcName)s %(message)s"
-            ),
-            "datefmt": "%Y-%m-%d %H:%M:%S",
-        },
-        "simple": {"format": "%(levelname)s %(message)s"},
-    },
-    "handlers": {
-        "null": {"level": "DEBUG", "class": "logging.NullHandler",},
-        "console": {
-            "level": "INFO",
-            "class": "logging.StreamHandler",
-            "formatter": "verbose",
-        },
-    },
-    "loggers": {
-        "django": {"handlers": ["console"], "level": "DEBUG", "propagate": True,},
-        "django.request": {
-            "handlers": ["console"],
-            "level": "DEBUG",
-            "propagate": False,
-        },
-    },
-}

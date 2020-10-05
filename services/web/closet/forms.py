@@ -1,12 +1,30 @@
+from PIL import Image
 from django import forms
+from django.utils import timezone
 from accounts.models import User
 from .models import Clothes, Outfit, ParentCategory
 
 
 class ClothesCreateForm(forms.ModelForm):
+    x = forms.FloatField(widget=forms.HiddenInput(), initial=0)
+    y = forms.FloatField(widget=forms.HiddenInput(), initial=0)
+    width = forms.FloatField(widget=forms.HiddenInput(), initial=0)
+    height = forms.FloatField(widget=forms.HiddenInput(), initial=0)
+
     class Meta:
         model = Clothes
-        fields = ("name", "note", "parent_category", "category", "publish")
+        fields = (
+            "name",
+            "note",
+            "publish",
+            "parent_category",
+            "category",
+            "picture",
+            "x",
+            "y",
+            "width",
+            "height",
+        )
 
 
 class OutfitCreateForm(forms.ModelForm):
