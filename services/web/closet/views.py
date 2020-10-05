@@ -14,6 +14,19 @@ from django.conf import settings
 # Create your views here.
 
 
+def crop_picture(self, obj):
+    x = float(self.request.POST.get("x"))
+    y = float(self.request.POST.get("y"))
+    w = float(self.request.POST.get("width"))
+    h = float(self.request.POST.get("height"))
+
+    image = Image.open(obj.picture)
+    cropped_image = image.crop((x, y, w + x, h + y))
+    resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
+    resized_image.save(obj.picture.path)
+    return obj
+
+
 class CreateClothes(LoginRequiredMixin, generic.CreateView):
     model = Clothes
     form_class = ClothesCreateForm
@@ -34,26 +47,13 @@ class CreateClothes(LoginRequiredMixin, generic.CreateView):
 
         clothes.save()
 
-        x = float(self.request.POST.get("x"))
-        y = float(self.request.POST.get("y"))
-        w = float(self.request.POST.get("width"))
-        h = float(self.request.POST.get("height"))
-
-        image = Image.open(clothes.picture)
-        cropped_image = image.crop((x, y, w + x, h + y))
-        resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
-        resized_image.save(clothes.picture.path)
+        clothes = crop_picture(self, clothes)
 
         messages.info(
-            self.request, f"{clothes.owner.username} added {clothes.name} successfully."
+            self.request,
+            f"{clothes.owner.username} added {clothes.name} successfully.",
         )
         return redirect("closet:clothes")
-
-    #
-    # def get_form_kwargs(self):
-    #     kwargs = super(CreateClothes, self).get_form_kwargs()
-    #     kwargs["user"] = self.request.user
-    #     return kwargs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -96,15 +96,7 @@ class EditClothes(LoginRequiredMixin, generic.UpdateView):
     def form_valid(self, form):
         clothes = form.save()
 
-        x = float(self.request.POST.get("x"))
-        y = float(self.request.POST.get("y"))
-        w = float(self.request.POST.get("width"))
-        h = float(self.request.POST.get("height"))
-
-        image = Image.open(clothes.picture)
-        cropped_image = image.crop((x, y, w + x, h + y))
-        resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
-        resized_image.save(clothes.picture.path)
+        clothes = crop_picture(self, clothes)
 
         messages.info(
             self.request,
