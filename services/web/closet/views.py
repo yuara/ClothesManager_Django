@@ -1,3 +1,4 @@
+from PIL import Image
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
@@ -17,10 +18,11 @@ class CreateClothes(LoginRequiredMixin, generic.CreateView):
     model = Clothes
     form_class = ClothesCreateForm
     template_name = "closet/add_clothes.html"
+    success_url = reverse_lazy("closet:clothes")
 
-    # Add user and date created in a clothes
     def form_valid(self, form):
         clothes = form.save(commit=False)
+        # Add user and date created in a clothes
         user = self.request.user
         clothes.owner = user
         clothes.created_at = timezone.now()
@@ -29,12 +31,29 @@ class CreateClothes(LoginRequiredMixin, generic.CreateView):
             category = clothes.category
             count_clothes = user.clothes.filter(category=category).count()
             clothes.name = f"{category} {count_clothes + 1}"
+
         clothes.save()
 
+        x = float(self.request.POST.get("x"))
+        y = float(self.request.POST.get("y"))
+        w = float(self.request.POST.get("width"))
+        h = float(self.request.POST.get("height"))
+
+        image = Image.open(clothes.picture)
+        cropped_image = image.crop((x, y, w + x, h + y))
+        resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
+        resized_image.save(clothes.picture.path)
+
         messages.info(
-            self.request, f"{user.username} added {clothes.name} successfully."
+            self.request, f"{clothes.owner.username} added {clothes.name} successfully."
         )
         return redirect("closet:clothes")
+
+    #
+    # def get_form_kwargs(self):
+    #     kwargs = super(CreateClothes, self).get_form_kwargs()
+    #     kwargs["user"] = self.request.user
+    #     return kwargs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -72,8 +91,26 @@ class PublishedClothes(generic.DetailView):
 class EditClothes(LoginRequiredMixin, generic.UpdateView):
     model = Clothes
     form_class = ClothesCreateForm
-    success_url = reverse_lazy("closet:clothes")
     template_name = "closet/add_clothes.html"
+
+    def form_valid(self, form):
+        clothes = form.save()
+
+        x = float(self.request.POST.get("x"))
+        y = float(self.request.POST.get("y"))
+        w = float(self.request.POST.get("width"))
+        h = float(self.request.POST.get("height"))
+
+        image = Image.open(clothes.picture)
+        cropped_image = image.crop((x, y, w + x, h + y))
+        resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
+        resized_image.save(clothes.picture.path)
+
+        messages.info(
+            self.request,
+            f"{clothes.owner.username} updated {clothes.name} successfully.",
+        )
+        return redirect("closet:clothes")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
