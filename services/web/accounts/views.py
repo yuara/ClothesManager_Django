@@ -125,7 +125,9 @@ def update_user(request, username):
             form.save()
             return redirect("accounts:current")
     form = ProfileForm(instance=profile)
-    return render(request, "accounts/edit_profile.html", {"form": form})
+    return render(
+        request, "accounts/edit_profile.html", {"form": form, "profile": profile}
+    )
 
 
 def ajax_get_location(request):
