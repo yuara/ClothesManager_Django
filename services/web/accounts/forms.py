@@ -4,7 +4,8 @@ from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .models import User, Profile
-from config.widgets import FileInputWithPreview
+
+# from config.widgets import FileInputWithPreview
 
 
 class UserCreateForm(UserCreationForm):
@@ -38,7 +39,7 @@ class ProfileForm(forms.ModelForm):
             "width",
             "height",
         )
-        widgets = {"picture": FileInputWithPreview}
+        # widgets = {"picture": FileInputWithPreview}
 
     def save(self):
         profile = super(ProfileForm, self).save()
