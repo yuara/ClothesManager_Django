@@ -6,10 +6,10 @@ from .models import Clothes, Outfit, ParentCategory
 
 
 class ClothesCreateForm(forms.ModelForm):
-    x = forms.FloatField(widget=forms.HiddenInput())
-    y = forms.FloatField(widget=forms.HiddenInput())
-    width = forms.FloatField(widget=forms.HiddenInput())
-    height = forms.FloatField(widget=forms.HiddenInput())
+    x = forms.FloatField(widget=forms.HiddenInput(), initial=0)
+    y = forms.FloatField(widget=forms.HiddenInput(), initial=0)
+    width = forms.FloatField(widget=forms.HiddenInput(), initial=0)
+    height = forms.FloatField(widget=forms.HiddenInput(), initial=0)
 
     class Meta:
         model = Clothes

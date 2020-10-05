@@ -21,10 +21,10 @@ class UserCreateForm(UserCreationForm):
 
 class ProfileForm(forms.ModelForm):
 
-    x = forms.FloatField(widget=forms.HiddenInput())
-    y = forms.FloatField(widget=forms.HiddenInput())
-    width = forms.FloatField(widget=forms.HiddenInput())
-    height = forms.FloatField(widget=forms.HiddenInput())
+    x = forms.FloatField(widget=forms.HiddenInput(), initial=0)
+    y = forms.FloatField(widget=forms.HiddenInput(), initial=0)
+    width = forms.FloatField(widget=forms.HiddenInput(), initial=0)
+    height = forms.FloatField(widget=forms.HiddenInput(), initial=0)
 
     class Meta:
         model = Profile
@@ -49,6 +49,8 @@ class ProfileForm(forms.ModelForm):
         w = self.cleaned_data.get("width")
         h = self.cleaned_data.get("height")
 
+        if x == 0 and y == 0 and w == 0 and h == 0:
+            return profile
         image = Image.open(profile.picture)
         cropped_image = image.crop((x, y, w + x, h + y))
         resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)

@@ -20,6 +20,8 @@ def crop_picture(self, obj):
     w = float(self.request.POST.get("width"))
     h = float(self.request.POST.get("height"))
 
+    if x == 0 and y == 0 and w == 0 and h == 0:
+        return obj
     image = Image.open(obj.picture)
     cropped_image = image.crop((x, y, w + x, h + y))
     resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
