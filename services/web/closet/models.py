@@ -1,3 +1,4 @@
+from PIL import Image
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
@@ -63,7 +64,7 @@ class Clothes(models.Model):
         related_name="clothes",
         on_delete=models.PROTECT,
     )
-    picture = models.ImageField(upload_to="clothes_pic/", blank=True)
+    picture = models.ImageField(upload_to="clothes_pic/", blank=True, null=True)
     created_at = models.DateTimeField(_("date created"), default=timezone.now)
     publish = models.BooleanField(_("publish"), default=False)
 
@@ -73,6 +74,19 @@ class Clothes(models.Model):
     class Meta:
         verbose_name = _("clothes")
         verbose_name_plural = _("clothes")
+
+    def crop_picture(self, x, y, width, height):
+        if x == 0 and y == 0 and width == 0 and height == 0:
+            return
+        image = Image.open(self.picture)
+        cropped_image = image.crop((x, y, width + x, height + y))
+        resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
+        resized_image.save(self.picture.path)
+
+    def show_img(self):
+        if not self.picture:
+            return f"/static/img/icon/clothes/{self.category}.jpg"
+        return self.picture.url
 
 
 class Outfit(models.Model):
