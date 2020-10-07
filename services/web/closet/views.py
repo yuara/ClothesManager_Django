@@ -1,4 +1,3 @@
-from PIL import Image
 from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
@@ -12,21 +11,6 @@ from django.utils import timezone
 from django.conf import settings
 
 # Create your views here.
-
-
-def crop_picture(self, obj):
-    x = float(self.request.POST.get("x"))
-    y = float(self.request.POST.get("y"))
-    w = float(self.request.POST.get("width"))
-    h = float(self.request.POST.get("height"))
-
-    if x == 0 and y == 0 and w == 0 and h == 0:
-        return obj
-    image = Image.open(obj.picture)
-    cropped_image = image.crop((x, y, w + x, h + y))
-    resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
-    resized_image.save(obj.picture.path)
-    return obj
 
 
 class CreateClothes(LoginRequiredMixin, generic.CreateView):
@@ -49,7 +33,12 @@ class CreateClothes(LoginRequiredMixin, generic.CreateView):
 
         clothes.save()
 
-        clothes = crop_picture(self, clothes)
+        x = float(self.request.POST.get("x"))
+        y = float(self.request.POST.get("y"))
+        w = float(self.request.POST.get("width"))
+        h = float(self.request.POST.get("height"))
+
+        clothes.crop_picture(x, y, w, h)
 
         messages.info(
             self.request,
@@ -65,6 +54,11 @@ class CreateClothes(LoginRequiredMixin, generic.CreateView):
 
 class UserClothes(LoginRequiredMixin, generic.ListView):
     template_name = "closet/clothes_list.html"
+
+    def post(self, request):
+        clothes_pks = request.POST.getlist("delete")
+        Clothes.objects.filter(pk__in=clothes_pks).delete()
+        return redirect("closet:clothes")
 
     def get_queryset(self):
         return self.request.user.clothes.all()
@@ -98,7 +92,12 @@ class EditClothes(LoginRequiredMixin, generic.UpdateView):
     def form_valid(self, form):
         clothes = form.save()
 
-        clothes = crop_picture(self, clothes)
+        x = float(self.request.POST.get("x"))
+        y = float(self.request.POST.get("y"))
+        w = float(self.request.POST.get("width"))
+        h = float(self.request.POST.get("height"))
+
+        clothes.crop_picture(x, y, w, h)
 
         messages.info(
             self.request,
