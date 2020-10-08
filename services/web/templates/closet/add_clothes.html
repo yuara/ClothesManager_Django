@@ -1,51 +1,96 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ add_or_edit }} Clothes{% endblock %}
+{% block title %}{{ add_or_edit }}
+  Clothes{% endblock %}
 
 {% block breadcrumb %}
   <ol class="breadcrumb mb-4 pt-3">
     <li class="breadcrumb-item">Closet</li>
-    <li class="breadcrumb-item"><a href="{% url 'closet:clothes' %}">Clothes</a></li>
+    <li class="breadcrumb-item">
+      <a href="{% url 'closet:clothes' %}">Clothes</a>
+    </li>
     <li class="breadcrumb-item active">{{ add_or_edit }}</li>
   </ol>
 {% endblock %}
 
 {% block content %}
-<!-- Form -->
-<div class="container">
-  <h3>{{ add_or_edit }} Clothes</h3>
-  <form method="POST" class="form" id="formUpload" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    <div class="row ">
-      {% if clothes.picture %}
-      <div class="col-sm-6 pb-3">
-          <div class="">
-            Current pic
+  <!-- Form -->
+  <div class="container">
+    <h3>{{ add_or_edit }}
+      Clothes</h3>
+    <form method="POST" class="form" id="formUpload" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <div class="field">
+        {{ form.name.label_tag }}
+        {{ form.name }}
+        {% if form.name.help_text %}
+          <span class="helptext">{{ form.name.help_text }}</span>
+        {% endif %}
+        {{ form.name.errors }}
+      </div>
+      <div class="field">
+        {{ form.note.label_tag }}
+        {{ form.note }}
+        {{ form.note.errors }}
+      </div>
+      <div class="field">
+        {{ form.category.label_tag }}
+        {{ form.parent_category }}
+        {{ form.parent_category.errors }}
+        {{ form.category }}
+        {{ form.category.errors }}
+      </div>
+      <div class="field">
+        {{ form.picture.label_tag }}
+        {{ form.picture }}
+        {{ form.picture.errors }}
+      </div>
+      <div class="row">
+        {% if clothes.picture %}
+          <div class="col-sm-6 pb-3">
+            <div class="">
+              Current pic
+            </div>
+            <img src="{{ clothes.picture.url }}"/>
           </div>
-        <img src="{{ clothes.picture.url }}"/>
+        {% endif %}
+        <div class="col-sm-6 pb-3">
+          <div id="preview-title"></div>
+          <div id="cropped-preview-img"></div>
+        </div>
       </div>
-      {% endif %}
-      <div class="col-sm-6 pb-3">
-        <div id="preview-title"></div>
-        <div id="cropped-preview-img"></div>
+      <div class="field">
+        {{ form.color.label_tag }}
+        {{ form.color }}
+        <input type="button" value="選択" onclick="cmanCP_JS_open(this)" cmancpat="rc_text:id001">
+        {{ form.color.errors }}
       </div>
-    </div>
-    {% buttons %}
-    <button type="submit" class="btn btn-primary">{{ add_or_edit }}</button>
-    {% endbuttons %}
-  </form>
-</div>
+      <div class="field">
+        {{ form.publish.label_tag }}
+        {{ form.publish }}
+        {{ form.publish.errors }}
+      </div>
+      {{ form.x }}
+      {{ form.y }}
+      {{ form.width }}
+      {{ form.height }}
+      {% buttons %}
+      <button type="submit" class="btn btn-primary">{{ add_or_edit }}</button>
+      {% endbuttons %}
+    </form>
+  </div>
 
-<!-- Modal to crop the img -->
-{% include "snippets/cropping_modal.html" %}
+  <!-- Modal to crop the img -->
+  {% include "snippets/cropping_modal.html" %}
 {% endblock %}
 
 {% block script %}
   <script src="{% static 'js/crop_picture.js' %}"></script>
-  
-<!-- Make dropdowns for categories -->
+  <script src="{% static 'js/cmanCP_v091.js' %}"></script>
+
+  <!-- Make dropdowns for categories -->
   <script>
     const parentCategoryElement = $('#id_parent_category');
     const categoryElement = $('#id_category');
