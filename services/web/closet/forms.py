@@ -16,10 +16,11 @@ class ClothesCreateForm(forms.ModelForm):
         fields = (
             "name",
             "note",
-            "publish",
             "parent_category",
             "category",
             "picture",
+            "color",
+            "publish",
             "x",
             "y",
             "width",

@@ -67,6 +67,7 @@ class Clothes(models.Model):
     picture = models.ImageField(upload_to="clothes_pic/", blank=True, null=True)
     created_at = models.DateTimeField(_("date created"), default=timezone.now)
     publish = models.BooleanField(_("publish"), default=False)
+    color = models.CharField(_("color"), max_length=6, blank=True, null=True)
 
     def __str__(self):
         return self.name
