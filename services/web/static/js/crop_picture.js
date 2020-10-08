@@ -17,6 +17,7 @@ var canvasData;
 $("#modalCrop").on("shown.bs.modal", function () {
   $image.cropper({
     viewMode: 1,
+    dragMode: 'move',
     aspectRatio: 1/1,
     minCropBoxWidth: 200,
     minCropBoxHeight: 200,
@@ -52,6 +53,6 @@ $(".js-crop-and-upload").click(function () {
   var croppedCanvasData = $image.cropper("getCroppedCanvas");
   document.getElementById("cropped-preview-img").append(croppedCanvasData);
   document.getElementsByTagName("canvas")[0].classList.add("default-preview-img");
-  const previewTitle = "Preview";
+  const previewTitle = "Preview Picture";
   document.getElementById("preview-title").append(previewTitle);
 });
