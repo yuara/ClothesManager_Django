@@ -20,5 +20,5 @@ urlpatterns = [
         views.PublishedOutfits.as_view(),
         name="user_outfits",
     ),
-    path("api/category/get/", views.ajax_get_category, name="ajax_get_category"),
+    path("api/get/category/", views.ajax_get_category, name="ajax_get_category"),
 ]
