@@ -9,7 +9,6 @@ $("#id_picture").change(function () {
     reader.readAsDataURL(this.files[0]);
   }
 });
-
 // Handle the cropper box
 var $image = $("#image");
 var cropBoxData;
@@ -50,9 +49,10 @@ $(".js-crop-and-upload").click(function () {
   $("#id_y").val(cropData["y"]);
   $("#id_width").val(cropData["width"]);
   $("#id_height").val(cropData["height"]);
-  var croppedCanvasData = $image.cropper("getCroppedCanvas");
-  document.getElementById("cropped-preview-img").append(croppedCanvasData);
+  if ($('canvas')) {
+    $('canvas').remove();
+  }
+  document.getElementById("cropped-preview-img").append($image.cropper("getCroppedCanvas"));
   document.getElementsByTagName("canvas")[0].classList.add("default-preview-img");
-  const previewTitle = "Preview Picture";
-  document.getElementById("preview-title").append(previewTitle);
+  $('#preview-title').show()
 });
