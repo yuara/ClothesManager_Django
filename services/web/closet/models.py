@@ -1,3 +1,4 @@
+import colorgram
 from PIL import Image
 from django.db import models
 from django.conf import settings
@@ -67,7 +68,7 @@ class Clothes(models.Model):
     picture = models.ImageField(upload_to="clothes_pic/", blank=True, null=True)
     created_at = models.DateTimeField(_("date created"), default=timezone.now)
     publish = models.BooleanField(_("publish"), default=False)
-    color = models.CharField(_("color"), max_length=6, blank=True, null=True)
+    color = models.CharField(_("color"), max_length=32, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -88,6 +89,23 @@ class Clothes(models.Model):
         if not self.picture:
             return f"/static/img/icon/clothes/{self.category}.jpg"
         return self.picture.url
+
+    def extract_color(self):
+        # Extract 6 colors from an image.
+        if self.picture:
+            colors = colorgram.extract(self.picture, 3)
+
+            # colorgram.extract returns Color objects, which let you access
+            # RGB, HSL, and what proportion of the image was that color.
+            first_color = colors[0]
+            rgb = first_color.rgb  # e.g. (255, 151, 210)
+            # hsl = first_color.hsl  # e.g. (230, 255, 203)
+            # proportion = first_color.proportion  # e.g. 0.34
+
+            # RGB and HSL are named tuples, so values can be accessed as properties.
+            # These all work just as well:
+            self.color = f"rgb({rgb[0]},{rgb[1]},{rgb[2]})"
+            self.save()
 
 
 class Outfit(models.Model):
