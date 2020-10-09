@@ -39,6 +39,7 @@ class CreateClothes(LoginRequiredMixin, generic.CreateView):
         h = float(self.request.POST.get("height"))
 
         clothes.crop_picture(x, y, w, h)
+        clothes.extract_color()
 
         messages.info(
             self.request,
@@ -98,6 +99,7 @@ class EditClothes(LoginRequiredMixin, generic.UpdateView):
         h = float(self.request.POST.get("height"))
 
         clothes.crop_picture(x, y, w, h)
+        clothes.extract_color()
 
         messages.info(
             self.request,
