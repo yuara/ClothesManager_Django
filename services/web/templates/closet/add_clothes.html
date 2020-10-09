@@ -51,20 +51,21 @@
         {% if clothes.picture %}
           <div class="col-sm-6 pb-3">
             <div class="">
-              Current pic
+              Current Picture
             </div>
             <img src="{{ clothes.picture.url }}"/>
           </div>
         {% endif %}
         <div class="col-sm-6 pb-3">
-          <div id="preview-title"></div>
+          <div id="preview-title">
+            Preview Picture</div>
           <div id="cropped-preview-img"></div>
         </div>
       </div>
       <div class="field">
         {{ form.color.label_tag }}
-        {{ form.color }}
-        <input type="button" value="選択" onclick="cmanCP_JS_open(this)" cmancpat="rc_text:id001">
+        <!-- {{ form.color }} -->
+        <input type="button" id="colorButton" style="background-color: {{clothes.color}}; width:2rem;" onclick="cmanCP_JS_open(this)" cmancpat="def_color:bgc=colorButton,def_tab:RGB,rc_form:RGB,rc_bg:colorButton">
         {{ form.color.errors }}
       </div>
       <div class="field">
@@ -89,7 +90,9 @@
 {% block script %}
   <script src="{% static 'js/crop_picture.js' %}"></script>
   <script src="{% static 'js/cmanCP_v091.js' %}"></script>
-
+  <script>
+    $('#preview-title').hide()
+  </script>
   <!-- Make dropdowns for categories -->
   <script>
     const parentCategoryElement = $('#id_parent_category');
