@@ -2,7 +2,7 @@ from PIL import Image
 from django import forms
 from django.utils import timezone
 from accounts.models import User
-from .models import Clothes, Outfit, ParentCategory
+from .models import Clothes, Outfit, ParentCategory, Color
 
 
 class ClothesCreateForm(forms.ModelForm):
@@ -36,11 +36,11 @@ class ClothesCreateForm(forms.ModelForm):
 class ClothesColorForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ClothesColorForm, self).__init__(*args, **kwargs)
-        self.fields["color"].widget = forms.HiddenInput()
+        self.fields["code"].widget = forms.HiddenInput()
 
     class Meta:
-        model = Clothes
-        fields = ("color",)
+        model = Color
+        fields = ("code",)
 
 
 class OutfitCreateForm(forms.ModelForm):
