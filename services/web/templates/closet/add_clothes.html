@@ -22,7 +22,7 @@
     <form method="POST" class="form" id="formUpload" enctype="multipart/form-data">
       {% csrf_token %}
       {{ form.non_field_errors }}
-      <div class="field">
+      <div class="form-group">
         {{ form.name.label_tag }}
         {{ form.name }}
         {% if form.name.help_text %}
@@ -30,21 +30,29 @@
         {% endif %}
         {{ form.name.errors }}
       </div>
-      <div class="field">
+      <div class="form-group">
         {{ form.note.label_tag }}
         {{ form.note }}
         {{ form.note.errors }}
       </div>
-      <div class="field">
+      <div class="form-group">
         {{ form.category.label_tag }}
-        {{ form.parent_category }}
-        {{ form.parent_category.errors }}
-        {{ form.category }}
-        {{ form.category.errors }}
+        <div class="row">
+          <div class="col-sm-6">
+            {{ form.parent_category }}
+            {{ form.parent_category.errors }}
+          </div>
+          <div class="col-sm-6">
+            {{ form.category }}
+            {{ form.category.errors }}
+          </div>
+        </div>
       </div>
-      <div class="field">
+      <div class="form-group">
         {{ form.picture.label_tag }}
-        {{ form.picture }}
+        <div style="border: transparent;">
+          {{ form.picture }}
+        </div>
         {{ form.picture.errors }}
       </div>
       <div class="row">
@@ -62,13 +70,15 @@
           <div id="cropped-preview-img"></div>
         </div>
       </div>
-      <div class="field">
-        {{ form.color.label_tag }}
-        <!-- {{ form.color }} -->
-        <input type="button" id="colorButton" style="background-color: {{clothes.color}}; width:2rem;" onclick="cmanCP_JS_open(this)" cmancpat="def_color:bgc=colorButton,def_tab:RGB,rc_form:RGB,rc_bg:colorButton">
+      <div class="form-group row">
+        <div class="col-sm-1">{{ form.color.label_tag }}</div>
+        <div class="col-sm-11">
+          <button type="button" id="pickrbtn" class="btn shadow-sm pickrbtn" style="background-color: {{ clothes.color }};">Choose Color</button>
+        </div>
+
         {{ form.color.errors }}
       </div>
-      <div class="field">
+      <div class="form-group">
         {{ form.publish.label_tag }}
         {{ form.publish }}
         {{ form.publish.errors }}
@@ -89,9 +99,64 @@
 
 {% block script %}
   <script src="{% static 'js/crop_picture.js' %}"></script>
-  <script src="{% static 'js/cmanCP_v091.js' %}"></script>
   <script>
     $('#preview-title').hide()
+  </script>
+  <script>
+    const pickr = Pickr.create({
+      el: '.pickrbtn',
+      theme: 'nano', // or 'monolith', or 'nano'
+
+      default: '{{ clothes.color }}',
+      useAsButton: true,
+      // comparison: false,
+      defaultRepresentation: 'RGBA',
+
+      swatches: [
+        'rgba(244, 67, 54, 1)',
+        'rgba(233, 30, 99, 0.95)',
+        'rgba(156, 39, 176, 0.9)',
+        'rgba(103, 58, 183, 0.85)',
+        'rgba(63, 81, 181, 0.8)',
+        'rgba(33, 150, 243, 0.75)',
+        'rgba(3, 169, 244, 0.7)',
+        'rgba(0, 188, 212, 0.7)',
+        'rgba(0, 150, 136, 0.75)',
+        'rgba(76, 175, 80, 0.8)',
+        'rgba(139, 195, 74, 0.85)',
+        'rgba(205, 220, 57, 0.9)',
+        'rgba(255, 235, 59, 0.95)',
+        'rgba(255, 193, 7, 1)'
+      ],
+
+      components: {
+
+        // Main components
+        preview: true,
+        opacity: true,
+        hue: true,
+
+        // Input / output Options
+        interaction: {
+            hex: false,
+            rgba: false,
+            hsla: false,
+            hsva: false,
+            cmyk: false,
+            input: true,
+            clear: true,
+            save: true
+        }
+      }
+    }).on('save', color => {
+      const selectColor = color.toRGBA().toString(3);
+      console.log(selectColor);
+      document.getElementById('pickrbtn').style.backgroundColor = selectColor;
+      pickr.hide();
+    }).on('cancel', color => {
+      pickr.hide();
+    });
+
   </script>
   <!-- Make dropdowns for categories -->
   <script>

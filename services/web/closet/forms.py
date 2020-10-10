@@ -11,6 +11,12 @@ class ClothesCreateForm(forms.ModelForm):
     width = forms.FloatField(widget=forms.HiddenInput(), initial=0)
     height = forms.FloatField(widget=forms.HiddenInput(), initial=0)
 
+    def __init__(self, *args, **kwargs):
+        super(ClothesCreateForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs["class"] = "form-control"
+        self.fields["picture"].widget.attrs["class"] = ""
+
     class Meta:
         model = Clothes
         fields = (
