@@ -68,7 +68,6 @@ class Clothes(models.Model):
     picture = models.ImageField(upload_to="clothes_pic/", blank=True, null=True)
     created_at = models.DateTimeField(_("date created"), default=timezone.now)
     publish = models.BooleanField(_("publish"), default=False)
-    color = models.CharField(_("color"), max_length=32, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -91,6 +90,7 @@ class Clothes(models.Model):
         return self.picture.url
 
     def extract_color(self):
+        # TODO: Adjust to Color Model
         # Extract 6 colors from an image.
         if self.picture:
             colors = colorgram.extract(self.picture, 3)
@@ -106,6 +106,18 @@ class Clothes(models.Model):
             # These all work just as well:
             self.color = f"rgb({rgb[0]},{rgb[1]},{rgb[2]})"
             self.save()
+
+
+class Color(models.Model):
+    clothes = models.ForeignKey(
+        Clothes, on_delete=models.CASCADE, blank=True, null=True, related_name="clothes"
+    )
+    code = models.CharField(_("color"), max_length=64)
+    original = models.CharField(_("original"), max_length=64)
+    proportion = models.IntegerField(_("proportion"))
+
+    def __str__(self):
+        return self.color
 
 
 class Outfit(models.Model):
