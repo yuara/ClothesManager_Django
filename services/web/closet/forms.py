@@ -25,13 +25,22 @@ class ClothesCreateForm(forms.ModelForm):
             "parent_category",
             "category",
             "picture",
-            "color",
             "publish",
             "x",
             "y",
             "width",
             "height",
         )
+
+
+class ClothesColorForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ClothesColorForm, self).__init__(*args, **kwargs)
+        self.fields["color"].widget = forms.HiddenInput()
+
+    class Meta:
+        model = Clothes
+        fields = ("color",)
 
 
 class OutfitCreateForm(forms.ModelForm):
