@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.views import generic
-from .forms import ClothesCreateForm, OutfitCreateForm
+from .forms import ClothesCreateForm, OutfitCreateForm, ClothesColorForm
 from accounts.models import User
 from .models import ParentCategory, Category, Clothes, Outfit
 from django.urls import reverse_lazy
@@ -17,7 +17,6 @@ class CreateClothes(LoginRequiredMixin, generic.CreateView):
     model = Clothes
     form_class = ClothesCreateForm
     template_name = "closet/add_clothes.html"
-    success_url = reverse_lazy("closet:clothes")
 
     def form_valid(self, form):
         clothes = form.save(commit=False)
@@ -111,6 +110,13 @@ class EditClothes(LoginRequiredMixin, generic.UpdateView):
         context = super().get_context_data(**kwargs)
         context["add_or_edit"] = "Edit"
         return context
+
+
+class ModifyColor(LoginRequiredMixin, generic.UpdateView):
+    model = Clothes
+    form_class = ClothesColorForm
+    template_name = "closet/modify_color.html"
+    success_url = reverse_lazy("closet:clothes")
 
 
 class CreateOutfit(LoginRequiredMixin, generic.CreateView):
