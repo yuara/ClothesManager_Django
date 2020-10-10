@@ -17,15 +17,16 @@
     {% if request.user.username == user.username %}
       {% if object_list %}
       <form action="" method="POST">
-        <table class="table table-hover" id="dataTable">
-          <tr>
+        <table class="table table-hover">
+          <thead>
             <th></th>
             <th>Clothes Name</th>
             <th>Category</th>
-            <th>Addtime</th>
+            <th>Color</th>
             <th>Publish</th>
             <th>Delete</th>
-          </tr>
+          </thead>
+          <tbody class="centerTable">
             {% for clothes in object_list %}
               <tr>
                 <td><img src="{{ clothes.show_img }}" class="rounded-lg" width="auto" height="40px"/></td>
@@ -36,11 +37,12 @@
                 <td>{{ clothes.parent_category }}
                   /
                   {{ clothes.category }}</td>
-                <td>{{ clothes.created_at }}</td>
+                <td><a href="{% url 'closet:clothes_color' clothes.pk %}" role="button" class="btn" style="background-color: {{ clothes.color }}; border-radius: 10px 0 0 10px;"><span style="visibility:hidden">a</span></a><a href="{% url 'closet:clothes_color' clothes.pk %}" role="button" class="btn" style="background-color: {{ clothes.color }}; border-radius: 0 0 0 0;"><span style="visibility:hidden">a</span></a><a href="{% url 'closet:clothes_color' clothes.pk %}" role="button" class="btn" style="background-color: {{ clothes.color }}; border-radius: 0 10px 10px 0;"><span style="visibility:hidden">a</span></a></td>
                 <td>{{ clothes.publish }}</td>
                 <td><input type="checkbox" name="delete" value="{{ clothes.pk }}"></td>
               </tr>
             {% endfor %}
+            </tbody>
             {% csrf_token %}
         </table>
         <button type="submit">Delete</button>
