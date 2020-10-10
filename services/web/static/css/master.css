@@ -2,3 +2,8 @@
   max-width: 200px;
   max-height: auto;
 }
+
+tbody.centerTable td {
+  vertical-align: middle;
+  text-align: center;
+}
