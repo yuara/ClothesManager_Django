@@ -97,27 +97,28 @@ class Clothes(models.Model):
 
             # colorgram.extract returns Color objects, which let you access
             # RGB, HSL, and what proportion of the image was that color.
-            first_color = colors[0]
-            rgb = first_color.rgb  # e.g. (255, 151, 210)
-            # hsl = first_color.hsl  # e.g. (230, 255, 203)
-            # proportion = first_color.proportion  # e.g. 0.34
+            for color in colors:
 
-            # RGB and HSL are named tuples, so values can be accessed as properties.
-            # These all work just as well:
-            self.color = f"rgb({rgb[0]},{rgb[1]},{rgb[2]})"
-            self.save()
+                rgb = color.rgb  # e.g. Rgb(r=217, g=216, b=233)
+                # RGB and HSL are named tuples, so values can be accessed as properties.
+                code = f"rgb({rgb[0]},{rgb[1]},{rgb[2]})"
+                proportion = color.proportion  # e.g. 0.34
+                Color.objects.create(
+                    clothes=self, code=code, original=code, proportion=proportion
+                )
+            print(self.colors.all())
 
 
 class Color(models.Model):
     clothes = models.ForeignKey(
-        Clothes, on_delete=models.CASCADE, blank=True, null=True, related_name="clothes"
+        Clothes, on_delete=models.CASCADE, related_name="colors"
     )
-    code = models.CharField(_("color"), max_length=64)
+    code = models.CharField(_("code"), max_length=64)
     original = models.CharField(_("original"), max_length=64)
     proportion = models.IntegerField(_("proportion"))
 
     def __str__(self):
-        return self.color
+        return self.code
 
 
 class Outfit(models.Model):
