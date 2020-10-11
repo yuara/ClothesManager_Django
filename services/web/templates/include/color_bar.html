@@ -1,0 +1,16 @@
+{% spaceless %}
+  {% for color in clothes.colors.all %}
+    {% if forloop.first %}
+      <div id="color1" value="{{ color }}" class="btn pickrbtn" style="background-color: {{ color }}; border-radius: 10px 0 0 10px;">
+        <span style="visibility:hidden">a</span></div>
+    {% else %}
+      {% if forloop.last %}
+        <div value="{{ color }}" id="color3" class="btn pickrbtn" style="background-color: {{ color }}; border-radius: 0 10px 10px 0;">
+          <span style="visibility:hidden">a</span></div>
+      {% else %}
+        <div value="{{ color }}" id="color2" class="btn pickrbtn" style="background-color: {{ color }}; border-radius: 0 0 0 0;">
+          <span style="visibility:hidden">a</span></div>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endspaceless %}
