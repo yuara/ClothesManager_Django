@@ -6,7 +6,9 @@
 {% block breadcrumb %}
   <ol class="breadcrumb mb-4 pt-3">
     <li class="breadcrumb-item">Closet</li>
-    <li class="breadcrumb-item"><a href="{% url 'closet:clothes' %}">Clothes</a></li>
+    <li class="breadcrumb-item">
+      <a href="{% url 'closet:clothes' %}">Clothes</a>
+    </li>
     <li class="breadcrumb-item active">{{ who }}</li>
   </ol>
 {% endblock %}
@@ -16,41 +18,43 @@
     <h3>Clothes List</h3>
     {% if request.user.username == user.username %}
       {% if object_list %}
-      <form action="" method="POST">
-        <table class="table table-hover">
-          <thead>
-            <th></th>
-            <th>Clothes Name</th>
-            <th>Category</th>
-            <th>Color</th>
-            <th>Publish</th>
-            <th>Delete</th>
-          </thead>
-          <tbody class="centerTable">
-            {% for clothes in object_list %}
-              <tr>
-                <td><img src="{{ clothes.show_img }}" class="rounded-lg" width="auto" height="40px"/></td>
-                <td>
-                  <a href="{% url 'closet:edit_clothes' clothes.pk %}">
-                  {{ clothes.name }}</a>
-                </td>
-                <td>{{ clothes.parent_category }}
-                  /
-                  {{ clothes.category }}</td>
-                <td><a href="{% url 'closet:clothes_color' clothes.pk %}" role="button" class="btn" style="background-color: {{ clothes.color }}; border-radius: 10px 0 0 10px;"><span style="visibility:hidden">a</span></a><a href="{% url 'closet:clothes_color' clothes.pk %}" role="button" class="btn" style="background-color: {{ clothes.color }}; border-radius: 0 0 0 0;"><span style="visibility:hidden">a</span></a><a href="{% url 'closet:clothes_color' clothes.pk %}" role="button" class="btn" style="background-color: {{ clothes.color }}; border-radius: 0 10px 10px 0;"><span style="visibility:hidden">a</span></a></td>
-                <td>{{ clothes.publish }}</td>
-                <td><input type="checkbox" name="delete" value="{{ clothes.pk }}"></td>
-              </tr>
-            {% endfor %}
+        <form action="" method="POST">
+          <table class="table table-hover">
+            <thead>
+              <th></th>
+              <th>Clothes Name</th>
+              <th>Category</th>
+              <th>Color</th>
+              <th>Publish</th>
+              <th>Delete</th>
+            </thead>
+            <tbody class="centerTable">
+              {% for clothes in object_list %}
+                <tr>
+                  <td><img src="{{ clothes.show_img }}" class="rounded-lg" width="auto" height="40px"/></td>
+                  <td>
+                    <a href="{% url 'closet:edit_clothes' clothes.pk %}">
+                      {{ clothes.name }}</a>
+                  </td>
+                  <td>{{ clothes.parent_category }}
+                    /
+                    {{ clothes.category }}</td>
+                  <td>
+                    {% include "include/color_bar.html" %}
+                  </td>
+                  <td>{{ clothes.publish }}</td>
+                  <td><input type="checkbox" name="delete" value="{{ clothes.pk }}"></td>
+                </tr>
+              {% endfor %}
             </tbody>
             {% csrf_token %}
-        </table>
-        <button type="submit">Delete</button>
-      </form>
+          </table>
+          <button class="btn btn-danger float-right" type="submit">Delete</button>
+        </form>
       {% else %}
         <h3>No Clothes Yet</h3>
       {% endif %}
-      <a href="{% url 'closet:add' %}">Add Clothes</a>
+      <a href="{% url 'closet:add' %}" class="btn btn-dark" role="button">Add Clothes</a>
 
     {% else %}
       {% if object_list %}
