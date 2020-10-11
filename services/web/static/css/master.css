@@ -7,3 +7,7 @@ tbody.centerTable td {
   vertical-align: middle;
   text-align: center;
 }
+
+.clickable .pickrbtn {
+  cursor: pointer;
+}
