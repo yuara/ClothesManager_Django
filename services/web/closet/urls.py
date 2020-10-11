@@ -12,7 +12,6 @@ urlpatterns = [
         views.PublishedClothes.as_view(),
         name="user_clothes",
     ),
-    path("clothes/<int:pk>/color/", views.ModifyColor.as_view(), name="clothes_color"),
     path("outfit/", views.UserOutfits.as_view(), name="outfits"),
     path("outfit/set", views.CreateOutfit.as_view(), name="set"),
     path("outfit/<int:pk>/edit", views.EditOutfit.as_view(), name="edit_outfit"),

@@ -98,7 +98,6 @@ class Clothes(models.Model):
             # colorgram.extract returns Color objects, which let you access
             # RGB, HSL, and what proportion of the image was that color.
             for color in colors:
-
                 rgb = color.rgb  # e.g. Rgb(r=217, g=216, b=233)
                 # RGB and HSL are named tuples, so values can be accessed as properties.
                 code = f"rgb({rgb[0]},{rgb[1]},{rgb[2]})"
@@ -106,7 +105,6 @@ class Clothes(models.Model):
                 Color.objects.create(
                     clothes=self, code=code, original=code, proportion=proportion
                 )
-            print(self.colors.all())
 
 
 class Color(models.Model):

@@ -33,16 +33,6 @@ class ClothesCreateForm(forms.ModelForm):
         )
 
 
-class ClothesColorForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(ClothesColorForm, self).__init__(*args, **kwargs)
-        self.fields["code"].widget = forms.HiddenInput()
-
-    class Meta:
-        model = Color
-        fields = ("code",)
-
-
 class OutfitCreateForm(forms.ModelForm):
     class Meta:
         model = Outfit
