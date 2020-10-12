@@ -69,16 +69,15 @@
         </div>
       </div>
       {% if add_or_edit == 'Edit' %}
-      <div class="form-group row">
-        <div class="col-sm-1">Color:</div>
-        <div class="col-sm-11">
-          <div class="clickable">
-            {% include "include/color_bar.html" %}
+        <div class="form-group row">
+          <div class="col-sm-1">Color:</div>
+          <div class="col-sm-11">
+            <div class="clickable">
+              {% include "include/color_bar.html" %}
+            </div>
           </div>
+            {{ formset }}
         </div>
-
-        {{ form.color.errors }}
-      </div>
       {% endif %}
       <div class="form-group">
         {{ form.publish.label_tag }}
@@ -92,6 +91,7 @@
       {% buttons %}
       <button type="submit" class="btn btn-primary">{{ add_or_edit }}</button>
       {% endbuttons %}
+
     </form>
   </div>
 
@@ -105,10 +105,10 @@
     $('#preview-title').hide()
   </script>
 
+{% if  add_or_edit == 'Edit' %}
   <script>
     function createPickr(idName) {
       const idEle = document.getElementById(idName)
-      console.log(idEle);
       const pickr = Pickr.create({
         el: '#' + idName,
         theme: 'nano', // or 'monolith', or 'nano'
@@ -152,23 +152,30 @@
             input: true,
             clear: true,
             save: true
-          }
+          },
         }
       }).on('save', color => {
         const selectColor = color.toRGBA().toString(1);
-        console.log(selectColor);
         idEle.style.backgroundColor = selectColor;
+        document.getElementById(idName + '-code').value = selectColor;
         pickr.hide();
-        
       }).on('cancel', color => {
         pickr.hide();
       });
     }
-    createPickr('color1')
-    createPickr('color2')
-    createPickr('color3')
-  </script>
 
+    function checkAndCreate (idName) {
+      if (document.getElementById(idName)) {
+        createPickr(idName);
+      }
+    }
+
+    checkAndCreate('id_colors-0')
+    checkAndCreate('id_colors-1')
+    checkAndCreate('id_colors-2')
+
+  </script>
+{% endif %}
 
   <!-- Make dropdowns for categories -->
   <script>
