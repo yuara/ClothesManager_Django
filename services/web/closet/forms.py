@@ -33,6 +33,11 @@ class ClothesCreateForm(forms.ModelForm):
         )
 
 
+ColorFormset = forms.inlineformset_factory(
+    Clothes, Color, fields=("code",), extra=1, max_num=3, can_delete=False,
+)
+
+
 class OutfitCreateForm(forms.ModelForm):
     class Meta:
         model = Outfit
