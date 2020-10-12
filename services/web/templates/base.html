@@ -25,19 +25,20 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'home' %}">Home
-                <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="{% url 'home' %}">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'accounts:all' %}">Explore</a>
             </li>
+
           </ul>
+
           <ul class="navbar-nav">
             {% if user.is_authenticated %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'closet:outfits' %}">Outfits</a>
               </li>
-              <li>
+              <li class="nav-item">
                 <a class="nav-link" href="{% url 'closet:clothes' %}">Clothes</a>
               </li>
             {% else %}
@@ -46,9 +47,9 @@
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {% if user.is_authenticated %}
                     {% if request.user.profile.picture %}
-                      <img src="{{ request.user.profile.picture.url }}" class="rounded-lg" width="auto" height="40px"/>
+                      <img src="{{ request.user.profile.picture.url }}" class="rounded-lg align-middle" width="auto" height="40px"/>
                     {% else %}
-                      <canvas width="30px" height="30px" style="background-color: #{{ request.user.profile.color }};"></canvas>
+                      <canvas class="rounded-lg align-middle" width="25rem" height="25rem" style="background-color: #{{ request.user.profile.color }};"></canvas>
                     {% endif %}
                 {% else %}
                   <i class="fas fa-user"></i>
@@ -57,7 +58,6 @@
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                 {% if user.is_authenticated %}
                   <a class="dropdown-item" href="{% url 'accounts:current' %}">Profile</a>
-                  <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a>
                 {% else %}
                   <a class="dropdown-item" href="{% url 'accounts:signup' %}">SignUp</a>
@@ -110,13 +110,6 @@
   <script src="{% static 'js/cropper.min.js' %}"></script>
   <script src="{% static 'js/jquery-cropper.min.js' %}"></script>
   <script src="{% static 'js/pickr.min.js' %}"></script>
-  <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-  <script>
-    $(document).ready(function () {
-      $('#dataTable').DataTable();
-    });
-  </script>
   {% block script %}{% endblock %}
 </body>
 </html>
