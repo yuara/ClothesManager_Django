@@ -77,8 +77,6 @@ class Clothes(models.Model):
         verbose_name_plural = _("clothes")
 
     def crop_picture(self, x, y, width, height):
-        if x == 0 and y == 0 and width == 0 and height == 0:
-            return
         image = Image.open(self.picture)
         cropped_image = image.crop((x, y, width + x, height + y))
         resized_image = cropped_image.resize((200, 200), Image.ANTIALIAS)
@@ -101,19 +99,16 @@ class Clothes(models.Model):
                 rgb = color.rgb  # e.g. Rgb(r=217, g=216, b=233)
                 # RGB and HSL are named tuples, so values can be accessed as properties.
                 code = f"rgb({rgb[0]},{rgb[1]},{rgb[2]})"
-                proportion = color.proportion  # e.g. 0.34
-                Color.objects.create(
-                    clothes=self, code=code, original=code, proportion=proportion
-                )
+                # proportion = color.proportion  # e.g. 0.34
+                Color.objects.create(clothes=self, code=code, original=code)
 
 
 class Color(models.Model):
     clothes = models.ForeignKey(
         Clothes, on_delete=models.CASCADE, related_name="colors"
     )
-    code = models.CharField(_("code"), max_length=64)
+    code = models.CharField(_("code"), max_length=64, null=True)
     original = models.CharField(_("original"), max_length=64)
-    proportion = models.IntegerField(_("proportion"))
 
     def __str__(self):
         return self.code
