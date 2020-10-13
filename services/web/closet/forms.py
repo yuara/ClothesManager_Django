@@ -34,7 +34,13 @@ class ClothesCreateForm(forms.ModelForm):
 
 
 ColorFormset = forms.inlineformset_factory(
-    Clothes, Color, fields=("code",), extra=1, max_num=3, can_delete=False,
+    Clothes,
+    Color,
+    fields=("code",),
+    extra=3,
+    max_num=3,
+    can_delete=False,
+    widgets={"code": forms.HiddenInput()},
 )
 
 
