@@ -5,83 +5,52 @@
 
 {% block breadcrumb %}
   <ol class="breadcrumb mb-4 pt-3">
-    <li class="breadcrumb-item"><a href="{% url 'accounts:current' %}">Profile</a> </li>
+    <li class="breadcrumb-item">
+      <a href="{% url 'accounts:current' %}">Profile</a>
+    </li>
     <li class="breadcrumb-item active">Edit</li>
   </ol>
 {% endblock %}
 
 {% block content %}
-<!-- Form -->
-<div class="container">
-  <form method="POST" class="form" id="formUpload" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    <div class="row ">
-      {% if profile.picture %}
-      <div class="col-sm-6 pb-3">
-          <div class="">
-            Current pic
+  <!-- Form -->
+  <div class="container">
+    <form method="POST" class="form" id="formUpload" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <div class="row ">
+        {% if profile.picture %}
+          <div class="col-sm-6 pb-3">
+            <div class="">
+              Current pic
+            </div>
+            <img src="{{ profile.picture.url }}"/>
           </div>
-        <img src="{{ profile.picture.url }}"/>
+        {% endif %}
+        <div class="col-sm-6 pb-3">
+          <div id="preview-title"></div>
+          <div id="cropped-preview-img"></div>
+        </div>
       </div>
-      {% endif %}
-      <div class="col-sm-6 pb-3">
-        <div id="preview-title"></div>
-        <div id="cropped-preview-img"></div>
-      </div>
-    </div>
-    {% buttons %}
-    <button type="submit" class="btn btn-primary">Save</button>
-    {% endbuttons %}
-  </form>
-</div>
+      {% buttons %}
+      <button type="submit" class="btn btn-primary">Save</button>
+      {% endbuttons %}
+    </form>
+  </div>
 
-<!-- Modal to crop the img -->
-{% include "include/cropping_modal.html" %}
+  <!-- Modal to crop the img -->
+  {% include "include/cropping_modal.html" %}
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'js/crop_picture.js' %}"></script>
+  <script src="{% static 'js/crop_picture.js' %}"></script>
+  <script src="{% static 'js/get_child_category.js' %}"></script>
 
+  <!-- Make dropdowns for prefectures -->
   <script>
-    const parentCategoryElement = $('#id_area');
-    const categoryElement = $('#id_prefecture');
-
-    const changeCategory = (select) => {
-      // Empty choices of child categories
-      categoryElement.children().remove();
-
-      $.ajax({
-        url: '{% url 'accounts:ajax_get_location' %}',
-        type: 'GET',
-        data: {
-          'pk': parentCategoryElement.val()
-        }
-      }).done(response => {
-        // Create and add the choices of the child categories
-        for (const pref of response.locationList) {
-          const option = $('<option>');
-          option.val(pref['pk']);
-          option.text(pref['name']);
-          categoryElement.append(option);
-        }
-
-        // Choose the category if picked
-        if (select !== undefined) {
-          categoryElement.val(select);
-        }
-
-      });
-    };
-
-    parentCategoryElement.on('change', () => {
-      changeCategory();
-    });
-
-    // If reloaded when something happens, create child categories
-    if (parentCategoryElement.val()) {
-      const selectedCategory = categoryElement.val();
-      changeCategory(selectedCategory);
-    }
+    const getCateURL = '{% url 'accounts:ajax_get_location' %}';
+    const areaCategory = $('#id_area');
+    const prefCategory = $('#id_prefecture');
+    createDropDown(getCateURL, areaCategory, prefCategory)
   </script>
 {% endblock %}

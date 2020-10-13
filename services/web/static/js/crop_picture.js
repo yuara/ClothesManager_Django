@@ -1,3 +1,4 @@
+$('#preview-title').hide();
 // Open the modal with the preview
 $("#id_picture").change(function () {
   if (this.files && this.files[0]) {

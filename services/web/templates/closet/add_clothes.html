@@ -71,12 +71,15 @@
       {% if add_or_edit == 'Edit' %}
         <div class="form-group row">
           <div class="col-sm-1">Color:</div>
-          <div class="col-sm-11">
+          <div class="col-sm-2">
             <div class="clickable">
               {% include "include/color_bar.html" %}
             </div>
           </div>
-            {{ formset }}
+          <div class="col-sm-9">
+            <a href="#">Default</a>
+          </div>
+          {{ formset }}
         </div>
       {% endif %}
       <div class="form-group">
@@ -101,122 +104,22 @@
 
 {% block script %}
   <script src="{% static 'js/crop_picture.js' %}"></script>
-  <script>
-    $('#preview-title').hide()
-  </script>
-
-{% if  add_or_edit == 'Edit' %}
-  <script>
-    function createPickr(idName) {
-      const idEle = document.getElementById(idName)
-      const pickr = Pickr.create({
-        el: '#' + idName,
-        theme: 'nano', // or 'monolith', or 'nano'
-
-        default: idEle.style.backgroundColor,
-        useAsButton: true,
-        // comparison: false,
-        defaultRepresentation: 'RGBA',
-
-        swatches: [
-          'rgba(244, 67, 54, 1)',
-          'rgba(233, 30, 99, 0.95)',
-          'rgba(156, 39, 176, 0.9)',
-          'rgba(103, 58, 183, 0.85)',
-          'rgba(63, 81, 181, 0.8)',
-          'rgba(33, 150, 243, 0.75)',
-          'rgba(3, 169, 244, 0.7)',
-          'rgba(0, 188, 212, 0.7)',
-          'rgba(0, 150, 136, 0.75)',
-          'rgba(76, 175, 80, 0.8)',
-          'rgba(139, 195, 74, 0.85)',
-          'rgba(205, 220, 57, 0.9)',
-          'rgba(255, 235, 59, 0.95)',
-          'rgba(255, 193, 7, 1)'
-        ],
-
-        components: {
-
-          // Main components
-          preview: true,
-          opacity: true,
-          hue: true,
-
-          // Input / output Options
-          interaction: {
-            hex: false,
-            rgba: false,
-            hsla: false,
-            hsva: false,
-            cmyk: false,
-            input: true,
-            clear: true,
-            save: true
-          },
-        }
-      }).on('save', color => {
-        const selectColor = color.toRGBA().toString(1);
-        idEle.style.backgroundColor = selectColor;
-        document.getElementById(idName + '-code').value = selectColor;
-        pickr.hide();
-      }).on('cancel', color => {
-        pickr.hide();
-      });
-    }
-
-    function checkAndCreate (idName) {
-      if (document.getElementById(idName)) {
-        createPickr(idName);
-      }
-    }
-
-    checkAndCreate('id_colors-0')
-    checkAndCreate('id_colors-1')
-    checkAndCreate('id_colors-2')
-
-  </script>
-{% endif %}
-
+  <script src="{% static 'js/get_child_category.js' %}"></script>
+  <script src="{% static 'js/run_pickr.js' %}"></script>
   <!-- Make dropdowns for categories -->
   <script>
-    const parentCategoryElement = $('#id_parent_category');
-    const categoryElement = $('#id_category');
-
-    const changeCategory = (select) => {
-      // Empty choices of child categories
-      categoryElement.children().remove();
-
-      $.ajax({
-        url: '{% url 'closet:ajax_get_category' %}',
-        type: 'GET',
-        data: {
-          'pk': parentCategoryElement.val()
-        }
-      }).done(response => {
-        // Create and add the choices of the child categories
-        for (const category of response.categoryList) {
-          const option = $('<option>');
-          option.val(category['pk']);
-          option.text(category['name']);
-          categoryElement.append(option);
-        }
-
-        // Choose the category if picked
-        if (select !== undefined) {
-          categoryElement.val(select);
-        }
-
-      });
-    };
-
-    parentCategoryElement.on('change', () => {
-      changeCategory();
-    });
-
-    // If reloaded when something happens, create child categories
-    if (parentCategoryElement.val()) {
-      const selectedCategory = categoryElement.val();
-      changeCategory(selectedCategory);
-    }
+    const getCateURL = '{% url 'closet:ajax_get_category' %}';
+    const parentCategory = $('#id_parent_category');
+    const childCategory = $('#id_category');
+    createDropDown(getCateURL, parentCategory, childCategory)
   </script>
+
+  {% if add_or_edit == 'Edit' %}
+    <script>
+      checkAndCreate('id_colors-0')
+      checkAndCreate('id_colors-1')
+      checkAndCreate('id_colors-2')
+    </script>
+  {% endif %}
+
 {% endblock %}

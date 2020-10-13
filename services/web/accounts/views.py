@@ -146,4 +146,4 @@ def ajax_get_location(request):
     ]
 
     # Return as JSON
-    return JsonResponse({"locationList": pref_list})
+    return JsonResponse({"categoryList": pref_list})
