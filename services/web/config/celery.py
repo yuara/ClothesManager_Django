@@ -26,7 +26,7 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     "scrape-forecast-every-hour": {
         "task": "config.celery.scrape_forecast",
-        "schedule": crontab(hour="*/12", minute=0),  # Executes 2 times a day
+        "schedule": crontab(hour="*/6", minute=0),  # Executes 4 times a day
     },
 }
 
