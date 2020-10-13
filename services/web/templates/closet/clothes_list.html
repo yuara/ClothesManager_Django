@@ -42,7 +42,13 @@
                   <td>
                     {% include "include/color_bar.html" %}
                   </td>
-                  <td>{{ clothes.publish }}</td>
+                  <td>
+                    {% if clothes.publish %}
+                      <i class="fas fa-check"></i>
+                    {% else %}
+                      <i class="fas fa-times"></i>
+                    {% endif %}
+                  </td>
                   <td><input type="checkbox" name="delete" value="{{ clothes.pk }}"></td>
                 </tr>
               {% endfor %}
