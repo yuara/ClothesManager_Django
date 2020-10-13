@@ -88,7 +88,6 @@ class Clothes(models.Model):
         return self.picture.url
 
     def extract_color(self):
-        # TODO: Adjust to Color Model
         # Extract 6 colors from an image.
         if self.picture:
             colors = colorgram.extract(self.picture, 3)
@@ -108,7 +107,7 @@ class Color(models.Model):
         Clothes, on_delete=models.CASCADE, related_name="colors"
     )
     code = models.CharField(_("code"), max_length=64, null=True)
-    original = models.CharField(_("original"), max_length=64)
+    original = models.CharField(_("original"), max_length=64, null=True)
 
     def __str__(self):
         return self.code
