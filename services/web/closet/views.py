@@ -114,6 +114,7 @@ def edit_clothes(request, pk):
         instance=clothes,
         initial=[x for x in clothes.colors.all()],
     )
+
     if request.method == "POST" and form.is_valid() and formset.is_valid():
         saved_clothes = form.save()
         x = float(request.POST.get("x"))
@@ -130,7 +131,8 @@ def edit_clothes(request, pk):
         )
         formset.save()
         # 編集ページを再度表示
-        return redirect("closet:edit_clothes", pk=pk)
+        # return redirect("closet:edit_clothes", pk=pk)
+        return redirect("closet:clothes")
 
     context = {
         "form": form,
