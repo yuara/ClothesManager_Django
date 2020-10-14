@@ -1,25 +1,14 @@
 {% spaceless %}
-  {% if clothes.colors.all %}
-    {% for color in clothes.colors.all %}
-      {% if forloop.first %}
-        <div id="id_colors-0" class="btn pickrbtn" style="background-color: {{ color }}; border-radius: 10px 0 0 10px;">
-          <span style="visibility:hidden">a</span></div>
-      {% else %}
-        {% if forloop.last %}
-          <div id="id_colors-2" class="btn pickrbtn" style="background-color: {{ color }}; border-radius: 0 10px 10px 0;">
-            <span style="visibility:hidden">a</span></div>
-        {% else %}
-          <div id="id_colors-1" class="btn pickrbtn" style="background-color: {{ color }}; border-radius: 0 0 0 0;">
-            <span style="visibility:hidden">a</span></div>
-        {% endif %}
-      {% endif %}
-    {% endfor %}
-  {% else %}
-    <div id="id_colors-0" class="btn border pickrbtn" style="background-color: white; border-radius: 10px 0 0 10px;">
-      <span style="visibility:hidden">a</span></div>
-    <div id="id_colors-1" class="btn border pickrbtn" style="background-color: white; border-radius: 0 0 0 0;">
-      <span style="visibility:hidden">a</span></div>
-    <div id="id_colors-2" class="btn border pickrbtn" style="background-color: white; border-radius: 0 10px 10px 0;">
-      <span style="visibility:hidden">a</span></div>
-  {% endif %}
+  {% for color in clothes.colors.all %}
+    {% if forloop.first %}
+      <div id="id_colors-0" class="btn border-light pickrbtn" style="background-color: {{ color.code }}; border-radius: 10px 0 0 10px;">
+        <span style="visibility:hidden">a</span></div>
+    {% elif forloop.last %}
+      <div id="id_colors-2" class="btn border-light pickrbtn" style="background-color: {{ color.code }}; border-radius: 0 10px 10px 0;">
+        <span style="visibility:hidden">a</span></div>
+    {% else %}
+      <div id="id_colors-1" class="btn border-light pickrbtn" style="background-color: {{ color.code }}; border-radius: 0 0 0 0;">
+        <span style="visibility:hidden">a</span></div>
+    {% endif %}
+  {% endfor %}
 {% endspaceless %}

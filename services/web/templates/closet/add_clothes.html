@@ -31,12 +31,7 @@
         {{ form.name.errors }}
       </div>
       <div class="form-group">
-        {{ form.note.label_tag }}
-        {{ form.note }}
-        {{ form.note.errors }}
-      </div>
-      <div class="form-group">
-        {{ form.category.label_tag }}
+        <span class="text-danger">*</span>{{ form.category.label_tag }}
         <div class="row">
           <div class="col-sm-6">
             {{ form.parent_category }}
@@ -83,9 +78,18 @@
         </div>
       {% endif %}
       <div class="form-group">
-        {{ form.publish.label_tag }}
-        {{ form.publish }}
+        <div class="row">
+          <div class="col-auto">{{ form.publish.label_tag }}</div>
+          <div class="col-auto">
+            {{ form.publish }}
+          </div>
+        </div>
         {{ form.publish.errors }}
+      </div>
+      <div class="form-group">
+        {{ form.note.label_tag }}
+        {{ form.note }}
+        {{ form.note.errors }}
       </div>
       {{ form.x }}
       {{ form.y }}
