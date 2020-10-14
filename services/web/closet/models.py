@@ -88,18 +88,34 @@ class Clothes(models.Model):
         return self.picture.url
 
     def extract_color(self):
-        # Extract 6 colors from an image.
-        if self.picture:
-            colors = colorgram.extract(self.picture, 3)
-
+        clothes_picture = self.picture
+        if clothes_picture:
+            clothes_colors = self.colors.all()
+            if clothes_colors:
+                all_are_different = all(
+                    [
+                        clothes_colors[0].code != clothes_colors[0].original,
+                        clothes_colors[1].code != clothes_colors[1].original,
+                        clothes_colors[2].code != clothes_colors[2].original,
+                    ]
+                )
+            # Extract 3 colors from an image.
+            extracted_colors = colorgram.extract(clothes_picture, 3)
             # colorgram.extract returns Color objects, which let you access
             # RGB, HSL, and what proportion of the image was that color.
-            for color in colors:
-                rgb = color.rgb  # e.g. Rgb(r=217, g=216, b=233)
+            for i in range(3):
+                rgb = extracted_colors[i].rgb  # e.g. Rgb(r=217, g=216, b=233)
                 # RGB and HSL are named tuples, so values can be accessed as properties.
                 code = f"rgb({rgb[0]},{rgb[1]},{rgb[2]})"
                 # proportion = color.proportion  # e.g. 0.34
-                Color.objects.create(clothes=self, code=code, original=code)
+                if clothes_colors:
+                    if are_all_difference:
+                        clothes_colors[i].original = code
+                    else:
+                        clothes_colors[i].code = code
+                        clothes_colors[i].original = code
+                else:
+                    Color.objects.create(clothes=self, code=code, original=code)
 
 
 class Color(models.Model):
