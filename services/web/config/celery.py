@@ -24,9 +24,13 @@ app.autodiscover_tasks()
 
 # Executes tasks with crontab periodically.
 app.conf.beat_schedule = {
-    "scrape-forecast-every-hour": {
+    "scrape-forecast": {
         "task": "config.celery.scrape_forecast",
         "schedule": crontab(hour="*/6", minute=0),  # Executes 4 times a day
+    },
+    "worker-test": {
+        "task": "config.celery.test_print",
+        "schedule": crontab(minute="*"),
     },
 }
 
@@ -41,3 +45,8 @@ def scrape_forecast():
     from scraping.crawl import run_spider
 
     return run_spider()
+
+
+@app.task()
+def test_print():
+    return "Celery worker is working"
