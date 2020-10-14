@@ -30,7 +30,7 @@ app.conf.beat_schedule = {
     },
     "wake-worker-up": {
         "task": "config.celery.wake_up",
-        "schedule": crontab(minute="*/30"),
+        "schedule": crontab(minute="10, 30, 50"),
     },
 }
 
