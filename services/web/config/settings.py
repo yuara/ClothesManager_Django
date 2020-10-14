@@ -172,7 +172,10 @@ LOGOUT_REDIRECT_URL = "home"
 
 AUTH_USER_MODEL = "accounts.User"
 
+import logging
 
+logger = logging.getLogger(__name__)
+logger.info("some important infos")
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
