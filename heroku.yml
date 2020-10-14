@@ -1,6 +1,6 @@
 build:
   docker:
-    web: services/web/Dockerfile.heroku
+    web: services/web/Dockerfile.prod.heroku
     worker: services/web/Dockerfile.celery
 run:
   web: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
