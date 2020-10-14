@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.views import generic
 from .forms import ClothesCreateForm, OutfitCreateForm, ColorFormset
 from accounts.models import User
-from .models import ParentCategory, Category, Clothes, Outfit
+from .models import ParentCategory, Category, Clothes, Outfit, Color
 from django.urls import reverse_lazy
 from django.http import JsonResponse, QueryDict
 from django.utils import timezone
@@ -20,11 +20,12 @@ class CreateClothes(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         clothes = form.save(commit=False)
-        # Add user and date created in a clothes
+        # Add user and date created to a clothes
         user = self.request.user
         clothes.owner = user
         clothes.created_at = timezone.now()
 
+        # Name a clothes if user doesn't
         if not clothes.name:
             category = clothes.category
             count_clothes = user.clothes.filter(category=category).count()
@@ -32,14 +33,21 @@ class CreateClothes(LoginRequiredMixin, generic.CreateView):
 
         clothes.save()
 
+        # Get cropping positions
         x = float(self.request.POST.get("x"))
         y = float(self.request.POST.get("y"))
         w = float(self.request.POST.get("width"))
         h = float(self.request.POST.get("height"))
 
+        # Crop if the cropping positions
         if x != 0 and y != 0 and w != 0 and h != 0:
             clothes.crop_picture(x, y, w, h)
             clothes.extract_color()
+        else:
+            # Create 3 color objects if no cropped image and colors
+            if not clothes.colors.all():
+                for i in range(3):
+                    Color.objects.create(clothes=clothes, code="rgba(255, 255, 255, 1)")
 
         messages.info(
             self.request, f"Added {clothes.name} successfully.",
@@ -112,7 +120,7 @@ def edit_clothes(request, pk):
     formset = ColorFormset(
         request.POST or None,
         instance=clothes,
-        initial=[x for x in clothes.colors.all()],
+        initial=clothes.colors.order_by("pk").all(),
     )
 
     if request.method == "POST" and form.is_valid() and formset.is_valid():
@@ -129,8 +137,13 @@ def edit_clothes(request, pk):
         messages.info(
             request, f"Updated {saved_clothes.name} successfully.",
         )
-        formset.save()
-        # 編集ページを再度表示
+        # for instance in formset.save(commit=False):
+        #     # ... do something with m2m relationships ...
+
+        # Save the order of a formset
+        for ordered_form in formset.ordered_forms:
+            ordered_form.instance.order = ordered_form.cleaned_data["ORDER"]
+            ordered_form.instance.save()
         # return redirect("closet:edit_clothes", pk=pk)
         return redirect("closet:clothes")
 
@@ -153,7 +166,7 @@ class UserClothes(LoginRequiredMixin, generic.ListView):
         return redirect("closet:clothes")
 
     def get_queryset(self):
-        return self.request.user.clothes.all()
+        return self.request.user.clothes.order_by("-id").all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
