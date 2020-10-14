@@ -1,5 +1,6 @@
 from PIL import Image
 from django import forms
+from django.forms.models import BaseInlineFormSet
 from django.utils import timezone
 from accounts.models import User
 from .models import Clothes, Outfit, ParentCategory, Color
@@ -16,6 +17,7 @@ class ClothesCreateForm(forms.ModelForm):
         for field in self.fields.values():
             field.widget.attrs["class"] = "form-control"
         self.fields["picture"].widget.attrs["class"] = ""
+        self.fields["publish"].widget.attrs["class"] = "form-check"
 
     class Meta:
         model = Clothes
@@ -33,13 +35,21 @@ class ClothesCreateForm(forms.ModelForm):
         )
 
 
+class MyBaseFormSet(BaseInlineFormSet):
+    def add_fields(self, form, index):
+        super(MyBaseFormSet, self).add_fields(form, index)
+        form.fields[forms.formsets.ORDERING_FIELD_NAME].widget = forms.HiddenInput()
+
+
 ColorFormset = forms.inlineformset_factory(
     Clothes,
     Color,
     fields=("code",),
-    extra=3,
+    formset=MyBaseFormSet,
+    extra=0,
     max_num=3,
     can_delete=False,
+    can_order=True,
     widgets={"code": forms.HiddenInput()},
 )
 
