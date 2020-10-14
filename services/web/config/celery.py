@@ -28,9 +28,9 @@ app.conf.beat_schedule = {
         "task": "config.celery.scrape_forecast",
         "schedule": crontab(hour="*/6", minute=0),  # Executes 4 times a day
     },
-    "worker-test": {
-        "task": "config.celery.test_print",
-        "schedule": crontab(hour="*", minute=0),
+    "wake-worker-up": {
+        "task": "config.celery.wake_up",
+        "schedule": crontab(minute="*/30"),
     },
 }
 
@@ -48,5 +48,5 @@ def scrape_forecast():
 
 
 @app.task()
-def test_print():
-    return "Celery worker is working"
+def wake_up():
+    return "Wake up!"
