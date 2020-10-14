@@ -30,7 +30,7 @@ app.conf.beat_schedule = {
     },
     "worker-test": {
         "task": "config.celery.test_print",
-        "schedule": crontab(minute="*"),
+        "schedule": crontab(hour="*", minute=0),
     },
 }
 
