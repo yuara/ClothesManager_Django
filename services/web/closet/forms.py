@@ -59,12 +59,12 @@ class OutfitCreateForm(forms.ModelForm):
         model = Outfit
         fields = (
             "name",
-            "note",
             "outerwear",
             "top",
             "extra_top",
             "bottom",
             "publish",
+            "note",
         )
 
     def __init__(self, *args, **kwargs):

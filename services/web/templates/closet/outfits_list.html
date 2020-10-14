@@ -42,7 +42,7 @@
       {% else %}
         <h3>No Outfits Yet</h3>
       {% endif %}
-      <a href="{% url 'closet:set' %}">Set Outfit</a>
+      <a href="{% url 'closet:set' %}" class="btn btn-dark" role="button">Set Outfit</a>
 
     {% else %}
     {% if object_list %}
