@@ -172,10 +172,6 @@ LOGOUT_REDIRECT_URL = "home"
 
 AUTH_USER_MODEL = "accounts.User"
 
-import logging
-
-logger = logging.getLogger(__name__)
-logger.info("some important infos")
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -183,8 +179,8 @@ LOGGING = {
         "verbose": {
             "format": (
                 "%(asctime)s [%(process)d] [%(levelname)s] "
-                + "pathname=%(pathname)s lineno=%(lineno)s "
-                + "funcname=%(funcName)s %(message)s"
+                "pathname=%(pathname)s lineno=%(lineno)s "
+                "funcname=%(funcName)s %(message)s"
             ),
             "datefmt": "%Y-%m-%d %H:%M:%S",
         },
@@ -193,10 +189,17 @@ LOGGING = {
     "handlers": {
         "null": {"level": "DEBUG", "class": "logging.NullHandler",},
         "console": {
-            "level": "DEBUG",
+            "level": "INFO",
             "class": "logging.StreamHandler",
             "formatter": "verbose",
         },
     },
-    "loggers": {"testlogger": {"handlers": ["console"], "level": "INFO",}},
+    "loggers": {
+        "django": {"handlers": ["console"], "level": "DEBUG", "propagate": True,},
+        "django.request": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+    },
 }
