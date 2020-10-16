@@ -23,7 +23,7 @@ CATEGORIES = [
         "rainwear",
     ],
     [
-        "no sleeves"
+        "no sleeves",
         # "off the shoulders",
         # "tanks",
         # "cropped",
