@@ -34,9 +34,10 @@ class ForecastPipeline:
 
     def process_item(self, item, spider):
 
+        jst = datetime.timezone(datetime.timedelta(hours=+9), "jst")
         update_time = item["update_time"]
         update_time = int(re.findall(r"\d{2}", update_time)[1])
-        today = datetime.datetime.today()
+        today = datetime.datetime.now(jst)
         update_time = datetime.datetime(
             year=today.year, month=today.month, day=today.day, hour=update_time
         )
