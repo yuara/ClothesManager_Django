@@ -38,7 +38,7 @@ CATEGORIES = [
         "pants",
         # "jeans",
         # "leggings",
-        "skirts",
+        "skirt",
         "shorts",
     ],
 ]
