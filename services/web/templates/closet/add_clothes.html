@@ -31,7 +31,8 @@
         {{ form.name.errors }}
       </div>
       <div class="form-group">
-        <span class="text-danger">*</span>{{ form.category.label_tag }}
+        {{ form.category.label_tag }}
+        <span class="text-danger">*</span><small class="text-muted">Required</small>
         <div class="row">
           <div class="col-sm-6">
             {{ form.parent_category }}
@@ -46,6 +47,7 @@
       <div class="form-group">
         {{ form.picture.label_tag }}
         {{ form.picture }}
+        <div class="text-muted ml-6"><small><span class="text-info"><i class="fas fa-bullhorn"></i></span> {{ form.picture.help_text }}</small></div>
         {{ form.picture.errors }}
       </div>
       <div class="row">
@@ -64,16 +66,17 @@
         </div>
       </div>
       {% if add_or_edit == 'Edit' %}
-        <div class="form-group row">
-          <div class="col-sm-1">Color:</div>
-          <div class="col-sm-2">
-            <div class="clickable">
-              {% include "include/color_bar.html" %}
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-1">Color:</div>
+            <div class="col-sm-11">
+              <div class="clickable pb-2">
+                {% include "include/color_bar.html" %}
+                <a href="#" class="p-4">Default</a>
+              </div>
             </div>
           </div>
-          <div class="col-sm-9">
-            <a href="#">Default</a>
-          </div>
+          <div class="text-muted"><small><span class="text-info"><i class="fas fa-bullhorn"></i></span> Select a color you want to change on the bar</small></div>
           {{ formset }}
         </div>
       {% endif %}

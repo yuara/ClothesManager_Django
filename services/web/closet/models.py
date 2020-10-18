@@ -91,6 +91,8 @@ class Clothes(models.Model):
         clothes_picture = self.picture
         if clothes_picture:
             clothes_colors = self.colors.all()
+            # Check if colors an user has are extracted
+            # or selected by the user.
             if clothes_colors:
                 all_are_different = all(
                     [
@@ -99,7 +101,7 @@ class Clothes(models.Model):
                         clothes_colors[2].code != clothes_colors[2].original,
                     ]
                 )
-            # Extract 3 colors from an image.
+            # Extract 3 colors from an image an user will upload.
             extracted_colors = colorgram.extract(clothes_picture, 3)
             # colorgram.extract returns Color objects, which let you access
             # RGB, HSL, and what proportion of the image was that color.
@@ -107,13 +109,17 @@ class Clothes(models.Model):
                 rgb = extracted_colors[i].rgb  # e.g. Rgb(r=217, g=216, b=233)
                 # RGB and HSL are named tuples, so values can be accessed as properties.
                 code = f"rgb({rgb[0]},{rgb[1]},{rgb[2]})"
-                # proportion = color.proportion  # e.g. 0.34
+                # You can get a proportion of a color
+                # as color.proportion  # e.g. 0.34
                 if clothes_colors:
+                    # Change only extracted colors if an user selects colors
                     if are_all_difference:
                         clothes_colors[i].original = code
+                    # Change both colors if an user doesn't select
                     else:
                         clothes_colors[i].code = code
                         clothes_colors[i].original = code
+
                 else:
                     Color.objects.create(clothes=self, code=code, original=code)
 

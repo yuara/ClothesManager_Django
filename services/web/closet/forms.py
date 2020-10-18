@@ -17,7 +17,7 @@ class ClothesCreateForm(forms.ModelForm):
         for field in self.fields.values():
             field.widget.attrs["class"] = "form-control"
         self.fields["picture"].widget.attrs["class"] = ""
-        self.fields["publish"].widget.attrs["class"] = "form-check"
+        self.fields["publish"].widget.attrs["class"] = "form-check-input"
 
     class Meta:
         model = Clothes
@@ -33,6 +33,9 @@ class ClothesCreateForm(forms.ModelForm):
             "width",
             "height",
         )
+        help_texts = {
+            "picture": "App extracts 3 colors from a picture you will upload."
+        }
 
 
 class MyBaseFormSet(BaseInlineFormSet):
