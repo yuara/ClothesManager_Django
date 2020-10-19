@@ -1,11 +1,11 @@
 {% for user in object_list %}
 <div class="p-2">
-
-
   <a href="{% url 'accounts:profile' user.username %}">
-    <svg class="bd-placeholder-img rounded-lg" width="2rem" height="2rem" xmlns="http://www.w3.org/2000/svg" focusable="false" role="img">
-      <rect width="100%" height="100%" fill="#{{ user.profile.color }}"/>
-    </svg>
+    {% if user.profile.picture %}
+      <img src="{{ user.profile.picture.url }}" class="rounded-lg align-middle" width="auto" height="40px"/>
+    {% else %}
+      <canvas class="rounded-lg align-middle" width="35rem" height="35rem" style="background-color: #{{ user.profile.color }};"></canvas>
+    {% endif %}
     {{ user.username}}</a>
   <br>
   </div>
