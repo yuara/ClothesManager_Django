@@ -65,19 +65,21 @@
     {% else %}
       {% if object_list %}
         <table class="table table-hover">
-          <tr>
+          <thead>
+            <th></th>
             <th>Clothes Name</th>
             <th>Category</th>
-            <th>Addtime</th>
-          </tr>
+          </thead>
           {% for clothes in object_list %}
-            <tr>
-              <td>{{ clothes.name }}</td>
-              <td>{{ clothes.parent_category }}
-                /
-                {{ clothes.category }}</td>
-              <td>{{ clothes.created_at }}</td>
-            </tr>
+            <tbody class="centerTable">
+              <tr>
+                <td><img src="{{ clothes.show_img }}" class="rounded-lg" width="auto" height="40px"/></td>
+                <td>{{ clothes.name }}</td>
+                <td>{{ clothes.parent_category }}
+                  /
+                  {{ clothes.category }}</td>
+              </tr>
+            </tbody>
           {% endfor %}
         </table>
       {% else %}
