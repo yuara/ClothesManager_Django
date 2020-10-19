@@ -28,10 +28,6 @@ app.conf.beat_schedule = {
         "task": "config.celery.scrape_forecast",
         "schedule": crontab(hour="*/6", minute=0),  # Executes 4 times a day
     },
-    "wake-worker-up": {
-        "task": "config.celery.wake_up",
-        "schedule": crontab(minute="10, 30, 50"),
-    },
 }
 
 
@@ -45,8 +41,3 @@ def scrape_forecast():
     from scraping.crawl import run_spider
 
     return run_spider()
-
-
-@app.task()
-def wake_up():
-    return "Wake up!"
