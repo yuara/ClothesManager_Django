@@ -11,7 +11,7 @@ from .models import (
     Weather,
     Forecast,
     IndexCategory,
-    Color,
+    ClothesColor,
 )
 
 # Register your models here.
@@ -22,8 +22,8 @@ class IndexCategoryInline(admin.StackedInline):
     extra = 0
 
 
-class ColorInline(admin.StackedInline):
-    model = Color
+class ClothesColorInline(admin.StackedInline):
+    model = ClothesColor
     extra = 0
     ordering = ("pk",)
 
@@ -41,7 +41,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Clothes)
 class ClothesAdmin(admin.ModelAdmin):
-    inlines = (ColorInline,)
+    inlines = (ClothesColorInline,)
     list_display = ("name", "owner", "parent_category", "category", "publish")
     list_filter = ("publish",)
     search_fields = ("owner",)

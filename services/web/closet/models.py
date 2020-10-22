@@ -121,10 +121,10 @@ class Clothes(models.Model):
                         clothes_colors[i].original = code
 
                 else:
-                    Color.objects.create(clothes=self, code=code, original=code)
+                    ClothesColor.objects.create(clothes=self, code=code, original=code)
 
 
-class Color(models.Model):
+class ClothesColor(models.Model):
     clothes = models.ForeignKey(
         Clothes, on_delete=models.CASCADE, related_name="colors"
     )

@@ -3,7 +3,7 @@ from django import forms
 from django.forms.models import BaseInlineFormSet
 from django.utils import timezone
 from accounts.models import User
-from .models import Clothes, Outfit, ParentCategory, Color
+from .models import Clothes, Outfit, ParentCategory, ClothesColor
 
 
 class ClothesCreateForm(forms.ModelForm):
@@ -44,9 +44,9 @@ class MyBaseFormSet(BaseInlineFormSet):
         form.fields[forms.formsets.ORDERING_FIELD_NAME].widget = forms.HiddenInput()
 
 
-ColorFormset = forms.inlineformset_factory(
+ClothesColorFormset = forms.inlineformset_factory(
     Clothes,
-    Color,
+    ClothesColor,
     fields=("code",),
     formset=MyBaseFormSet,
     extra=0,

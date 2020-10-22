@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.views import generic
-from .forms import ClothesCreateForm, OutfitCreateForm, ColorFormset
+from .forms import ClothesCreateForm, OutfitCreateForm, ClothesColorFormset
 from accounts.models import User
-from .models import ParentCategory, Category, Clothes, Outfit, Color
+from .models import ParentCategory, Category, Clothes, Outfit, ClothesColor
 from django.urls import reverse_lazy
 from django.http import JsonResponse, QueryDict
 from django.utils import timezone
@@ -47,7 +47,9 @@ class CreateClothes(LoginRequiredMixin, generic.CreateView):
             # Create 3 color objects if no cropped image and colors
             if not clothes.colors.all():
                 for i in range(3):
-                    Color.objects.create(clothes=clothes, code="rgba(255, 255, 255, 1)")
+                    ClothesColor.objects.create(
+                        clothes=clothes, code="rgba(255, 255, 255, 1)"
+                    )
 
         messages.info(
             self.request, f"Added {clothes.name} successfully.",
@@ -117,7 +119,7 @@ def edit_clothes(request, pk):
     form = ClothesCreateForm(
         request.POST or None, files=request.FILES or None, instance=clothes
     )
-    formset = ColorFormset(
+    formset = ClothesColorFormset(
         request.POST or None,
         instance=clothes,
         initial=clothes.colors.order_by("pk").all(),
@@ -310,14 +312,14 @@ def ajax_get_category(request):
 
 
 def ajax_default_color(request, pk):
-    if request.method == "POST":
-        dic = QueryDict(request.body, encoding="utf-8")
-        color_code = dic.get("color")
-        id_name = dic.get("id_name")
-        id = int(id_name.replace("color", "")) - 1
-
-        clothes = Clothes.objects.get(pk=pk)
-        color = clothes.colors.all()[id]
-        color.code = color_code
-        color.save()
+    # if request.method == "POST":
+    #     dic = QueryDict(request.body, encoding="utf-8")
+    #     color_code = dic.get("color")
+    #     id_name = dic.get("id_name")
+    #     id = int(id_name.replace("color", "")) - 1
+    #
+    #     clothes = Clothes.objects.get(pk=pk)
+    #     color = clothes.colors.all()[id]
+    #     color.code = color_code
+    #     color.save()
     return JsonResponse({"colorCode": color_code})
