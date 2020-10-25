@@ -26,7 +26,11 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     "scrape-forecast": {
         "task": "config.celery.scrape_forecast",
-        "schedule": crontab(hour="*/6", minute=0),  # Executes 4 times a day
+        "schedule": crontab(hour="*", minute="0"),  # Executes 4 times a day
+    },
+    "testing": {
+        "task": "config.celery.test",
+        "schedule": crontab(hour="*", minute="*"),
     },
 }
 
@@ -41,3 +45,8 @@ def scrape_forecast():
     from scraping.crawl import run_spider
 
     return run_spider()
+
+
+@app.task()
+def test():
+    return "Task is working now!"
