@@ -35,11 +35,12 @@ class ForecastPipeline:
     def process_item(self, item, spider):
 
         jst = datetime.timezone(datetime.timedelta(hours=+9), "jst")
-        update_time = item["update_time"]
-        update_time = int(re.findall(r"\d{2}", update_time)[1])
+        row_update_time = item["update_time"]
+        update_hour = int(re.findall(r"\d{2}", row_update_time)[1])
+        now = datetime.datetime.now()
         today = datetime.datetime.now(jst)
         update_time = datetime.datetime(
-            year=today.year, month=today.month, day=today.day, hour=update_time
+            year=today.year, month=today.month, day=today.day, hour=update_hour
         )
 
         area = item["area"]
@@ -113,4 +114,5 @@ class ForecastPipeline:
         self.connection.commit()
         self.counter += 1
 
-        return f"Scraped {self.counter}/{update_time}"
+        return f"Row: {row_update_time}\nUhour: {update_hour}\nNow: {now}\nJST: {today}\nUpdate Time: {update_time}"
+        # return f"Scraped {self.counter}/{update_time}"
