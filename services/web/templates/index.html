@@ -34,7 +34,7 @@
                   <i class="fas fa-temperature-high"></i>
                 </th>
                 <th>
-                  <i class="fas fa-umbrella"></i>
+                  <i class="fas fa-cloud-rain"></i>
                 </th>
               </tr>
               <tr>
@@ -45,7 +45,11 @@
                   {{ forecast.prefecture.name }}
                 </td>
                 <td>
-                  {{ forecast.weather.name }}
+                  <i class="{{forecast.first_weather.icon }}"></i>
+                  {% if forecast.second_weather %}
+                  <i class="{{forecast.weather_change.icon }}"></i>
+                  <i class="{{forecast.second_weather.icon }}"></i>
+                  {% endif %}
                 </td>
                 <td>
                   {{ forecast.highest_temp }} &ordm;C
