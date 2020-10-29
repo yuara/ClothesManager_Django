@@ -1,3 +1,9 @@
+etup:
+  addons:
+    - plan: heroku-postgresql
+      as: DATABASE
+    - plan: heroku-redis
+      as: REDIS
 build:
   docker:
     web: services/web/Dockerfile.prod.heroku
