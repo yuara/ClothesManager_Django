@@ -27,12 +27,13 @@ class ForecastPipeline:
         self.connection.close()
 
     def process_item(self, item, spider):
-
-        update_time = item["update_time"]
-        update_time = int(re.findall(r"\d{2}", update_time)[1])
-        today = datetime.datetime.today()
+        jst = datetime.timezone(datetime.timedelta(hours=+9), "jst")
+        row_update_time = item["update_time"]
+        update_hour = int(re.findall(r"\d{2}", row_update_time)[1])
+        now = datetime.datetime.now()
+        today = datetime.datetime.now(jst)
         update_time = datetime.datetime(
-            year=today.year, month=today.month, day=today.day, hour=update_time
+            year=today.year, month=today.month, day=today.day, hour=update_hour
         )
 
         area = item["area"]
@@ -74,28 +75,49 @@ class ForecastPipeline:
         if clothes_index_id is None:
             raise scrapy.exceptions.DropItem("Invalid clothes index")
 
-        # Check if a weather is in closet_weather table.
-        # Get its id if there is. Insert that into the table if no.
-        while True:
-            weather_sql = "SELECT id FROM closet_weather WHERE name=%s"
-            self.cursor.execute(weather_sql, (weather,))
-            weather_id = self.cursor.fetchone()
-            if weather_id:
-                break
+        # Check if a weather is in closet_weatherelement table.
+        # Get its id if there is. Raise if not so.
+        if len(weather) == 4:
+            weather_list = [weather[0], weather[1:3], weather[-1]]
+        elif len(weather) == 1:
+            weather_list = [weather]
+        else:
+            raise scrapy.exceptions.DropItem("Scraped Unknown Weather")
+
+        weather_element_ids = []
+        for weather_check in weather_list:
+            check_sql = "SELECT id FROM closet_weatherelement WHERE name=%s"
+            self.cursor.execute(check_sql, (weather_check,))
+            weather_element_id = self.cursor.fetchone()
+            if weather_element_id:
+                weather_element_ids.append(weather_element_id)
             else:
-                weather_insert_sql = "INSERT INTO closet_weather (name) VALUES (%s)"
-                self.cursor.execute(weather_insert_sql, (weather,))
-                self.connection.commit()
+                raise scrapy.exceptions.DropItem("Scraped Unknown Weather")
+
+        if len(weather_element_ids) == 1:
+            weather_element_ids += [None, None]
+        elif len(weather_element_ids) == 3:
+            pass
+        else:
+            raise scrapy.exceptions.DropItem("Scraped Unknown Weather")
+
+        # Delete previous data
+        self.cursor.execute(
+            "DELETE FROM closet_forecast WHERE area_id=%s AND prefecture_id=%s",
+            (area_id, prefecture_id),
+        )
 
         # Insert scraped data into the database
-        insert_sql = "INSERT INTO closet_forecast (area_id, prefecture_id, weather_id, highest_temp, lowest_temp, rain_chance, clothes_index_id, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        insert_sql = "INSERT INTO closet_forecast (area_id, prefecture_id, first_weather_id, weather_change_id, second_weather_id, highest_temp, lowest_temp, rain_chance, clothes_index_id, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
         self.cursor.execute(
             insert_sql,
             (
                 area_id,
                 prefecture_id,
-                weather_id,
+                weather_element_ids[0],
+                weather_element_ids[1],
+                weather_element_ids[2],
                 highest_temp,
                 lowest_temp,
                 rain_chance,
@@ -106,4 +128,5 @@ class ForecastPipeline:
         self.connection.commit()
         self.counter += 1
 
+        # return f"Row: {row_update_time}\nUhour: {update_hour}\nNow: {now}\nJST: {today}\nUpdate Time: {update_time}"
         return f"Scraped {self.counter}/{update_time}"
