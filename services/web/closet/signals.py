@@ -5,7 +5,7 @@ from .models import (
     Prefecture,
     ClothesIndex,
     IndexCategory,
-    Weather,
+    WeatherElement,
 )
 
 PARENT_CATEGORIES = ["outerwears", "tops", "bottoms"]
@@ -131,30 +131,15 @@ CATEGORY_INDEXES = [
     {"clothes_index_id": 10, "category_id": 13, "needs_outers": 0},
 ]
 
-WEATHER = [
-    {"name": "晴", "icon": '<i class="fas fa-sun"></i>'},
-    {"name": "曇", "icon": '<i class="fas fa-cloud"></i>'},
-    {"name": "雨", "icon": '<i class="fas fa-umbrella"></i>'},
-    {
-        "name": "曇時々晴",
-        "icon": '<i class="fas fa-cloud"></i> <i class="fas fa-sun"></i>',
-    },
-    {
-        "name": "曇のち晴",
-        "icon": '<i class="fas fa-cloud"></i> <i class="fas fa-sun"></i>',
-    },
-    {
-        "name": "曇一時雨",
-        "icon": '<i class="fas fa-cloud"></i> <i class="fas fa-umbrella"></i>',
-    },
-    {
-        "name": "雨時々曇",
-        "icon": '<i class="fas fa-umbrella"></i> <i class="fas fa-cloud"></i>',
-    },
-    {
-        "name": "雨のち晴",
-        "icon": '<i class="fas fa-umbrella"></i> <i class="fas fa-sun"></i>',
-    },
+# TODO: how to display icons
+WEATHER_ELEMENTS = [
+    {"name": "晴", "icon": "fas fa-sun"},
+    {"name": "曇", "icon": "fas fa-cloud"},
+    {"name": "雨", "icon": "fas fa-umbrella"},
+    {"name": "雪", "icon": "fas fa-umbrella"},
+    {"name": "のち", "icon": "fas fa-long-arrow-alt-right",},
+    {"name": "一時", "icon": "fas fa-undo-alt",},
+    {"name": "時々", "icon": "fas fa-sync-alt",},
 ]
 
 POPULATE_DATA = [
@@ -196,5 +181,7 @@ def create_category_index(sender, **kwargs):
 
 
 def create_weather(sender, **kwargs):
-    for data in WEATHER:
-        weather = Weather.objects.get_or_create(name=data["name"], icon=data["icon"])
+    for data in WEATHER_ELEMENTS:
+        weather = WeatherElement.objects.get_or_create(
+            name=data["name"], icon=data["icon"]
+        )

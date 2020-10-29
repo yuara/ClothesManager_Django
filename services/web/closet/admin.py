@@ -8,7 +8,7 @@ from .models import (
     Area,
     Prefecture,
     ClothesIndex,
-    Weather,
+    WeatherElement,
     Forecast,
     IndexCategory,
     ClothesColor,
@@ -70,8 +70,8 @@ class ClothesIndexAdmin(admin.ModelAdmin):
     inlines = (IndexCategoryInline,)
 
 
-@admin.register(Weather)
-class WeatherAdmin(admin.ModelAdmin):
+@admin.register(WeatherElement)
+class WeatherElementAdmin(admin.ModelAdmin):
     pass
 
 

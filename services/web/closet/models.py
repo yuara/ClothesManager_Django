@@ -198,7 +198,7 @@ class ClothesIndex(models.Model):
         verbose_name_plural = _("clothes indexes")
 
 
-class Weather(models.Model):
+class WeatherElement(models.Model):
     name = models.CharField(max_length=255)
     icon = models.CharField(max_length=255, blank=True, null=True)
 
@@ -222,7 +222,15 @@ class Forecast(models.Model):
         related_name="forecast",
         on_delete=models.PROTECT,
     )
-    weather = models.ForeignKey("Weather", on_delete=models.PROTECT)
+    first_weather = models.ForeignKey(
+        "WeatherElement", on_delete=models.PROTECT, related_name="first"
+    )
+    weather_change = models.ForeignKey(
+        "WeatherElement", on_delete=models.PROTECT, related_name="change", null=True
+    )
+    second_weather = models.ForeignKey(
+        "WeatherElement", on_delete=models.PROTECT, related_name="second", null=True
+    )
     highest_temp = models.IntegerField(_("highest tempreture"))
     lowest_temp = models.IntegerField(_("lowest tempreture"))
     rain_chance = models.IntegerField(_("rain chance"))
