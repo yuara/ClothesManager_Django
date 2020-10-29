@@ -95,6 +95,9 @@ class ForecastPipeline:
                 self.cursor.execute(weather_insert_sql, (weather,))
                 self.connection.commit()
 
+        # Delete previous data
+        self.cursor.execute("DELETE FROM closet_forecast")
+
         # Insert scraped data into the database
         insert_sql = "INSERT INTO closet_forecast (area_id, prefecture_id, weather_id, highest_temp, lowest_temp, rain_chance, clothes_index_id, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
 
@@ -114,5 +117,5 @@ class ForecastPipeline:
         self.connection.commit()
         self.counter += 1
 
-        return f"Row: {row_update_time}\nUhour: {update_hour}\nNow: {now}\nJST: {today}\nUpdate Time: {update_time}"
-        # return f"Scraped {self.counter}/{update_time}"
+        # return f"Row: {row_update_time}\nUhour: {update_hour}\nNow: {now}\nJST: {today}\nUpdate Time: {update_time}"
+        return f"Scraped {self.counter}/{update_time}"
