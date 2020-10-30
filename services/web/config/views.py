@@ -24,7 +24,7 @@ class IndexPage(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if Forecast.objects.filter(id=1):
+        if Forecast.objects.first():
             user_pref_id = self.request.user.profile.prefecture.id
             user_forecast = (
                 Forecast.objects.filter(prefecture=user_pref_id)
