@@ -45,16 +45,26 @@
                   {{ forecast.prefecture.name }}
                 </td>
                 <td>
-                  <i class="{{forecast.first_weather.icon }}"></i>
-                  {% if forecast.second_weather %}
-                  <i class="{{forecast.weather_change.icon }}"></i>
-                  <i class="{{forecast.second_weather.icon }}"></i>
-                  {% endif %}
+                  <a
+                    href="#"
+                    class="text-reset"
+                    data-toggle="popover"
+                    data-trigger="hover"
+                    data-placement="bottom"
+                    data-html="true"
+                    data-content="<span class='text-center'>{{forecast.first_weather.name}}{%if forecast.second_weather%} {{forecast.weather_change.name}} {{forecast.second_weather.name}}{%endif%}</span>">
+                    <i class="{{forecast.first_weather.icon }}"></i>
+                    {% if forecast.second_weather %}
+                      <i class="{{forecast.weather_change.icon }}"></i>
+                      <i class="{{forecast.second_weather.icon }}"></i>
+                    {% endif %}
+                  </a>
                 </td>
                 <td>
-                  {{ forecast.highest_temp }} &ordm;C
-                  /
-                  {{ forecast.lowest_temp }} &ordm;C
+                  {{ forecast.highest_temp }}
+                  &ordm;C /
+                  {{ forecast.lowest_temp }}
+                  &ordm;C
                 </td>
                 <td>
                   {{ forecast.rain_chance }}
@@ -73,83 +83,64 @@
       <div class="card mb-4">
         <div class="card-header">
           <i class="fas fa-server mr-1"></i>
-          Suggestion
+          Suitable Clothes
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-xl-4">
-              <div class="card mb-3">
-                <div class="card-header">
-                  <i class="fas fa-dice-one mr-1"></i>
-                  Outerwears
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    {% if outerwears %}
-                      <table class="table table-hover text-center">
-                          {% for outerwear in outerwears %}
-                            <tr>
-                              <td>{{ outerwear.name }}</td>
-                            </tr>
-                          {% endfor %}
-                      </table>
-                    {% else %}
-                      None
-                    {% endif %}
-                  </div>
+            {% if outerwears %}
+              <!-- 3 sections including outerwear -->
+              <div class="col-sm-4 border-right">
+                <div class="text-center">
+                  {% for outerwear in outerwears %}
+                    <a href="#" data-toggle="popover" data-content="{{outerwear.name}}" data-trigger="hover" data-placement="bottom">
+                      <img src="/static/img/icon/clothes/{{outerwear.name}}.jpg" alt="{{outerwear.name}}" height="100px" width="auto">
+                    </a>
+                  {% endfor %}
                 </div>
               </div>
-            </div>
-            <div class="col-xl-4">
-              <div class="card mb-3">
-                <div class="card-header">
-                  <i class="fas fa-dice-two mr-1"></i>
-                  Tops
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    {% if tops %}
-                      <table class="table table-hover text-center">
-                          {% for top in tops %}
-                            <tr>
-                              <td>{{ top.name }}</td>
-                            </tr>
-                          {% endfor %}
-                      </table>
-                    {% else %}
-                      None
-                    {% endif %}
-                  </div>
+              <div class="col-sm-4 border-right">
+                <div class="text-center">
+                  {% for top in tops %}
+                    <a href="#" data-toggle="popover" data-content="{{top.name}}" data-trigger="hover" data-placement="bottom">
+                      <img src="/static/img/icon/clothes/{{top.name}}.jpg" alt="{{top.name}}" height="100px" width="auto">
+                    </a>
+                  {% endfor %}
                 </div>
               </div>
-            </div>
-            <div class="col-xl-4">
-              <div class="card mb-3">
-                <div class="card-header">
-                  <i class="fas fa-dice-three mr-1"></i>
-                  Bottoms
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    {% if bottoms %}
-                      <table class="table table-hover text-center">
-                          {% for bottom in bottoms %}
-                            <tr>
-                              <td>{{ bottom.name }}</td>
-                            </tr>
-                          {% endfor %}
-                      </table>
-                    {% else %}
-                      None
-                    {% endif %}
-                  </div>
+              <div class="col-sm-4">
+                <div class="text-center">
+                  {% for bottom in bottoms %}
+                    <a href="#" data-toggle="popover" data-content="{{bottom.name}}" data-trigger="hover" data-placement="bottom">
+                      <img src="/static/img/icon/clothes/{{bottom.name}}.jpg" alt="{{bottom.name}}" height="100px" width="auto">
+                    </a>
+                  {% endfor %}
                 </div>
               </div>
-            </div>
+            {% else %}
+              <!-- 2 sections except outerwear -->
+              <div class="col-sm-6">
+                {% for top in tops %}
+                  <img src="/static/img/icon/clothes/{{top.name}}.jpg" alt="{{top.name}}" height="100px" width="auto">
+                {% endfor %}
+              </div>
+              <div class="col-sm-6">
+                {% for bottom in bottoms %}
+                  <img src="/static/img/icon/clothes/{{bottom.name}}.jpg" alt="{{bottom.name}}" height="100px" width="auto">
+                {% endfor %}
+              </div>
+            {% endif %}
           </div>
         </div>
       </div>
+      <!-- card -->
     </div>
+    <!-- col -->
   </div>
+  <!-- row -->
 
+  <script>
+    $(document).ready(function () {
+      $('[data-toggle="popover"]').popover();
+    });
+  </script>
 {% endblock %}

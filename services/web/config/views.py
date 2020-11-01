@@ -24,18 +24,24 @@ class IndexPage(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if Forecast.objects.first():
-            user_pref_id = self.request.user.profile.prefecture.id
-            user_forecast = (
-                Forecast.objects.filter(prefecture=user_pref_id)
-                .order_by("-created_at")
-                .first()
-            )
-            user_clothes = Clothes.objects.select_related("parent_category").filter(
-                category__in=user_forecast.clothes_index.categories.all()
-            )
-            context["outerwears"] = user_clothes.filter(parent_category_id=1)
-            context["tops"] = user_clothes.filter(parent_category_id=2)
-            context["bottoms"] = user_clothes.filter(parent_category_id=3)
+        user_pref_id = self.request.user.profile.prefecture.id
+        user_forecast = (
+            Forecast.objects.filter(prefecture=user_pref_id)
+            .order_by("-created_at")
+            .first()
+        )
+        if user_forecast:
+            user_categories = user_forecast.clothes_index.categories.all()
+
+            # user_clothes = Clothes.objects.select_related("parent_category").filter(
+            #     category__in=user_forecast.clothes_index.categories.all()
+            # )
+            # context["outerwears"] = user_clothes.filter(parent_category_id=1)
+            # context["tops"] = user_clothes.filter(parent_category_id=2)
+            # context["bottoms"] = user_clothes.filter(parent_category_id=3)
             context["forecast"] = user_forecast
+            # context["categories"] = user_categories
+            context["outerwears"] = user_categories.filter(parent_id=1)
+            context["tops"] = user_categories.filter(parent_id=2)
+            context["bottoms"] = user_categories.filter(parent_id=3)
         return context
