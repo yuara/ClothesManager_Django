@@ -131,7 +131,6 @@ CATEGORY_INDEXES = [
     {"clothes_index_id": 10, "category_id": 13, "needs_outers": 0},
 ]
 
-# TODO: how to display icons
 WEATHER_ELEMENTS = [
     {"name": "晴", "icon": "fas fa-sun"},
     {"name": "曇", "icon": "fas fa-cloud"},
