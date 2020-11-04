@@ -1,4 +1,11 @@
 __pycache__
+Makefile
+db.sqlite3
+deploy_note.txt
+staticfiles
+mediafiles
+.env*
 
-# db.sqlite3
-local.py
+get_csrf_token.js
+
+data
