@@ -1,41 +1,47 @@
 
 ARG = foo
 
-.PHONY: env run shell mk migr remg user reuserlite test up down clean log sql exec
+.PHONY: env run shell mk migr remg user reuserlite test up down clean log db web scrape
 
 env:
 	pipenv shell
 
 run:
-	python services/manage.py runserver
+	python services/web/manage.py runserver
 
-shell:
-	python services/manage.py shell
+enshell:
+	python services/web/manage.py shell
 
-mk:
-	python services/manage.py makemigrations
+enmk:
+	python services/web/manage.py makemigrations
 
-migr:
-	python services/manage.py migrate
+enmg:
+	python services/web/manage.py migrate
 
-user:
-	python services/manage.py createsuperuser
+enuser:
+	python services/web/manage.py createsuperuser
 
 remg: mk migr
 
 reuser: mk migr user
 
 lite:
-	sqlite3 services/db.sqlite3
+	sqlite3 services/web/db.sqlite3
 
 test:
-	python services/manage.py test ARG
+	python services/web/manage.py test ARG
 
 up:
 	docker-compose up -d --build
 
 down:
-	docker-compose down
+	docker-compose down -v
+
+start:
+	docker-compose start
+
+stop:
+	docker-compose stop
 
 clean:
 	docker-compose down --rmi all --volumes
@@ -43,8 +49,47 @@ clean:
 log:
 	docker-compose logs -f
 
-sql:
-	docker-compose exec db mysql -u ClothesManager -p
+db:
+	docker-compose exec dev-db psql --username=cmuser --dbname=cm
 
-exec:
-	docker-compose exec web bash
+web:
+	docker-compose exec dev-web sh
+
+shell:
+	docker-compose exec dev-web python manage.py shell
+
+sc:
+	docker-compose exec dev-scrapyd curl http://dev-scrapyd:6800/schedule.json -d project=scraping -d spider=forecast
+
+mk:
+	docker-compose exec dev-web python manage.py makemigrations
+
+mg:
+	docker-compose exec dev-web python manage.py migrate
+
+user:
+	docker-compose exec dev-web python manage.py createsuperuser
+
+pdup:
+	docker-compose -f docker-compose.prod.yml up -d --build
+
+pddown:
+	docker-compose -f docker-compose.prod.yml down -v
+
+pdlog:
+	docker-compose -f docker-compose.prod.yml logs -f
+
+pdmg:
+	docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
+
+pdst:
+	docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --noinput
+
+pdsc:
+	docker-compose -f docker-compose.prod.yml exec scrapyd curl http://scrapyd:6800/schedule.json -d project=scraping -d spider=forecast
+
+pdweb:
+	docker-compose -f docker-compose.prod.yml exec web sh
+
+pddb:
+	docker-compose -f docker-compose.prod.yml exec db psql --username=cmuser --dbname=cm
