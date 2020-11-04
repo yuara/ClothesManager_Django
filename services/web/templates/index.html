@@ -100,7 +100,7 @@
                 <!-- Tab panes -->
                 <div class="tab-content text-center pt-3">
                   {% for outerwear in outerwears %}
-                    <div id="{{outerwear.name|slugify}}" class="container tab-pane fade"><br>
+                    <div id="{{outerwear.name|slugify}}" class="container tab-pane fade">
                     </div>
                   {% endfor %}
                 </div>
@@ -162,7 +162,6 @@
 {% endblock %}
 
 {% block script %}
-  <script src="{% static 'js/jquery.inview.js' %}"></script>
   <script>
     $('.nav-link').on('click', function () {
       const categoryIdName = $(this).attr('href');
@@ -179,16 +178,24 @@
           pillContent.append(data['clothesDict']['text'])
         } else {
           const clothesDict = data['clothesDict'];
+          const form = $('<form>').appendTo($('<div class="btn-group-toggle" data-toggle="buttons">'));
+          const clothesGroup = form.appendTo(pillContent);
+
           for (const clothes of clothesDict) {
-            const clothesBtn = $('<button class="btn">');
+            const labelName = clothes['pk'] + categoryIdName;
+            const clothesLbl = $('<label class="btn btn-default">');
+            const clothesIpt = $('<input type="radio" autocomplete="off">');
             const clothesName = $('<span class="pl-3">');
-            const clothesImg = $('<img height="40px" width="auto">');
-            clothesBtn.val(clothes['pk']);
+            const clothesImg = $('<img class="rounded" height="auto" width="40px">');
+            clothesIpt.attr('name', categoryIdName);
+            clothesIpt.attr('id', labelName);
+            clothesIpt.val(clothes['pk']);
+            clothesLbl.attr('for', labelName);
             clothesImg.attr('src', clothes['image']);
             clothesImg.attr('alt', clothes['name']);
             clothesName.text(clothes['name']);
-            clothesBtn.append(clothesImg).append(clothesName);
-            pillContent.append(clothesBtn).append('<br>');
+            clothesLbl.append(clothesImg).append(clothesName);
+            clothesGroup.append(clothesLbl).append('<br>');
           }
         }
 

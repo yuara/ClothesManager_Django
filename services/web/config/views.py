@@ -76,5 +76,4 @@ def ajax_get_clothes(request):
             clothes_dict = {"text": "Not Registered Yet"}
             is_success = False
 
-    print(f"Dict: {clothes_dict}")
     return JsonResponse({"clothesDict": clothes_dict, "isSuccess": is_success})
