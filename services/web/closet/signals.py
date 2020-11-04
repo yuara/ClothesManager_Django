@@ -69,8 +69,8 @@ PREFECTURES = [
 ]
 
 CLOTHES_INDEXES = [
-    {"value": 10, "description": ""},
-    {"value": 20, "description": ""},
+    {"value": 10, "description": "ぶるぶる、何を着ても寒い！！"},
+    {"value": 20, "description": "ダウンジャケットでしっかり防寒"},
     {"value": 30, "description": "コートを着ないと結構寒いなあ。"},
     {"value": 40, "description": "裏地付きトレンチコートがおすすめ。"},
     {"value": 50, "description": "薄手のジャケットを羽織ろう。"},
