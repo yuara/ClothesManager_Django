@@ -82,76 +82,80 @@
 
     <div class="col-xl-12">
       <div class="card mb-4">
-        <div class="card-header">
-          <i class="fas fa-server mr-1"></i>
-          Suitable Clothes
-        </div>
-        <div class="card-body">
-          <div class="row">
-            {% if outerwears %}
-              <!-- 3 sections including outerwear -->
-              <div class="col-sm-4 border-right">
-                <ul class="nav nav-pills justify-content-center" role="tablist">
-                  {% for clothes in outerwears %}
-                    {% include "include/clothes_tab.html" %}
-                  {% endfor %}
-                </ul>
-
-                <!-- Tab panes -->
-                <div class="tab-content text-center pt-3">
-                  {% for outerwear in outerwears %}
-                    <div id="{{outerwear.name|slugify}}" class="container tab-pane fade">
-                    </div>
-                  {% endfor %}
-                </div>
-                <!-- tab panes-->
-              </div>
-
-              <div class="col-sm-4 border-right">
-                <ul class="nav nav-pills justify-content-center" role="tablist">
-                  {% for clothes in tops %}
-                    {% include "include/clothes_tab.html" %}
-                  {% endfor %}
-                </ul>
-
-                <!-- Tab panes -->
-                <div class="tab-content text-center pt-3">
-                  {% for top in tops %}
-                    <div id="{{top.name|slugify}}" class="container tab-pane fade"><br>
-                    </div>
-                  {% endfor %}
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <ul class="nav nav-pills justify-content-center" role="tablist">
-                  {% for clothes in bottoms %}
-                    {% include "include/clothes_tab.html" %}
-                  {% endfor %}
-                </ul>
-
-                <!-- Tab panes -->
-                <div class="tab-content text-center pt-3">
-                  {% for bottom in bottoms %}
-                    <div id="{{bottom.name|slugify}}" class="container tab-pane active"><br>
-                    </div>
-                  {% endfor %}
-                </div>
-              </div>
-            {% else %}
-              <!-- 2 sections except outerwear -->
-              <div class="col-sm-6">
-                {% for top in tops %}
-                  <img src="/static/img/icon/clothes/{{top.name}}.jpg" alt="{{top.name}}" height="70px" width="auto">
-                {% endfor %}
-              </div>
-              <div class="col-sm-6">
-                {% for bottom in bottoms %}
-                  <img src="/static/img/icon/clothes/{{bottom.name}}.jpg" alt="{{bottom.name}}" height="70px" width="auto">
-                {% endfor %}
-              </div>
-            {% endif %}
+        <form class="m-0" action="{% url 'index' %}" method="POST">
+          {% csrf_token %}
+          <div class="card-header">
+            <i class="fas fa-server mr-1"></i>
+            Suitable Clothes
+            <button class="btn btn-dark float-right py-0" type="submit" name="button">Save</button>
           </div>
-        </div>
+          <div class="card-body">
+            <div class="row">
+              {% if outerwears %}
+                <!-- 3 sections including outerwear -->
+                <div class="col-sm-4 border-right">
+                  <ul class="nav nav-pills justify-content-center" role="tablist">
+                    {% for clothes in outerwears %}
+                      {% include "include/clothes_tab.html" %}
+                    {% endfor %}
+                  </ul>
+
+                  <!-- Tab panes -->
+                  <div class="tab-content text-center">
+                    {% for outerwear in outerwears %}
+                      <div id="{{outerwear.name|slugify}}" class="container tab-pane fade"></div>
+                    {% endfor %}
+                  </div>
+                  <!-- tab panes-->
+                </div>
+
+                <div class="col-sm-4 border-right">
+                  <ul class="nav nav-pills justify-content-center" role="tablist">
+                    {% for clothes in tops %}
+                      {% include "include/clothes_tab.html" %}
+                    {% endfor %}
+                  </ul>
+
+                  <!-- Tab panes -->
+                  <div class="tab-content text-center">
+                    {% for top in tops %}
+                      <div id="{{top.name|slugify}}" class="container tab-pane fade"><br>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <ul class="nav nav-pills justify-content-center" role="tablist">
+                    {% for clothes in bottoms %}
+                      {% include "include/clothes_tab.html" %}
+                    {% endfor %}
+                  </ul>
+
+                  <!-- Tab panes -->
+                  <div class="tab-content text-center">
+                    {% for bottom in bottoms %}
+                      <div id="{{bottom.name|slugify}}" class="container tab-pane active"><br>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% else %}
+                <!-- 2 sections except outerwear -->
+                <div class="col-sm-6">
+                  {% for top in tops %}
+                    <img src="/static/img/icon/clothes/{{top.name}}.jpg" alt="{{top.name}}" height="70px" width="auto">
+                  {% endfor %}
+                </div>
+                <div class="col-sm-6">
+                  {% for bottom in bottoms %}
+                    <img src="/static/img/icon/clothes/{{bottom.name}}.jpg" alt="{{bottom.name}}" height="70px" width="auto">
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          <!-- card body -->
+        </form>
       </div>
       <!-- card -->
     </div>
@@ -178,23 +182,20 @@
           pillContent.append(data['clothesDict']['text'])
         } else {
           const clothesDict = data['clothesDict'];
-          const form = $('<form>').appendTo($('<div class="btn-group-toggle" data-toggle="buttons">'));
-          const clothesGroup = form.appendTo(pillContent);
+          const clothesGroup = $('<div class="btn-group-toggle pt-3" data-toggle="buttons">').appendTo(pillContent);
 
           for (const clothes of clothesDict) {
             const labelName = clothes['pk'] + categoryIdName;
-            const clothesLbl = $('<label class="btn btn-default">');
+            const clothesLbl = $('<label class="btn btn-light mb-2">');
             const clothesIpt = $('<input type="radio" autocomplete="off">');
             const clothesName = $('<span class="pl-3">');
             const clothesImg = $('<img class="rounded" height="auto" width="40px">');
             clothesIpt.attr('name', categoryIdName);
-            clothesIpt.attr('id', labelName);
             clothesIpt.val(clothes['pk']);
-            clothesLbl.attr('for', labelName);
             clothesImg.attr('src', clothes['image']);
             clothesImg.attr('alt', clothes['name']);
             clothesName.text(clothes['name']);
-            clothesLbl.append(clothesImg).append(clothesName);
+            clothesLbl.append(clothesIpt).append(clothesImg).append(clothesName);
             clothesGroup.append(clothesLbl).append('<br>');
           }
         }

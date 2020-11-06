@@ -1,9 +1,10 @@
 from django.urls import reverse
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse
 from django.views.generic import TemplateView
-from closet.models import Clothes, Forecast
+from closet.models import Clothes, Forecast, Outfit
+from django.shortcuts import render
 
 
 class HomePage(TemplateView):
@@ -19,34 +20,60 @@ class HomePage(TemplateView):
         return super().get(request, *args, **kwargs)
 
 
-class IndexPage(LoginRequiredMixin, TemplateView):
-    template_name = "index.html"
+@login_required
+def index(request):
+    user = request.user
+    user_pref_id = user.profile.prefecture.id
+    user_forecast = (
+        Forecast.objects.filter(prefecture=user_pref_id).order_by("-created_at").first()
+    )
+    context = {}
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        user_pref_id = self.request.user.profile.prefecture.id
-        user_forecast = (
-            Forecast.objects.filter(prefecture=user_pref_id)
-            .order_by("-created_at")
-            .first()
+    if user_forecast:
+        context["forecast"] = user_forecast
+
+        forecast_categories = user_forecast.clothes_index.categories.all()
+        context["outerwears"] = forecast_categories.filter(parent_id=1)
+        context["tops"] = forecast_categories.filter(parent_id=2)
+        context["bottoms"] = forecast_categories.filter(parent_id=3)
+
+        user_categories = Clothes.objects.select_related("parent_category").filter(
+            category__in=forecast_categories
         )
-        if user_forecast:
-            context["forecast"] = user_forecast
+        context["user_outerwears"] = user_categories.filter(parent_category_id=1)
+        context["user_tops"] = user_categories.filter(parent_category_id=2)
+        context["user_bottoms"] = user_categories.filter(parent_category_id=3)
 
-            forecast_categories = user_forecast.clothes_index.categories.all()
-            context["outerwears"] = forecast_categories.filter(parent_id=1)
-            context["tops"] = forecast_categories.filter(parent_id=2)
-            context["bottoms"] = forecast_categories.filter(parent_id=3)
-
-            # TODO: j
-            user_categories = Clothes.objects.select_related("parent_category").filter(
-                category__in=forecast_categories
+    if request.method == "POST":
+        clothes_id = []
+        for x in request.POST:
+            if x[0] == "#":
+                clothes_id.append(request.POST[x])
+        if len(clothes_id) == 2:
+            a = Outfit.objects.create(
+                owner=user, top_id=clothes_id[0], bottom_id=clothes_id[1]
             )
-            context["user_outerwears"] = user_categories.filter(parent_category_id=1)
-            context["user_tops"] = user_categories.filter(parent_category_id=2)
-            context["user_bottoms"] = user_categories.filter(parent_category_id=3)
+            a.set_name()
+            a.save()
+            msg = f"Saved {a.name} successfully."
+        elif len(clothes_id) == 3:
+            a = Outfit.objects.create(
+                owner=user,
+                outerwear_id=clothes_id[0],
+                top_id=clothes_id[1],
+                bottom_id=clothes_id[2],
+            )
+            a.set_name()
+            a.save()
+            msg = f"Saved {a.name} successfully."
+        else:
+            msg = f"Failed to set an outfit"
 
-        return context
+        messages.info(
+            request, msg,
+        )
+
+    return render(request, "index.html", context)
 
 
 def ajax_get_clothes(request):
