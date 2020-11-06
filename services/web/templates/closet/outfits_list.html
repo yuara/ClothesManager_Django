@@ -17,6 +17,7 @@
     <h3>Outfits List</h3>
     {% if request.user.username == user.username %}
       {% if object_list %}
+        <form action="" method="POST">
         <table class="table table-hover">
           <thead>
             <th>Outfit Name</th>
@@ -25,9 +26,10 @@
             <th>Extra Tops</th>
             <th>Bottoms</th>
             <th>Publish</th>
+            <th>Delete</th>
           </thead>
-          {% for outfit in object_list %}
             <tbody class="centerTable">
+              {% for outfit in object_list %}
               <tr>
                 <td>
                   <a href="{% url 'closet:edit_outfit' outfit.pk %}">{{ outfit.name }}</a>
@@ -43,10 +45,14 @@
                     <i class="fas fa-times"></i>
                   {% endif %}
                 </td>
+                <td><input type="checkbox" name="delete" value="{{ outfit.pk }}"></td>
               </tr>
+              {% endfor %}
             </tbody>
-          {% endfor %}
+            {% csrf_token %}
         </table>
+        <button class="btn btn-danger float-right" type="submit">Delete</button>
+      </form>
       {% else %}
         <h3>No Outfits Yet</h3>
       {% endif %}
@@ -66,7 +72,7 @@
             <tbody class="centerTable">
               <tr>
                 <td>
-                  <a href="{% url 'closet:edit_outfit' outfit.pk %}">{{ outfit.name }}</a>
+                  {{ outfit.name }}
                 </td>
                 <td>{{ outfit.outerwear }}</td>
                 <td>{{ outfit.top }}</td>

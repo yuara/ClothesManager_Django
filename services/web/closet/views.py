@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views import generic
 from .forms import ClothesCreateForm, OutfitCreateForm, ClothesColorFormset
@@ -114,6 +115,7 @@ class CreateClothes(LoginRequiredMixin, generic.CreateView):
 #     return render(request, "closet/add_clothes.html", context)
 
 
+@login_required
 def edit_clothes(request, pk):
     clothes = get_object_or_404(Clothes, pk=pk)
     form = ClothesCreateForm(
@@ -235,10 +237,7 @@ class CreateOutfit(LoginRequiredMixin, generic.CreateView):
         user = self.request.user
         outfit.owner = user
         outfit.created_at = timezone.now()
-
-        if not outfit.name:
-            count_outfit = user.outfits.count()
-            outfit.name = f"Outfit {count_outfit + 1}"
+        outfit.set_name()
         outfit.save()
         return redirect("closet:outfits")
 
@@ -250,6 +249,11 @@ class CreateOutfit(LoginRequiredMixin, generic.CreateView):
 
 class UserOutfits(LoginRequiredMixin, generic.ListView):
     template_name = "closet/outfits_list.html"
+
+    def post(self, request):
+        outfits_pks = request.POST.getlist("delete")
+        Outfit.objects.filter(pk__in=outfits_pks).delete()
+        return redirect("closet:outfits")
 
     def get_queryset(self):
         return self.request.user.outfits.all()
