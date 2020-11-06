@@ -169,6 +169,12 @@ class Outfit(models.Model):
     def __str__(self):
         return self.name
 
+    def set_name(self):
+        if not self.name:
+            count_outfit = self.owner.outfits.count()
+            self.name = f"Outfit {count_outfit + 1}"
+            self.save()
+
 
 class Area(models.Model):
     name = models.CharField(_("area"), max_length=255)
