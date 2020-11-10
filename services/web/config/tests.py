@@ -85,10 +85,11 @@ class VisitTest(StaticLiveServerTestCase):
         self.browser.get(self.live_server_url)
 
         # Confirm a title and header
-        # self.assertIn("Home", self.browser.title)
-        # header_text = self.browser.find_element_by_tag_name("h1").text
-        # self.assertIn("ClothesManager", header_text)
-        # self.fail("Fail........")
+        self.assertIn("Home", self.browser.title)
+
+    # header_text = self.browser.find_element_by_tag_name("h1").text
+    # self.assertIn("ClothesManager", header_text)
+    # self.fail("Fail........")
 
     # def test_login(self):
     #     self.browser.get(self.live_server_url + "/accounts/login/")
