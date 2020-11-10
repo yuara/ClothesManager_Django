@@ -1,0 +1,351 @@
+[{
+  "model": "closet.Prefecture",
+  "pk": 1,
+  "fields": {
+    "name": "道北",
+    "parent": 1
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 2,
+  "fields": {
+    "name": "道東",
+    "parent": 1
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 3,
+  "fields": {
+    "name": "道南",
+    "parent": 1
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 4,
+  "fields": {
+    "name": "道央",
+    "parent": 1
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 5,
+  "fields": {
+    "name": "青森県",
+    "parent": 2
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 6,
+  "fields": {
+    "name": "岩手県",
+    "parent": 2
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 7,
+  "fields": {
+    "name": "宮城県",
+    "parent": 2
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 8,
+  "fields": {
+    "name": "秋田県",
+    "parent": 2
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 9,
+  "fields": {
+    "name": "山形県",
+    "parent": 2
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 10,
+  "fields": {
+    "name": "福島県",
+    "parent": 2
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 11,
+  "fields": {
+    "name": "茨城県",
+    "parent": 3
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 12,
+  "fields": {
+    "name": "栃木県",
+    "parent": 3
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 13,
+  "fields": {
+    "name": "群馬県",
+    "parent": 3
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 14,
+  "fields": {
+    "name": "埼玉県",
+    "parent": 3
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 15,
+  "fields": {
+    "name": "千葉県",
+    "parent": 3
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 16,
+  "fields": {
+    "name": "東京都",
+    "parent": 3
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 17,
+  "fields": {
+    "name": "神奈川県",
+    "parent": 3
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 18,
+  "fields": {
+    "name": "新潟県",
+    "parent": 4
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 19,
+  "fields": {
+    "name": "富山県",
+    "parent": 4
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 20,
+  "fields": {
+    "name": "石川県",
+    "parent": 4
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 21,
+  "fields": {
+    "name": "福井県",
+    "parent": 4
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 22,
+  "fields": {
+    "name": "山梨県",
+    "parent": 5
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 23,
+  "fields": {
+    "name": "長野県",
+    "parent": 5
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 24,
+  "fields": {
+    "name": "岐阜県",
+    "parent": 5
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 25,
+  "fields": {
+    "name": "静岡県",
+    "parent": 5
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 26,
+  "fields": {
+    "name": "愛知県",
+    "parent": 5
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 27,
+  "fields": {
+    "name": "三重県",
+    "parent": 5
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 28,
+  "fields": {
+    "name": "滋賀県",
+    "parent": 6
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 29,
+  "fields": {
+    "name": "京都府",
+    "parent": 6
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 30,
+  "fields": {
+    "name": "大阪府",
+    "parent": 6
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 31,
+  "fields": {
+    "name": "兵庫県",
+    "parent": 6
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 32,
+  "fields": {
+    "name": "奈良県",
+    "parent": 6
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 33,
+  "fields": {
+    "name": "和歌山県",
+    "parent": 6
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 34,
+  "fields": {
+    "name": "鳥取県",
+    "parent": 7
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 35,
+  "fields": {
+    "name": "島根県",
+    "parent": 7
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 36,
+  "fields": {
+    "name": "岡山県",
+    "parent": 7
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 37,
+  "fields": {
+    "name": "広島県",
+    "parent": 7
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 38,
+  "fields": {
+    "name": "山口県",
+    "parent": 7
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 39,
+  "fields": {
+    "name": "徳島県",
+    "parent": 8
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 40,
+  "fields": {
+    "name": "香川県",
+    "parent": 8
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 41,
+  "fields": {
+    "name": "愛媛県",
+    "parent": 8
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 42,
+  "fields": {
+    "name": "高知県",
+    "parent": 8
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 43,
+  "fields": {
+    "name": "福岡県",
+    "parent": 9
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 44,
+  "fields": {
+    "name": "佐賀県",
+    "parent": 9
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 45,
+  "fields": {
+    "name": "長崎県",
+    "parent": 9
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 46,
+  "fields": {
+    "name": "熊本県",
+    "parent": 9
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 47,
+  "fields": {
+    "name": "大分県",
+    "parent": 9
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 48,
+  "fields": {
+    "name": "宮崎県",
+    "parent": 9
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 49,
+  "fields": {
+    "name": "鹿児島県",
+    "parent": 9
+  }
+}, {
+  "model": "closet.Prefecture",
+  "pk": 50,
+  "fields": {
+    "name": "沖縄県",
+    "parent": 10
+  }
+}]

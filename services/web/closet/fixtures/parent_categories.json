@@ -1,0 +1,19 @@
+[{
+  "model": "closet.ParentCategory",
+  "pk": 1,
+  "fields": {
+    "name": "outerwears"
+  }
+}, {
+  "model": "closet.ParentCategory",
+  "pk": 2,
+  "fields": {
+    "name": "tops"
+  }
+}, {
+  "model": "closet.ParentCategory",
+  "pk": 3,
+  "fields": {
+    "name": "bottoms"
+  }
+}]

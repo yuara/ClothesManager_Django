@@ -1,0 +1,92 @@
+[{
+  "model": "closet.Category",
+  "pk": 1,
+  "fields": {
+    "name": "insulated",
+    "parent": 1
+  }
+}, {
+  "model": "closet.Category",
+  "pk": 2,
+  "fields": {
+    "name": "overcoat",
+    "parent": 1
+  }
+}, {
+  "model": "closet.Category",
+  "pk": 3,
+  "fields": {
+    "name": "trenchcoat",
+    "parent": 1
+  }
+}, {
+  "model": "closet.Category",
+  "pk": 4,
+  "fields": {
+    "name": "jacket",
+    "parent": 1
+  }
+}, {
+  "model": "closet.Category",
+  "pk": 5,
+  "fields": {
+    "name": "sweater jacket",
+    "parent": 1
+  }
+}, {
+  "model": "closet.Category",
+  "pk": 6,
+  "fields": {
+    "name": "rainwear",
+    "parent": 1
+  }
+}, {
+  "model": "closet.Category",
+  "pk": 7,
+  "fields": {
+    "name": "no sleeves",
+    "parent": 2
+  }
+}, {
+  "model": "closet.Category",
+  "pk": 8,
+  "fields": {
+    "name": "short sleeves",
+    "parent": 2
+  }
+}, {
+  "model": "closet.Category",
+  "pk": 9,
+  "fields": {
+    "name": "long sleeves",
+    "parent": 2
+  }
+}, {
+  "model": "closet.Category",
+  "pk": 10,
+  "fields": {
+    "name": "pullover",
+    "parent": 2
+  }
+}, {
+  "model": "closet.Category",
+  "pk": 11,
+  "fields": {
+    "name": "pants",
+    "parent": 3
+  }
+}, {
+  "model": "closet.Category",
+  "pk": 12,
+  "fields": {
+    "name": "skirt",
+    "parent": 3
+  }
+}, {
+  "model": "closet.Category",
+  "pk": 13,
+  "fields": {
+    "name": "shorts",
+    "parent": 3
+  }
+}]
