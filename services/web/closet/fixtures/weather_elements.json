@@ -1,0 +1,43 @@
+[{
+  "model": "closet.WeatherElement",
+  "fields": {
+    "name": "晴",
+    "icon": "fas fa-sun"
+  }
+}, {
+  "model": "closet.WeatherElement",
+  "fields": {
+    "name": "曇",
+    "icon": "fas fa-cloud"
+  }
+}, {
+  "model": "closet.WeatherElement",
+  "fields": {
+    "name": "雨",
+    "icon": "fas fa-umbrella"
+  }
+}, {
+  "model": "closet.WeatherElement",
+  "fields": {
+    "name": "雪",
+    "icon": "fas fa-umbrella"
+  }
+}, {
+  "model": "closet.WeatherElement",
+  "fields": {
+    "name": "のち",
+    "icon": "fas fa-long-arrow-alt-right"
+  }
+}, {
+  "model": "closet.WeatherElement",
+  "fields": {
+    "name": "一時",
+    "icon": "fas fa-undo-alt"
+  }
+}, {
+  "model": "closet.WeatherElement",
+  "fields": {
+    "name": "時々",
+    "icon": "fas fa-sync-alt"
+  }
+}]
