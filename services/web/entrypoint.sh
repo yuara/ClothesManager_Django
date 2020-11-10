@@ -15,4 +15,6 @@ python manage.py flush --no-input
 python manage.py makemigrations
 python manage.py migrate
 
+python manage.py loaddata areas prefectures parent_categories child_categories clothes_indexes index_categories weather_elements
+
 exec "$@"
