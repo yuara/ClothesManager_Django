@@ -13,6 +13,7 @@ services:
     depends_on:
       - dev-db
       - redis
+      - chromedriver
 
   dev-db:
     image: postgres:12.0-alpine
@@ -49,6 +50,16 @@ services:
     depends_on:
       - dev-db
     restart: always
+
+  chromedriver:
+    image: chromedriver
+    build: ./services/chromedriver
+    init: true
+    command:
+      - chromedriver
+      - --whitelisted-ips
+    volumes:
+      - /dev/shm:/dev/shm
 
 volumes:
   postgres_data:
