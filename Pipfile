@@ -20,6 +20,8 @@ redis = "*"
 scrapy = "*"
 django-redis-cache = "*"
 colorgram-py = "*"
+factory-boy = "*"
+selenium = "*"
 
 [requires]
 python_version = "3.8"

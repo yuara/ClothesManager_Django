@@ -28,6 +28,14 @@ DEBUG = int(os.environ.get("DEBUG", default=0))
 # ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "clothesmanager.herokuapp.com"]
 
+# IPS for debug tool
+INTERNAL_IPS = ["127.0.0.1"]
+
+if os.environ.get("USE_DOCKER") == "yes":
+    import socket
+
+    ALLOWED_HOSTS += [socket.gethostbyname(socket.gethostname())]
+    INTERNAL_IPS += [socket.gethostbyname(socket.gethostname())]
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -62,9 +70,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "config.urls"
-
-# IPS for debug tool
-INTERNAL_IPS = ["127.0.0.1", "172.21.0.1"]
 
 FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
