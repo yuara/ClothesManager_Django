@@ -1,0 +1,330 @@
+[{
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 1,
+    "category": 1,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 1,
+    "category": 10,
+    "needs_outers": 1
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 1,
+    "category": 11,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 2,
+    "category": 1,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 2,
+    "category": 2,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 2,
+    "category": 9,
+    "needs_outers": 1
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 2,
+    "category": 10,
+    "needs_outers": 1
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 2,
+    "category": 11,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 3,
+    "category": 2,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 3,
+    "category": 9,
+    "needs_outers": 1
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 3,
+    "category": 10,
+    "needs_outers": 1
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 3,
+    "category": 11,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 4,
+    "category": 2,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 4,
+    "category": 3,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 4,
+    "category": 9,
+    "needs_outers": 1
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 4,
+    "category": 10,
+    "needs_outers": 1
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 4,
+    "category": 11,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 5,
+    "category": 3,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 5,
+    "category": 4,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 5,
+    "category": 5,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 5,
+    "category": 9,
+    "needs_outers": 1
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 5,
+    "category": 10,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 5,
+    "category": 11,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 6,
+    "category": 4,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 6,
+    "category": 5,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 6,
+    "category": 8,
+    "needs_outers": 1
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 6,
+    "category": 9,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 6,
+    "category": 10,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 6,
+    "category": 11,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 7,
+    "category": 4,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 7,
+    "category": 5,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 7,
+    "category": 8,
+    "needs_outers": 1
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 7,
+    "category": 11,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 8,
+    "category": 8,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 8,
+    "category": 11,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 8,
+    "category": 12,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 8,
+    "category": 13,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 9,
+    "category": 7,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 9,
+    "category": 8,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 9,
+    "category": 11,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 9,
+    "category": 12,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 9,
+    "category": 13,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 10,
+    "category": 7,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 10,
+    "category": 8,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 10,
+    "category": 11,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 10,
+    "category": 12,
+    "needs_outers": 0
+  }
+}, {
+  "model": "closet.IndexCategory",
+  "fields": {
+    "clothes_index": 10,
+    "category": 13,
+    "needs_outers": 0
+  }
+}]
