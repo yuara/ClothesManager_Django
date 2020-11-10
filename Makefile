@@ -1,5 +1,5 @@
 
-ARG = foo
+ARG := "foo"
 
 .PHONY: env run shell mk migr remg user reuserlite test up down clean log db web scrape
 
@@ -28,9 +28,6 @@ reuser: mk migr user
 lite:
 	sqlite3 services/web/db.sqlite3
 
-test:
-	python services/web/manage.py test ARG
-
 up:
 	docker-compose up -d --build
 
@@ -57,6 +54,10 @@ web:
 
 shell:
 	docker-compose exec dev-web python manage.py shell
+
+# make test ARG=accounts
+test:
+	docker-compose exec dev-web python manage.py test --debug-mode ${ARG}
 
 sc:
 	docker-compose exec dev-scrapyd curl http://dev-scrapyd:6800/schedule.json -d project=scraping -d spider=forecast
