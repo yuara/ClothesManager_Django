@@ -7,5 +7,6 @@ mediafiles
 .env*
 
 get_csrf_token.js
+signals.py
 
 data
