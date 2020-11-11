@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "accounts.apps.AccountsConfig",
     "closet.apps.ClosetConfig",
+    "ajax.apps.AjaxConfig",
     "django_cleanup.apps.CleanupConfig",
     "django.forms",
 ]
