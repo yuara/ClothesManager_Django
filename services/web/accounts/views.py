@@ -127,21 +127,3 @@ def update_user(request, username):
     return render(
         request, "accounts/edit_profile.html", {"form": form, "profile": profile}
     )
-
-
-def ajax_get_location(request):
-    pk = request.GET.get("pk")
-    # Return all categories if pk is None or empty.
-    if not pk:
-        pref_list = Prefecture.objects.all()
-
-    # Return categories if geting its pk
-    else:
-        pref_list = Prefecture.objects.filter(area__pk=pk)
-
-    # Return a list that has dicts like this [ {'name': 'short sleeves', 'pk': '5'}, {'name': 'long sleeves', 'pk': '6'}, {...} ]
-    pref_list = [
-        {"pk": prefecture.pk, "name": prefecture.name} for prefecture in pref_list
-    ]
-    # Return as JSON
-    return JsonResponse({"categoryList": pref_list})
