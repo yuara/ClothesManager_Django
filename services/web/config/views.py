@@ -74,33 +74,3 @@ def index(request):
         )
 
     return render(request, "index.html", context)
-
-
-def ajax_get_clothes(request):
-    category_name = request.GET.get("category_name")
-    category_name = category_name.replace("#", "").replace("-", " ").replace("-", " ")
-    user = request.user
-    if not category_name:
-        clothes_dict = {"text": "Something is happening to get category name."}
-        is_success = False
-
-    else:
-        clothes_list = Clothes.objects.filter(
-            owner=user, category__name=category_name
-        ).all()
-        if clothes_list:
-            clothes_dict = []
-            for clothes in clothes_list:
-                if clothes.picture:
-                    img_url = clothes.picture.url
-                else:
-                    img_url = f"/static/img/icon/clothes/{clothes.category}.jpg"
-                clothes_dict.append(
-                    {"pk": clothes.pk, "name": clothes.name, "image": img_url}
-                )
-            is_success = True
-        else:
-            clothes_dict = {"text": "Not Registered Yet"}
-            is_success = False
-
-    return JsonResponse({"clothesDict": clothes_dict, "isSuccess": is_success})

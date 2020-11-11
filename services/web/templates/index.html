@@ -170,7 +170,7 @@
     $('.nav-link').on('click', function () {
       const categoryIdName = $(this).attr('href');
       $.ajax({
-        url: "{% url 'ajax_get_clothes' %}",
+        url: "{% url 'ajax:get_clothes' %}",
         type: 'GET',
         data: {
           'category_name': categoryIdName

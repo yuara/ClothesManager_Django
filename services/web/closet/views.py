@@ -294,36 +294,3 @@ class EditOutfit(LoginRequiredMixin, generic.UpdateView):
         context = super().get_context_data(**kwargs)
         context["set_or_edit"] = "Edit"
         return context
-
-
-def ajax_get_category(request):
-    pk = request.GET.get("pk")
-    # Return all categories if pk is None or empty.
-    if not pk:
-        category_list = Category.objects.all()
-
-    # Return categories if geting its pk
-    else:
-        category_list = Category.objects.filter(parent__pk=pk)
-
-    # Return a list that has dicts like this [ {'name': 'short sleeves', 'pk': '5'}, {'name': 'long sleeves', 'pk': '6'}, {...} ]
-    category_list = [
-        {"pk": category.pk, "name": category.name} for category in category_list
-    ]
-
-    # Return as JSON
-    return JsonResponse({"categoryList": category_list})
-
-
-def ajax_default_color(request, pk):
-    # if request.method == "POST":
-    #     dic = QueryDict(request.body, encoding="utf-8")
-    #     color_code = dic.get("color")
-    #     id_name = dic.get("id_name")
-    #     id = int(id_name.replace("color", "")) - 1
-    #
-    #     clothes = Clothes.objects.get(pk=pk)
-    #     color = clothes.colors.all()[id]
-    #     color.code = color_code
-    #     color.save()
-    return JsonResponse({"colorCode": color_code})
