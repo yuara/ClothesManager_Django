@@ -7,8 +7,7 @@ from django.shortcuts import render, redirect, resolve_url, get_object_or_404
 import random
 from django.http import JsonResponse
 from .forms import UserCreateForm, ProfileForm
-from .models import User, Profile
-from closet.models import Area, Prefecture
+from .models import User, Profile, Area, Prefecture
 
 # Create your views here.
 class SignUp(generic.CreateView):
@@ -138,12 +137,11 @@ def ajax_get_location(request):
 
     # Return categories if geting its pk
     else:
-        pref_list = Prefecture.objects.filter(parent__pk=pk)
+        pref_list = Prefecture.objects.filter(area__pk=pk)
 
     # Return a list that has dicts like this [ {'name': 'short sleeves', 'pk': '5'}, {'name': 'long sleeves', 'pk': '6'}, {...} ]
     pref_list = [
         {"pk": prefecture.pk, "name": prefecture.name} for prefecture in pref_list
     ]
-
     # Return as JSON
     return JsonResponse({"categoryList": pref_list})

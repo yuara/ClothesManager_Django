@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.db import models
 from django.utils.translation import gettext, gettext_lazy as _
 from .forms import UserChangeForm, ProfileForm
-from .models import User, Profile
+from .models import User, Profile, Area, Prefecture
 
 # Register your models here.
 
@@ -17,17 +17,14 @@ class ProfileInline(admin.StackedInline):
     form = ProfileForm
 
 
-# class FollowingInline(admin.StackedInline):
-#     model = FollowUser
-#     fk_name = "following"
-#     extra = 1
-#
-#
-# class FollowerInline(admin.StackedInline):
-#     model = FollowUser
-#     fk_name = "follower"
-#     extra = 1
-#
+@admin.register(Area)
+class AreaAdmin(admin.ModelAdmin):
+    ordering = ("pk",)
+
+
+@admin.register(Prefecture)
+class PrefectureAdmin(admin.ModelAdmin):
+    ordering = ("pk",)
 
 
 @admin.register(User)

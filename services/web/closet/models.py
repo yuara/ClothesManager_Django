@@ -4,6 +4,7 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from accounts.models import Area, Prefecture
 
 
 # Create your models here
@@ -174,21 +175,6 @@ class Outfit(models.Model):
             count_outfit = self.owner.outfits.count()
             self.name = f"Outfit {count_outfit + 1}"
             self.save()
-
-
-class Area(models.Model):
-    name = models.CharField(_("area"), max_length=255)
-
-    def __str__(self):
-        return self.name
-
-
-class Prefecture(models.Model):
-    name = models.CharField(_("prefecture"), max_length=255)
-    parent = models.ForeignKey("Area", verbose_name="area", on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.name
 
 
 class ClothesIndex(models.Model):

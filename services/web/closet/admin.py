@@ -5,8 +5,6 @@ from .models import (
     Category,
     Clothes,
     Outfit,
-    Area,
-    Prefecture,
     ClothesIndex,
     WeatherElement,
     Forecast,
@@ -52,16 +50,6 @@ class OutfitAdmin(admin.ModelAdmin):
     list_display = ("name", "owner", "publish")
     list_filter = ("publish",)
     search_fields = ("owner",)
-
-
-@admin.register(Area)
-class AreaAdmin(admin.ModelAdmin):
-    ordering = ("pk",)
-
-
-@admin.register(Prefecture)
-class PrefectureAdmin(admin.ModelAdmin):
-    ordering = ("pk",)
 
 
 @admin.register(ClothesIndex)
