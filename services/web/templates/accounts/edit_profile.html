@@ -48,7 +48,7 @@
 
   <!-- Make dropdowns for prefectures -->
   <script>
-    const getCateURL = '{% url 'accounts:ajax_get_location' %}';
+    const getCateURL = '{% url 'ajax:get_location' %}';
     const areaCategory = $('#id_area');
     const prefCategory = $('#id_prefecture');
     createDropDown(getCateURL, areaCategory, prefCategory)

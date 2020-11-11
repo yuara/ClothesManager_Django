@@ -115,7 +115,7 @@
   <script src="{% static 'js/run_pickr.js' %}"></script>
   <!-- Make dropdowns for categories -->
   <script>
-    const getCateURL = '{% url 'closet:ajax_get_category' %}';
+    const getCateURL = '{% url 'ajax:get_category' %}';
     const parentCategory = $('#id_parent_category');
     const childCategory = $('#id_category');
     createDropDown(getCateURL, parentCategory, childCategory)
