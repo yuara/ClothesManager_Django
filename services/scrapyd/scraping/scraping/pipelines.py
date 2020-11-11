@@ -41,10 +41,10 @@ class ForecastPipeline:
         city = item["weather_city"][0]
 
         # Check if location data about area and pref is in the database
-        area_sql = "SELECT id FROM closet_area WHERE name=%s"
+        area_sql = "SELECT id FROM accounts_area WHERE name=%s"
         self.cursor.execute(area_sql, (area,))
         area_id = self.cursor.fetchone()
-        pref_sql = "SELECT id FROM closet_prefecture WHERE name=%s"
+        pref_sql = "SELECT id FROM accounts_prefecture WHERE name=%s"
         self.cursor.execute(pref_sql, (prefecture,))
         prefecture_id = self.cursor.fetchone()
         if area_id is None or prefecture_id is None:
