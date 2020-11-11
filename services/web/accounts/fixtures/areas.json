@@ -1,59 +1,59 @@
 [{
-  "model": "closet.Area",
+  "model": "accounts.Area",
   "pk": 1,
   "fields": {
     "name": "北海道地方"
   }
 }, {
-  "model": "closet.Area",
+  "model": "accounts.Area",
   "pk": 2,
   "fields": {
     "name": "東北地方"
   }
 }, {
-  "model": "closet.Area",
+  "model": "accounts.Area",
   "pk": 3,
   "fields": {
     "name": "関東・甲信地方"
   }
 }, {
-  "model": "closet.Area",
+  "model": "accounts.Area",
   "pk": 4,
   "fields": {
     "name": "北陸地方"
   }
 }, {
-  "model": "closet.Area",
+  "model": "accounts.Area",
   "pk": 5,
   "fields": {
     "name": "東海地方"
   }
 }, {
-  "model": "closet.Area",
+  "model": "accounts.Area",
   "pk": 6,
   "fields": {
     "name": "近畿地方"
   }
 }, {
-  "model": "closet.Area",
+  "model": "accounts.Area",
   "pk": 7,
   "fields": {
     "name": "中国地方"
   }
 }, {
-  "model": "closet.Area",
+  "model": "accounts.Area",
   "pk": 8,
   "fields": {
     "name": "四国地方"
   }
 }, {
-  "model": "closet.Area",
+  "model": "accounts.Area",
   "pk": 9,
   "fields": {
     "name": "九州地方"
   }
 }, {
-  "model": "closet.Area",
+  "model": "accounts.Area",
   "pk": 10,
   "fields": {
     "name": "沖縄地方"
