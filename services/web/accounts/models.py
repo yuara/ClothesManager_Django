@@ -6,9 +6,23 @@ from django.utils.translation import gettext_lazy as _
 from django.core.mail import send_mail
 from django.conf import settings
 import uuid as uuid_lib
-from closet.models import Area, Prefecture
 
 # Create your models here.
+class Area(models.Model):
+    name = models.CharField(_("area"), max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
+class Prefecture(models.Model):
+    name = models.CharField(_("prefecture"), max_length=255)
+    area = models.ForeignKey("Area", verbose_name="area", on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.name
+
+
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     about_me = models.TextField(blank=True)
