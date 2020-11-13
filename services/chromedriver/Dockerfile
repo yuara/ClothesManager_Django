@@ -1,6 +1,7 @@
 FROM jess/chrome
 
-ARG CHROMEDRIVER_VERSION=2.33
+# Check chromedriver version http://chromedriver.chromium.org/downloads
+ARG CHROMEDRIVER_VERSION=86.0.4240.22
 
 USER root
 # Install chromedriver
