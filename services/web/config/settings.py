@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "closet.apps.ClosetConfig",
     "ajax.apps.AjaxConfig",
+    "functional_tests",
     "django_cleanup.apps.CleanupConfig",
     "django.forms",
 ]
