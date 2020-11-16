@@ -1,5 +1,7 @@
 import random
+from django.dispatch import receiver
 from django.db import models
+from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.utils import timezone
@@ -37,6 +39,7 @@ class Profile(models.Model):
         Prefecture, on_delete=models.PROTECT, blank=True, default=1
     )
     picture = models.ImageField(upload_to="profile_pic/", blank=True)
+    # Set a default color as HEX
     color = models.CharField(max_length=6, blank=True, default=set_random_color)
 
     class Meta:
@@ -119,3 +122,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def is_following(self, user):
         return user in self.following.all()
+
+
+@receiver(post_save, sender=User)
+def create_profile(sender, **kwargs):
+    if kwargs["created"]:
+        user_profile = Profile.objects.get_or_create(user=kwargs["instance"])
