@@ -144,7 +144,7 @@ def edit_clothes(request, pk):
         # for instance in formset.save(commit=False):
         #     # ... do something with m2m relationships ...
 
-        # Save the order of a formset
+        # Save the order of a formset of clothes colors
         for ordered_form in formset.ordered_forms:
             ordered_form.instance.order = ordered_form.cleaned_data["ORDER"]
             ordered_form.instance.save()

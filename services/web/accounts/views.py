@@ -17,12 +17,7 @@ class SignUp(generic.CreateView):
 
     def form_valid(self, form):
         self.object = user = form.save()
-        area = Area.objects.get(id=1)
-        prefecture = Prefecture.objects.get(id=1)
-        color = "%06x" % random.randint(0, 0xFFFFFF)
-        profile = Profile.objects.create(
-            user=user, area=area, prefecture=prefecture, color=color
-        )
+        # profile = Profile.objects.create(user=user)
         messages.info(self.request, f"Sign Up! {user.username}!")
         return redirect(self.get_success_url())
 

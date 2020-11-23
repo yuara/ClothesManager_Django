@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse
 from django.views.generic import TemplateView
+from accounts.models import Profile
 from closet.models import Clothes, Forecast, Outfit
 from django.shortcuts import render
 
@@ -23,6 +24,7 @@ class HomePage(TemplateView):
 @login_required
 def index(request):
     user = request.user
+    # profile, is_created = Profile.objects.get_or_create(user=user)
     user_pref_id = user.profile.prefecture.id
     user_forecast = (
         Forecast.objects.filter(prefecture=user_pref_id).order_by("-created_at").first()
@@ -49,6 +51,7 @@ def index(request):
         for x in request.POST:
             if x[0] == "#":
                 clothes_id.append(request.POST[x])
+        # TODO: Create validation for a combination of clothes on index page
         if len(clothes_id) == 2:
             a = Outfit.objects.create(
                 owner=user, top_id=clothes_id[0], bottom_id=clothes_id[1]
@@ -72,5 +75,8 @@ def index(request):
         messages.info(
             request, msg,
         )
+
+    if is_created == True:
+        messages.info(request, "Edit your profile to change your location")
 
     return render(request, "index.html", context)

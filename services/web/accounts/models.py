@@ -1,4 +1,7 @@
+import random
+from django.dispatch import receiver
 from django.db import models
+from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.utils import timezone
@@ -23,14 +26,21 @@ class Prefecture(models.Model):
         return self.name
 
 
+def set_random_color():
+    return "%06x" % random.randint(0, 0xFFFFFF)
+
+
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     about_me = models.TextField(blank=True)
     webpage = models.URLField(blank=True)
-    area = models.ForeignKey(Area, on_delete=models.PROTECT, blank=True)
-    prefecture = models.ForeignKey(Prefecture, on_delete=models.PROTECT, blank=True)
+    area = models.ForeignKey(Area, on_delete=models.PROTECT, blank=True, default=1)
+    prefecture = models.ForeignKey(
+        Prefecture, on_delete=models.PROTECT, blank=True, default=1
+    )
     picture = models.ImageField(upload_to="profile_pic/", blank=True)
-    color = models.CharField(max_length=6, blank=True)
+    # Set a default color as HEX
+    color = models.CharField(max_length=6, blank=True, default=set_random_color)
 
     class Meta:
         verbose_name = "profile"
@@ -38,18 +48,6 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s profile"
-
-
-# class FollowUser(models.Model):
-#     follower = models.ForeignKey(
-#         "User", on_delete=models.CASCADE, related_name="following_followusers"
-#     )
-#     following = models.ForeignKey(
-#         "User", on_delete=models.CASCADE, related_name="follower_followusers"
-#     )
-#
-#     class Meta:
-#         unique_together = ("follower", "following")
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -72,23 +70,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     following = models.ManyToManyField(
         "self", related_name="followers", blank=True, symmetrical=False
     )
-    # followings = models.ManyToManyField(
-    #     "User",
-    #     verbose_name="following users",
-    #     through="FollowUser",
-    #     related_name="+",
-    #     through_fields=("follower", "following"),
-    #     blank=True,
-    # )
-    # followers = models.ManyToManyField(
-    #     "User",
-    #     verbose_name="followers",
-    #     through="FollowUser",
-    #     related_name="+",
-    #     through_fields=("following", "follower"),
-    #     blank=True,
-    # )
-
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
@@ -141,3 +122,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def is_following(self, user):
         return user in self.following.all()
+
+
+@receiver(post_save, sender=User)
+def create_profile(sender, **kwargs):
+    if kwargs["created"]:
+        user_profile = Profile.objects.get_or_create(user=kwargs["instance"])
