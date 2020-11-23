@@ -1,7 +1,7 @@
 import factory
 from django.test import TestCase
 from accounts.models import User
-from .models import Clothes, Outfit
+from closet.models import Clothes, Outfit
 
 # Create your tests here.
 
@@ -13,7 +13,7 @@ class ClothesImageFactory(factory.django.DjangoModelFactory):
     picture = factory.django.ImageField(color="red")
 
 
-class ClosetTests(TestCase):
+class ClosetModelsTests(TestCase):
     fixtures = ["areas", "prefectures", "parent_categories", "child_categories"]
 
     def setUp(self):

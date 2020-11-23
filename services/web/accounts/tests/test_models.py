@@ -2,7 +2,7 @@ from django.test import TestCase
 from accounts.models import User
 
 # Create your tests here.
-class AccountsTests(TestCase):
+class AccountsModelsTests(TestCase):
     fixtures = ["areas", "prefectures"]
 
     def setUp(self):
