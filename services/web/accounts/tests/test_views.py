@@ -25,3 +25,7 @@ class AccountsViewsTest(TestCase):
     def test_view_uses_correct_template(self):
         response = self.client.get(reverse("accounts:signup"))
         self.assertTemplateUsed(response, "accounts/signup.html")
+
+    def test_view_url_of_users(self):
+        response = self.client.get(reverse("accounts:all"))
+        self.assertEqual(response.status_code, 200)
