@@ -43,3 +43,20 @@ class AccountsViewsTest(TestCase):
         login = self.client.login(username="test_user_1", password="testing_user_1_now")
         response = self.client.get(reverse("accounts:profile", args=("test_user_2",)))
         self.assertEqual(response.status_code, 200)
+
+    def test_view_url_to_follow(self):
+        u1 = User.objects.get(username="test_user_1")
+        u2 = User.objects.get(username="test_user_2")
+        self.assertEqual(list(u1.following.all()), [])
+        login = self.client.login(username="test_user_1", password="testing_user_1_now")
+        response = self.client.get(reverse("accounts:follow", args=("test_user_2",)))
+        self.assertEqual(list(u1.following.all()), [u2])
+
+    def test_view_url_to_follow(self):
+        u1 = User.objects.get(username="test_user_1")
+        u2 = User.objects.get(username="test_user_2")
+        u1.following.add(u2)
+        self.assertEqual(list(u1.following.all()), [u2])
+        login = self.client.login(username="test_user_1", password="testing_user_1_now")
+        response = self.client.get(reverse("accounts:unfollow", args=("test_user_2",)))
+        self.assertEqual(list(u1.following.all()), [])
