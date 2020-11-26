@@ -38,3 +38,8 @@ class AccountsViewsTest(TestCase):
         login = self.client.login(username="test_user_1", password="testing_user_1_now")
         response = self.client.get(reverse("accounts:current"))
         self.assertEqual(response.status_code, 200)
+
+    def test_view_url_of_another_user_profile(self):
+        login = self.client.login(username="test_user_1", password="testing_user_1_now")
+        response = self.client.get(reverse("accounts:profile", args=("test_user_2",)))
+        self.assertEqual(response.status_code, 200)
