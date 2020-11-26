@@ -24,7 +24,6 @@ class HomePage(TemplateView):
 @login_required
 def index(request):
     user = request.user
-    # profile, is_created = Profile.objects.get_or_create(user=user)
     user_pref_id = user.profile.prefecture.id
     user_forecast = (
         Forecast.objects.filter(prefecture=user_pref_id).order_by("-created_at").first()
@@ -75,8 +74,5 @@ def index(request):
         messages.info(
             request, msg,
         )
-
-    if is_created == True:
-        messages.info(request, "Edit your profile to change your location")
 
     return render(request, "index.html", context)
