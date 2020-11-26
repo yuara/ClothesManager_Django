@@ -29,3 +29,12 @@ class AccountsViewsTest(TestCase):
     def test_view_url_of_users(self):
         response = self.client.get(reverse("accounts:all"))
         self.assertEqual(response.status_code, 200)
+
+    def test_redirect_if_not_logged_in(self):
+        response = self.client.get(reverse("accounts:current"))
+        self.assertRedirects(response, "/accounts/login/?next=/accounts/profile/")
+
+    def test_view_url_of_current_user_profile(self):
+        login = self.client.login(username="test_user_1", password="testing_user_1_now")
+        response = self.client.get(reverse("accounts:current"))
+        self.assertEqual(response.status_code, 200)
